@@ -1,0 +1,12 @@
+---
+title: NULL
+type: page
+---
+
+## Extended examples
+
+- [Brief feature demonstrations](quick)
+- [Generate MAP Bayes estimates](map_bayes)
+- [Internal model library](modmrg)
+- [Model gallery](model-gallery)
+- [Working with event objects](events)

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>/2017/02/23/test-post/</loc>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/02/23/zero-out-random-effect-variances/</loc>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/</loc>
+    <lastmod>2017-01-05T13:09:02+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/01/01/generating-input-data-sets-for-mrgsolve/</loc>
+    <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/01/01/resimulate-random-effect-variates-on-demand/</loc>
+    <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/01/01/work-with-r-objects-in-your-model/</loc>
+    <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/topic/model-gallery/</loc>
+  </url>
+  
+  <url>
+    <loc>/topic/modmrg/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/topic/</loc>
+  </url>
+  
+  <url>
+    <loc>/topic/map_bayes/</loc>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+  </url>
+  
+  <url>
+    <loc>/topic/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/topic/events/</loc>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2017-02-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.18.1" />
+
+
+<title>Resimulate random effect variates on demand - mrgsolve</title>
+<meta property="og:title" content="Resimulate random effect variates on demand - mrgsolve">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css' rel='stylesheet' type='text/css'>
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/mrgsolve.png"
+         width="400"
+         height="200"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../">Home</a></li>
+    
+    <li><a href="../../../../post/">Blog</a></li>
+    
+    <li><a href="../../../../topic/">Help Topics</a></li>
+    
+    <li><a href="https://github.com/metrumresearchgroup/mrgsolve">GitHub</a></li>
+    
+    <li><a href="https://mrgsolve.github.io/user_guide">User Guide</a></li>
+    
+    <li><a href="https://mrgsolve.github.io/docs">R docs</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">Resimulate random effect variates on demand</h1>
+
+    
+    <span class="article-date">2017/01/01</span>
+    
+
+    <div class="article-content">
+
+
+<div id="TOC">
+<ul>
+<li><a href="#simeta-example"><code>simeta</code> example</a><ul>
+<li><a href="#simulate-without-simeta">Simulate without <code>simeta</code></a></li>
+<li><a href="#simulate-with-simeta">Simulate with <code>simeta</code></a></li>
+</ul></li>
+<li><a href="#simeps-example"><code>simeps</code> example</a><ul>
+<li><a href="#simulate-without-simeps">Simulate without <code>simeps</code></a></li>
+<li><a href="#simulate-with-simeps">Simulate with <code>simeps</code></a></li>
+</ul></li>
+</ul>
+</div>
+
+<p><BR></p>
+<pre class="r"><code>library(mrgsolve)</code></pre>
+<div id="simeta-example" class="section level2">
+<h2><code>simeta</code> example</h2>
+<ul>
+<li>In this example, we want to simulate a patient-specific baseline response that is between 80 and 120.</li>
+<li>In the code, we start a loop that calls <code>simeta</code> with no arguments until the baseline is between the specified bounds</li>
+<li>For this example, we only calculate <code>BASE</code> when <code>NEWIND &lt;=1</code> … or whenever we are working on the first record of an individual. This ensures that we don’t re-simulate <code>BASE</code> at every simulation record.</li>
+<li>We have also implemented a counter (<code>i</code>) that ensures we only try to resimulate 100 times. If a value for <code>BASE</code> cannot be generated in 100 tries, we give up.<br />
+</li>
+<li>You probably won’t need to implement <code>FLAG</code> for your problem. I am only using <code>FLAG</code> here so we can selectively call the <code>simeta</code> code to demonstrate how it is working.</li>
+</ul>
+<pre class="r"><code>code &lt;- &#39;
+$PARAM TVBASE = 100, FLAG = 0
+
+$CMT RESPONSE
+
+$MAIN 
+
+if(NEWIND &lt;=1) {
+
+  capture BASE = TVBASE*exp(EBASE);
+
+  int i = 0;
+
+  if(FLAG &gt; 0) {
+    while((BASE &lt; 80) || (BASE &gt; 120)) {
+      if(++i &gt; 100) {
+        report(&quot;There was a problem simulating BASE&quot;);
+      }
+      simeta();
+      BASE = TVBASE*exp(EBASE);
+    }
+  }
+  
+  RESPONSE_0 = BASE;
+}
+
+
+$OMEGA @labels EBASE
+1
+
+$CAPTURE EBASE
+&#39;</code></pre>
+<pre class="r"><code>mod &lt;- mcode(&quot;simeta&quot;, code)</code></pre>
+<div id="simulate-without-simeta" class="section level3">
+<h3>Simulate without <code>simeta</code></h3>
+<pre class="r"><code>system.time({
+  out &lt;- mod %&gt;% mrgsim(nid=100, end=-1)
+  sum &lt;- summary(out)
+})</code></pre>
+<pre><code>.    user  system elapsed 
+.   0.014   0.000   0.015</code></pre>
+<pre class="r"><code>print(sum)</code></pre>
+<pre><code>.        ID              time      RESPONSE           EBASE        
+.  Min.   :  1.00   Min.   :0   Min.   :  17.78   Min.   :-1.7269  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.:  62.71   1st Qu.:-0.4666  
+.  Median : 50.50   Median :0   Median : 118.59   Median : 0.1704  
+.  Mean   : 50.50   Mean   :0   Mean   : 187.59   Mean   : 0.1909  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.: 222.31   3rd Qu.: 0.7985  
+.  Max.   :100.00   Max.   :0   Max.   :1185.01   Max.   : 2.4723  
+.       BASE        
+.  Min.   :  17.78  
+.  1st Qu.:  62.71  
+.  Median : 118.59  
+.  Mean   : 187.59  
+.  3rd Qu.: 222.31  
+.  Max.   :1185.01</code></pre>
+<p>When we simulate with <code>FLAG=0</code>, the <code>simeta</code> code <strong>isn’t</strong> called and we <code>BASE</code> values all over the place.</p>
+</div>
+<div id="simulate-with-simeta" class="section level3">
+<h3>Simulate with <code>simeta</code></h3>
+<pre class="r"><code>system.time({
+  out &lt;- mod %&gt;% mrgsim(nid=100, end=-1, param=list(FLAG=1))
+  sum &lt;- summary(out)
+})</code></pre>
+<pre><code>.    user  system elapsed 
+.   0.007   0.000   0.007</code></pre>
+<pre class="r"><code>print(sum)</code></pre>
+<pre><code>.        ID              time      RESPONSE          EBASE          
+.  Min.   :  1.00   Min.   :0   Min.   : 80.61   Min.   :-0.215551  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 90.14   1st Qu.:-0.103793  
+.  Median : 50.50   Median :0   Median : 99.37   Median :-0.006364  
+.  Mean   : 50.50   Mean   :0   Mean   : 98.92   Mean   :-0.017261  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:107.19   3rd Qu.: 0.069402  
+.  Max.   :100.00   Max.   :0   Max.   :119.83   Max.   : 0.180902  
+.       BASE       
+.  Min.   : 80.61  
+.  1st Qu.: 90.14  
+.  Median : 99.37  
+.  Mean   : 98.92  
+.  3rd Qu.:107.19  
+.  Max.   :119.83</code></pre>
+<p>When we simulate with <code>FLAG=1</code>, the <code>simeta</code> code <strong>is</strong> called and we <code>BASE</code> values within the specified bounds.</p>
+</div>
+</div>
+<div id="simeps-example" class="section level2">
+<h2><code>simeps</code> example</h2>
+<ul>
+<li>In this example, we want to re-simulate the residual error variate to make sure we have a concentration that is positive.</li>
+<li>We set up a loop that looks like the <code>simeta</code> example, but we work in <code>$TABLE</code> this time because we are calculating <code>CP</code>.</li>
+</ul>
+<pre class="r"><code>code &lt;- &#39;
+$PARAM CL = 1, V = 20, FLAG=0
+
+$SIGMA 50
+
+$PKMODEL cmt=&quot;CENT&quot;
+
+$TABLE
+capture CP = CENT/V + EPS(1);
+
+int i = 0;
+while(CP &lt; 0 &amp;&amp; FLAG &gt; 0) {
+  if(++i &gt; 100) {
+    report(&quot;Problem simulating positive CP&quot;);
+  }
+  simeps();
+  CP = CENT/V + EPS(1);
+}
+
+&#39;</code></pre>
+<pre class="r"><code>mod &lt;- mcode(&quot;simeps&quot;, code)</code></pre>
+<div id="simulate-without-simeps" class="section level3">
+<h3>Simulate without <code>simeps</code></h3>
+<pre class="r"><code>system.time({
+  out &lt;- mod %&gt;% ev(amt=100) %&gt;% mrgsim(end=48)
+  sum &lt;- summary(out)
+})</code></pre>
+<pre><code>.    user  system elapsed 
+.   0.010   0.000   0.011</code></pre>
+<pre class="r"><code>print(sum)</code></pre>
+<pre><code>.        ID         time            CENT              CP         
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-16.965  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -1.770  
+.  Median :1   Median :23.50   Median : 29.38   Median :  2.249  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   :  1.470  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  6.838  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 16.344</code></pre>
+<p><strong>Negative</strong> concentrations are simulated when we <strong>don’t</strong> call the <code>simeps</code> loop.</p>
+</div>
+<div id="simulate-with-simeps" class="section level3">
+<h3>Simulate with <code>simeps</code></h3>
+<pre class="r"><code>system.time({
+  out &lt;- mod %&gt;% ev(amt=100) %&gt;% mrgsim(end=48, param=list(FLAG=1))
+  sum &lt;- summary(out)
+})</code></pre>
+<pre><code>.    user  system elapsed 
+.   0.009   0.000   0.009</code></pre>
+<pre class="r"><code>print(sum)</code></pre>
+<pre><code>.        ID         time            CENT              CP         
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.2368  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 2.5009  
+.  Median :1   Median :23.50   Median : 29.38   Median : 5.9579  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 6.5570  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.: 8.4263  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :22.9003</code></pre>
+<p>Better … all concentrations are positive.</p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,76 @@
+---
+title: "Simulation from PK/PD and QSP models in R"
+type: page
+---
+
+## About
+`mrgsolve` is an `R` package designed to facilitate simulation from hierarchical, ordinary
+differential equation (ODE) based models typically employed in drug development.
+The modeler creates a model specification file consisting of `R` and `C++` code that
+is parsed, compiled, and dynamically loaded into the `R` session. Input data are
+passed in and simulated data are returned as `R` objects, so disk access is never
+required during the simulation cycle after compiling. Differential equations
+are solved with the 'DLSODA' routine in 'ODEPACK' [A. C. Hindmarsh, "ODEPACK,
+A Systematized Collection of ODE Solvers," in Scientific Computing, R. S.
+Stepleman et al. (eds.), North-Holland, Amsterdam, 1983, pp.55-64.].
+
+
+## `mrgsolve` is free, open-source software
+`mrgsolve` is distributed as a package for `R` and utilizes an ODE-solver from `ODEPACK` which is freely-available in the public domain.  We develop `mrgsolve` on [github](http://www.github.com/metrumresearchgroup/mrgsolve), with input and contributions from the pharmacometrics modeling and simulation community.  We welcome feature requests and 
+bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresearchgroup/mrgsolve/issues). 
+
+## Links
+
+* [GitHub Page](http://www.github.com/metrumresearchgroup/mrgsolve): Browse source code, find useful examples, get help installing, report issues
+* [User Guide](http://mrgsolve.github.io/user_guide): In-depth description and discussion about how `mrgsolve` works, including code block reference
+* [R documentation](http://mrgsolve.github.io/docs): All `mrgsolve` documentation that you would find in the `R` help system
+* [Metrum Research Group](http://metrumrg.com): Our main website
+
+
+
+<hr>
+
+## An example
+
+The following is a simple example to illustrate the basics of how `mrgsolve` works.  You can find more examples and usage vignettes in the links above or in the "Topics" menu in the nav bar at the top of the [mrgsolve.github.io](https://mrgsolve.github.io) main page.
+
+
+
+```{r,echo=FALSE,message=FALSE}
+library(mrgsolve)
+```
+
+First, a model object is created.  As an introduction, we will use a pre-coded model 
+from an internal library.
+```{r,message=FALSE}
+mod <- mread("irm1", modlib())
+```
+
+An overview about this model
+```{r,comment='.'}
+mod
+```
+
+Next, let's create an intervention for the model.  We do this with an event object.
+```{r}
+e <- ev(amt=100, ii=24, addl=3)
+```
+
+Now, we simulate with our model object (`mod`) and the event object (`e`)
+```{r,comment='.'}
+out <- mod %>% ev(e) %>% mrgsim(end=240,delta=0.1)
+out
+```
+
+And plot
+```{r}
+plot(out)
+```
+
+
+The source code for this model:
+```{r,comment=" "}
+cat(mrgsolve:::code(mod),sep="\n")
+```
+
+

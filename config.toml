@@ -1,0 +1,61 @@
+baseurl = "/"
+relativeurls = true
+languageCode = "en-us"
+title = "mrgsolve"
+theme = "hugo-lithium-theme"
+googleAnalytics = "UA-92528248-1"
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+publishDir="../"
+
+[permalinks]
+    post = "/:year/:month/:day/:slug/"
+[[menu.main]]
+  name="Home"
+  url="/"
+  weight=1
+[[menu.main]]
+    name = "GitHub"
+    url = "https://github.com/metrumresearchgroup/mrgsolve"
+    weight=3
+[[menu.main]]
+  name="User Guide"
+  url="https://mrgsolve.github.io/user_guide"
+  weight=4
+[[menu.main]]
+  name="R docs"
+  url="https://mrgsolve.github.io/docs"
+  weight=5
+[[menu.main]]
+  name="Blog"
+  url="/post/"
+  weight=2
+[[menu.main]]
+  name="Help Topics"
+  url="/topic/"
+  weight=2.5
+ 
+ [[params.navlinks]]
+   name="foo"
+   url="/topic/"
+ 
+[taxonimies]
+tag="tags"
+category="categories"
+series="series"
+  
+[params]
+    description = "Simulation from PKPD models in R."
+
+    # options for highlight.js (version, additional languages, and theme)
+    highlightjsVersion = "9.9.0"
+    highlightjsLang = ["r", "yaml"]
+    highlightjsTheme = "github"
+
+    [params.logo]
+    url = "mrgsolve.png"
+    width = 400
+    height = 200
+    alt = "Logo"
+
+   
