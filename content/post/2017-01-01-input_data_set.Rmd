@@ -9,7 +9,7 @@ tags: "data_set"
 ```{r,echo=FALSE,message=FALSE}
 library(mrgsolve)
 library(dplyr)
-knitr::opts_chunk$set(comment='.')
+knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE,fig.align=TRUE)
 ```
 
 

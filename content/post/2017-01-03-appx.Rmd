@@ -29,7 +29,7 @@ library(ggplot2)
 
 ```{r,echo=FALSE}
 library(knitr)
-opts_chunk$set(fig.path="img/covset-",comment='.')
+knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE)
 ```
 
 ```{r}

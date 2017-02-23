@@ -26,8 +26,19 @@
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;Design lists help you assign different designs to different groups in a population or specific designs to specific individuals.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
-library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Loading required package: methods&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. mrgsolve: Community Edition&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. www.github.com/metrumresearchgroup/mrgsolve&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+. Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. The following objects are masked from &amp;#39;package:stats&amp;#39;:
+. 
+.     filter, lag&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. The following objects are masked from &amp;#39;package:base&amp;#39;:
+. 
+.     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;assign-designs-to-individuals&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Assign designs to individuals&lt;/h3&gt;
 &lt;p&gt;To illustrate, let’s make a population of 4 individuals, all with different simulation &lt;strong&gt;end&lt;/strong&gt; times.&lt;/p&gt;
@@ -201,7 +212,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 mod %&amp;gt;% 
   mrgsim(data=data) %&amp;gt;% 
   plot(CP~time|factor(ID),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as_data_set&#34; class=&#34;section level3&#34;&gt;
@@ -282,7 +293,7 @@ mod %&amp;gt;%
   data_set(data) %&amp;gt;% 
   mrgsim() %&amp;gt;% 
   plot&lt;/code&gt;&lt;/pre&gt;
-&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as.data.frame.ev&#34; class=&#34;section level3&#34;&gt;
@@ -356,7 +367,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 2  1   48   1 250    1 168    3
 . 3  1   96   1 250    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Or, you can do 100 mg doses on Monday, Wednesday, Friday, and 50 mg doses on Tuesday, Thursday, with drug holiday on weekends&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100,ID=1)
 e2 &amp;lt;- ev(amt=50,ID=1)
@@ -370,7 +381,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 5  1   96   1 100    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And simulate&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The same thing can be accomplished like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- ev_days(e1,days=&amp;quot;m,w,f&amp;quot;,addl=3)
 b &amp;lt;- ev_days(e2,days=&amp;quot;t,th&amp;quot;,addl=3)
@@ -489,22 +500,22 @@ $CAPTURE EBASE
   sum &amp;lt;- summary(out)
 })&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;.    user  system elapsed 
-.   0.012   0.001   0.012&lt;/code&gt;&lt;/pre&gt;
+.   0.013   0.001   0.013&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE            EBASE        
-.  Min.   :  1.00   Min.   :0   Min.   :   6.432   Min.   :-2.7439  
-.  1st Qu.: 25.75   1st Qu.:0   1st Qu.:  37.967   1st Qu.:-0.9685  
-.  Median : 50.50   Median :0   Median :  82.315   Median :-0.1946  
-.  Mean   : 50.50   Mean   :0   Mean   : 144.373   Mean   :-0.2315  
-.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.: 149.168   3rd Qu.: 0.3997  
-.  Max.   :100.00   Max.   :0   Max.   :1845.822   Max.   : 2.9155  
-.       BASE         
-.  Min.   :   6.432  
-.  1st Qu.:  37.967  
-.  Median :  82.315  
-.  Mean   : 144.373  
-.  3rd Qu.: 149.168  
-.  Max.   :1845.822&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE          EBASE         
+.  Min.   :  1.00   Min.   :0   Min.   : 10.30   Min.   :-2.27292  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 54.54   1st Qu.:-0.60646  
+.  Median : 50.50   Median :0   Median :106.82   Median : 0.06598  
+.  Mean   : 50.50   Mean   :0   Mean   :167.25   Mean   : 0.05014  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:203.87   3rd Qu.: 0.71229  
+.  Max.   :100.00   Max.   :0   Max.   :984.94   Max.   : 2.28741  
+.       BASE       
+.  Min.   : 10.30  
+.  1st Qu.: 54.54  
+.  Median :106.82  
+.  Mean   :167.25  
+.  3rd Qu.:203.87  
+.  Max.   :984.94&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When we simulate with &lt;code&gt;FLAG=0&lt;/code&gt;, the &lt;code&gt;simeta&lt;/code&gt; code &lt;strong&gt;isn’t&lt;/strong&gt; called and we &lt;code&gt;BASE&lt;/code&gt; values all over the place.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;simulate-with-simeta&#34; class=&#34;section level3&#34;&gt;
@@ -516,20 +527,20 @@ $CAPTURE EBASE
 &lt;pre&gt;&lt;code&gt;.    user  system elapsed 
 .   0.007   0.000   0.007&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE          EBASE          
-.  Min.   :  1.00   Min.   :0   Min.   : 80.46   Min.   :-0.217460  
-.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 90.96   1st Qu.:-0.094753  
-.  Median : 50.50   Median :0   Median : 99.07   Median :-0.009351  
-.  Mean   : 50.50   Mean   :0   Mean   : 99.80   Mean   :-0.007820  
-.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:109.16   3rd Qu.: 0.087634  
-.  Max.   :100.00   Max.   :0   Max.   :119.98   Max.   : 0.182169  
+&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE          EBASE         
+.  Min.   :  1.00   Min.   :0   Min.   : 80.02   Min.   :-0.22291  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 89.18   1st Qu.:-0.11453  
+.  Median : 50.50   Median :0   Median : 97.88   Median :-0.02140  
+.  Mean   : 50.50   Mean   :0   Mean   : 98.24   Mean   :-0.02388  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:107.60   3rd Qu.: 0.07326  
+.  Max.   :100.00   Max.   :0   Max.   :117.98   Max.   : 0.16533  
 .       BASE       
-.  Min.   : 80.46  
-.  1st Qu.: 90.96  
-.  Median : 99.07  
-.  Mean   : 99.80  
-.  3rd Qu.:109.16  
-.  Max.   :119.98&lt;/code&gt;&lt;/pre&gt;
+.  Min.   : 80.02  
+.  1st Qu.: 89.18  
+.  Median : 97.88  
+.  Mean   : 98.24  
+.  3rd Qu.:107.60  
+.  Max.   :117.98&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;When we simulate with &lt;code&gt;FLAG=1&lt;/code&gt;, the &lt;code&gt;simeta&lt;/code&gt; code &lt;strong&gt;is&lt;/strong&gt; called and we &lt;code&gt;BASE&lt;/code&gt; values within the specified bounds.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -560,6 +571,8 @@ while(CP &amp;lt; 0 &amp;amp;&amp;amp; FLAG &amp;gt; 0) {
 
 &amp;#39;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mcode(&amp;quot;simeps&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Compiling simeps ...&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. done.&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;simulate-without-simeps&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Simulate without &lt;code&gt;simeps&lt;/code&gt;&lt;/h3&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system.time({
@@ -567,15 +580,15 @@ while(CP &amp;lt; 0 &amp;amp;&amp;amp; FLAG &amp;gt; 0) {
   sum &amp;lt;- summary(out)
 })&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;.    user  system elapsed 
-.   0.010   0.001   0.010&lt;/code&gt;&lt;/pre&gt;
+.    0.01    0.00    0.01&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;.        ID         time            CENT              CP         
-.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-19.545  
-.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -0.926  
-.  Median :1   Median :23.50   Median : 29.38   Median :  3.926  
-.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   :  3.277  
-.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  8.341  
-.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 16.640&lt;/code&gt;&lt;/pre&gt;
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-11.505  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -4.454  
+.  Median :1   Median :23.50   Median : 29.38   Median :  1.248  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   :  1.545  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  5.773  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 24.436&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Negative&lt;/strong&gt; concentrations are simulated when we &lt;strong&gt;don’t&lt;/strong&gt; call the &lt;code&gt;simeps&lt;/code&gt; loop.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;simulate-with-simeps&#34; class=&#34;section level3&#34;&gt;
@@ -585,15 +598,15 @@ while(CP &amp;lt; 0 &amp;amp;&amp;amp; FLAG &amp;gt; 0) {
   sum &amp;lt;- summary(out)
 })&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;.    user  system elapsed 
-.   0.009   0.000   0.010&lt;/code&gt;&lt;/pre&gt;
+.   0.009   0.000   0.009&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.        ID         time            CENT              CP          
-.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.03417  
-.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 3.51124  
-.  Median :1   Median :23.50   Median : 29.38   Median : 6.13162  
-.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 6.64506  
-.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.: 9.67835  
-.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :14.02558&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID         time            CENT              CP         
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.1492  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 3.4201  
+.  Median :1   Median :23.50   Median : 29.38   Median : 6.5715  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 6.9808  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.: 9.6578  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :18.0430&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Better … all concentrations are positive.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
