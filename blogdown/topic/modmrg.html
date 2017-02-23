@@ -3,8 +3,15 @@ title: Access Models in the Internal Library
 date:  2017-02-23T10:13:36
 ---
 
+<!-- BLOGDOWN-HEAD -->
 
 
+
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+
+<!-- /BLOGDOWN-BODY-BEFORE -->
 
 <pre class="r"><code>library(mrgsolve)</code></pre>
 <div id="pk-model" class="section level3">
@@ -16,7 +23,7 @@ mod %&gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&gt;%
   mrgsim(end=320) %&gt;% 
   plot(CP~.)</code></pre>
-<p><img src="figures/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="#####content/topic/modmrg_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>see(mod)</code></pre>
 <pre><code>. 
 . Model file:  pk2cmt.cpp 
@@ -102,7 +109,7 @@ out &lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))</code></pre>
-<p><img src="figures/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="#####content/topic/modmrg_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="pkpd-model" class="section level3">
 <h3>PK/PD model</h3>
@@ -163,7 +170,7 @@ see(mod)</code></pre>
 .  CP : Plasma concentration (mass/volume)</code></pre>
 <pre class="r"><code>mod %&gt;% ev(amt=700,time=50) %&gt;% param(n=1.5,KOUT=0.02) %&gt;%
   mrgsim(end=480) %&gt;% plot(CP+RESP~.)</code></pre>
-<p><img src="figures/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="#####content/topic/modmrg_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="population-pk-model" class="section level3">
 <h3>Population PK model</h3>
@@ -172,5 +179,5 @@ see(mod)</code></pre>
   ev(amt=100) %&gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&gt;%
   plot(DV+ECL~.)</code></pre>
-<p><img src="figures/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="#####content/topic/modmrg_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>

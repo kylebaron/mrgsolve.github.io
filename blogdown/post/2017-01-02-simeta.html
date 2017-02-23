@@ -6,7 +6,13 @@ output:
       toc: true
 ---
 
+<!-- BLOGDOWN-HEAD -->
 
+
+
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
 
 <div id="TOC">
 <ul>
@@ -20,6 +26,7 @@ output:
 </ul></li>
 </ul>
 </div>
+<!-- /BLOGDOWN-BODY-BEFORE -->
 
 <p><BR></p>
 <pre class="r"><code>library(mrgsolve)</code></pre>
@@ -75,20 +82,20 @@ $CAPTURE EBASE
 <pre><code>.    user  system elapsed 
 .   0.012   0.001   0.012</code></pre>
 <pre class="r"><code>print(sum)</code></pre>
-<pre><code>.        ID              time      RESPONSE           EBASE         
-.  Min.   :  1.00   Min.   :0   Min.   :  1.646   Min.   :-4.10670  
-.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 54.678   1st Qu.:-0.60371  
-.  Median : 50.50   Median :0   Median :107.812   Median : 0.07521  
-.  Mean   : 50.50   Mean   :0   Mean   :162.154   Mean   : 0.01893  
-.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:193.488   3rd Qu.: 0.66004  
-.  Max.   :100.00   Max.   :0   Max.   :884.059   Max.   : 2.17935  
-.       BASE        
-.  Min.   :  1.646  
-.  1st Qu.: 54.678  
-.  Median :107.812  
-.  Mean   :162.154  
-.  3rd Qu.:193.488  
-.  Max.   :884.059</code></pre>
+<pre><code>.        ID              time      RESPONSE            EBASE        
+.  Min.   :  1.00   Min.   :0   Min.   :   6.432   Min.   :-2.7439  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.:  37.967   1st Qu.:-0.9685  
+.  Median : 50.50   Median :0   Median :  82.315   Median :-0.1946  
+.  Mean   : 50.50   Mean   :0   Mean   : 144.373   Mean   :-0.2315  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.: 149.168   3rd Qu.: 0.3997  
+.  Max.   :100.00   Max.   :0   Max.   :1845.822   Max.   : 2.9155  
+.       BASE         
+.  Min.   :   6.432  
+.  1st Qu.:  37.967  
+.  Median :  82.315  
+.  Mean   : 144.373  
+.  3rd Qu.: 149.168  
+.  Max.   :1845.822</code></pre>
 <p>When we simulate with <code>FLAG=0</code>, the <code>simeta</code> code <strong>isn’t</strong> called and we <code>BASE</code> values all over the place.</p>
 </div>
 <div id="simulate-with-simeta" class="section level3">
@@ -98,22 +105,22 @@ $CAPTURE EBASE
   sum &lt;- summary(out)
 })</code></pre>
 <pre><code>.    user  system elapsed 
-.   0.008   0.000   0.007</code></pre>
+.   0.007   0.000   0.007</code></pre>
 <pre class="r"><code>print(sum)</code></pre>
-<pre><code>.        ID              time      RESPONSE          EBASE         
-.  Min.   :  1.00   Min.   :0   Min.   : 80.14   Min.   :-0.22138  
-.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 90.04   1st Qu.:-0.10495  
-.  Median : 50.50   Median :0   Median : 98.66   Median :-0.01352  
-.  Mean   : 50.50   Mean   :0   Mean   : 99.22   Mean   :-0.01526  
-.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:109.01   3rd Qu.: 0.08622  
-.  Max.   :100.00   Max.   :0   Max.   :119.91   Max.   : 0.18160  
+<pre><code>.        ID              time      RESPONSE          EBASE          
+.  Min.   :  1.00   Min.   :0   Min.   : 80.46   Min.   :-0.217460  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 90.96   1st Qu.:-0.094753  
+.  Median : 50.50   Median :0   Median : 99.07   Median :-0.009351  
+.  Mean   : 50.50   Mean   :0   Mean   : 99.80   Mean   :-0.007820  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:109.16   3rd Qu.: 0.087634  
+.  Max.   :100.00   Max.   :0   Max.   :119.98   Max.   : 0.182169  
 .       BASE       
-.  Min.   : 80.14  
-.  1st Qu.: 90.04  
-.  Median : 98.66  
-.  Mean   : 99.22  
-.  3rd Qu.:109.01  
-.  Max.   :119.91</code></pre>
+.  Min.   : 80.46  
+.  1st Qu.: 90.96  
+.  Median : 99.07  
+.  Mean   : 99.80  
+.  3rd Qu.:109.16  
+.  Max.   :119.98</code></pre>
 <p>When we simulate with <code>FLAG=1</code>, the <code>simeta</code> code <strong>is</strong> called and we <code>BASE</code> values within the specified bounds.</p>
 </div>
 </div>
@@ -151,15 +158,15 @@ while(CP &lt; 0 &amp;&amp; FLAG &gt; 0) {
   sum &lt;- summary(out)
 })</code></pre>
 <pre><code>.    user  system elapsed 
-.   0.011   0.000   0.011</code></pre>
+.   0.010   0.001   0.010</code></pre>
 <pre class="r"><code>print(sum)</code></pre>
 <pre><code>.        ID         time            CENT              CP         
-.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-14.066  
-.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -2.000  
-.  Median :1   Median :23.50   Median : 29.38   Median :  2.481  
-.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   :  1.875  
-.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  4.768  
-.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 16.818</code></pre>
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-19.545  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -0.926  
+.  Median :1   Median :23.50   Median : 29.38   Median :  3.926  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   :  3.277  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  8.341  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 16.640</code></pre>
 <p><strong>Negative</strong> concentrations are simulated when we <strong>don’t</strong> call the <code>simeps</code> loop.</p>
 </div>
 <div id="simulate-with-simeps" class="section level3">
@@ -169,15 +176,15 @@ while(CP &lt; 0 &amp;&amp; FLAG &gt; 0) {
   sum &lt;- summary(out)
 })</code></pre>
 <pre><code>.    user  system elapsed 
-.    0.01    0.00    0.01</code></pre>
+.   0.009   0.000   0.010</code></pre>
 <pre class="r"><code>print(sum)</code></pre>
-<pre><code>.        ID         time            CENT              CP         
-.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.3048  
-.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 3.5145  
-.  Median :1   Median :23.50   Median : 29.38   Median : 6.4686  
-.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 7.5931  
-.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:10.2184  
-.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :17.6316</code></pre>
+<pre><code>.        ID         time            CENT              CP          
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.03417  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 3.51124  
+.  Median :1   Median :23.50   Median : 29.38   Median : 6.13162  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 6.64506  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.: 9.67835  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :14.02558</code></pre>
 <p>Better … all concentrations are positive.</p>
 </div>
 </div>

@@ -4,8 +4,15 @@ title: "Flexible, heterogeneous simulation designs in a population"
 date: 2017-01-05T13:09:02
 ---
 
+<!-- BLOGDOWN-HEAD -->
 
 
+
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+
+<!-- /BLOGDOWN-BODY-BEFORE -->
 
 <p>Design lists help you assign different designs to different groups in a population or specific designs to specific individuals.</p>
 <pre class="r"><code>library(mrgsolve)
@@ -62,7 +69,7 @@ idata</code></pre>
   mrgsim</code></pre>
 <p>We see that ID 1 has a 24 hour end time, ID 2 has 48 hour simulation time, ID 3 with 72 hour simulation time, and ID 4 96 hour simulation time as reflected in the list of the designs.</p>
 <pre class="r"><code>plot(out, CP~time|ID)</code></pre>
-<p><img src="figures/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p><strong>Note</strong>: Check the arguments to <code>design</code> (<code>?design</code>). There is a <code>descol</code> argument that is required. <code>descol</code> in this function refers to a column in <code>idata_set</code> to be used as the grouping variable to assign the sampling design. <code>as_deslist</code> also had a <code>descol</code> argument that referred to a column in the input data frame for that function. We don’t need to pass <code>descol</code> to <code>design()</code> because we created the design list with <code>as_deslist</code>: <code>design()</code> reads <code>descol</code> from the attribute. We don’t <strong>have</strong> to use <code>as_deslist</code> to create the design list. It could be just a plan old <code>R</code> list created by you with <code>tgrid</code> objects. In that case, you must state what <code>descol</code> is when you call <code>design()</code>.<br />
 And it can’t be emphasized enough here that you <strong>MUST</strong> use an <code>idata_set</code> for this to work and <code>idata_set</code> must contain a valid <code>descol</code>.</p>
 </div>
@@ -99,9 +106,9 @@ out &lt;-
   mrgsim(carry.out=&quot;ARM&quot;)
 
 plot(out, CP~time|factor(ARM))</code></pre>
-<p><img src="figures/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <pre class="r"><code>plot(out, CP~time|factor(ID))</code></pre>
-<p><img src="figures/unnamed-chunk-10-2.png" width="672" /></p>
+<p><img src="#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
 </div>
 <div id="list-cols-and-additional-times" class="section level3">
 <h3><code>list-cols</code> and <code>additional</code> times</h3>
@@ -129,6 +136,6 @@ des</code></pre>
   design(as_deslist(des)) %&gt;% 
   mrgsim %&gt;% 
   plot(CP~time|factor(ID), type=&#39;b&#39;)</code></pre>
-<p><img src="figures/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>Ok … not the most lovely-looking result we’ve seen before, but maybe that’s just what you needed in this simulation.</p>
 </div>
