@@ -10,7 +10,7 @@
     <atom:link href="/topic/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Hard to find features</title>
+      <title>Quick hit feature demos</title>
       <link>/topic/quick/</link>
       <pubDate>Thu, 23 Feb 2017 16:49:01 -0600</pubDate>
       
@@ -25,6 +25,7 @@
 
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#operator-for-model-object-gets-the-parameter-value&#34;&gt;&lt;code&gt;$&lt;/code&gt; operator for model object gets the parameter value&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#zero-all-random-effect-variances-on-the-fly&#34;&gt;Zero all random effect variances on the fly&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#plot-formulae&#34;&gt;Plot formulae&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -34,6 +35,29 @@
 &lt;p&gt;These are all miscellaneous features that may be difficult to find in other documentation.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
 library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;operator-for-model-object-gets-the-parameter-value&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;$&lt;/code&gt; operator for model object gets the parameter value&lt;/h1&gt;
+&lt;p&gt;If our model parameters are&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house()
+param(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+.  Model parameters (N=13):
+.  name value . name  value
+.  CL   1     | SEXCL 0.7  
+.  F1   1     | SEXVC 0.85 
+.  IC50 10    | VC    20   
+.  KA   1.2   | WT    70   
+.  KIN  100   | WTCL  0.75 
+.  KOUT 2     | WTVC  1    
+.  SEX  0     | .     .&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we can pick a parameter value with&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod$CL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. CL 
+.  1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod$WT&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. WT 
+. 70&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div id=&#34;zero-all-random-effect-variances-on-the-fly&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Zero all random effect variances on the fly&lt;/h1&gt;
 &lt;p&gt;If your model has random effects, you can easily and temporarily zero them out.&lt;/p&gt;
@@ -56,10 +80,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default, both &lt;code&gt;OMEGA&lt;/code&gt; and &lt;code&gt;SIGMA&lt;/code&gt; are zeroed. Check the arguments for &lt;code&gt;zero_re&lt;/code&gt; to see how to selectively zero &lt;code&gt;OMEGA&lt;/code&gt; or &lt;code&gt;SIGMA&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Compare the population output&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;with&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% zero_re %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plot-formulae&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Plot formulae&lt;/h1&gt;
@@ -67,10 +91,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% events(ev(amt=100))
 
 mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot can be customized with a formula selecting variables to plot. Other arguments to &lt;code&gt;lattice::xyplot&lt;/code&gt; can be passed as well.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot(CP+RESP ~ time, lty=2, col=&amp;quot;firebrick&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -912,6 +936,7 @@ events&lt;/code&gt;&lt;/pre&gt;
 
 &lt;div id=&#34;extended-examples&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Extended examples&lt;/h2&gt;
+&lt;p&gt;A complete listing of tagged content can be found &lt;a href=&#34;../tax/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;quick&#34;&gt;Brief feature demonstrations&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;map_bayes&#34;&gt;Generate MAP Bayes estimates&lt;/a&gt;&lt;/li&gt;

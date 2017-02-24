@@ -11,7 +11,7 @@ designs to specific individuals.
 
 
 ```{r,echo=FALSE}
-knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE)
+knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE,message=FALSE)
 ```
 
 ```{r}

@@ -26,19 +26,8 @@
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;Design lists help you assign different designs to different groups in a population or specific designs to specific individuals.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Loading required package: methods&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. mrgsolve: Community Edition&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. www.github.com/metrumresearchgroup/mrgsolve&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. 
-. Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. The following objects are masked from &amp;#39;package:stats&amp;#39;:
-. 
-.     filter, lag&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. The following objects are masked from &amp;#39;package:base&amp;#39;:
-. 
-.     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;assign-designs-to-individuals&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Assign designs to individuals&lt;/h3&gt;
 &lt;p&gt;To illustrate, let’s make a population of 4 individuals, all with different simulation &lt;strong&gt;end&lt;/strong&gt; times.&lt;/p&gt;

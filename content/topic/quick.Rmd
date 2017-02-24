@@ -1,6 +1,6 @@
 ---
 date: 2017-02-23T16:49:01-06:00
-title: Hard to find features
+title: Quick hit feature demos
 output: 
   blogdown::html_page:
     toc: true
@@ -17,6 +17,24 @@ knitr::opts_chunk$set(message=FALSE,comment='.',cache=TRUE,autodeps=TRUE)
 library(mrgsolve)
 library(dplyr)
 ```
+
+
+# `$` operator for model object gets the parameter value
+
+If our model parameters are
+```{r}
+mod <- mrgsolve:::house()
+param(mod)
+```
+
+we can pick a parameter value with
+```{r}
+mod$CL
+
+mod$WT
+```
+
+
 
 
 # Zero all random effect variances on the fly

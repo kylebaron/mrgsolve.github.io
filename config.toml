@@ -36,11 +36,11 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 [[params.navlinks]]
   name="foo"
   url="/topic/"
- 
+
 [taxonimies]
 tag="tags"
-category="categories"
-series="series"
+categories="categories"
+
   
 [params]
   description = "Simulation from PKPD models in R."
