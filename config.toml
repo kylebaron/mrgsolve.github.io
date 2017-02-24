@@ -18,21 +18,13 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
   url = "https://github.com/metrumresearchgroup/mrgsolve"
   weight=3
 [[menu.main]]
-  name="User Guide"
-  url="https://mrgsolve.github.io/user_guide"
+  name="Documentation"
+  url="/index.html#Documentation"
   weight=4
-[[menu.main]]
-  name="R docs"
-  url="https://mrgsolve.github.io/docs"
-  weight=5
 [[menu.main]]
   name="Blog"
   url="/post/"
   weight=2
-[[menu.main]]
-  name="Help Topics"
-  url="/topic/"
-  weight=2.5
 [[params.navlinks]]
   name="foo"
   url="/topic/"

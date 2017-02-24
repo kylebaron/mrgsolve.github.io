@@ -21,13 +21,16 @@ required during the simulation cycle after compiling.
 `mrgsolve` is distributed as a package for `R` and   <img src="/images/mrgsolve_sticker_812418_1.png" width="100px" align="right"> utilizes an ODE-solver from `ODEPACK` which is freely-available in the public domain.  We develop `mrgsolve` on [github](http://www.github.com/metrumresearchgroup/mrgsolve), with input and contributions from the pharmacometrics modeling and simulation community.  We welcome feature requests and 
 bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresearchgroup/mrgsolve/issues). 
 
-## Links
-
-* [GitHub Page](http://www.github.com/metrumresearchgroup/mrgsolve): Browse source code, find useful examples, get help installing, report issues
+## Documentation
 * [User Guide](http://mrgsolve.github.io/user_guide): In-depth description and discussion about how `mrgsolve` works, including code block reference
 * [R documentation](http://mrgsolve.github.io/docs): All `mrgsolve` documentation that you would find in the `R` help system
+* [Help topics](/topic/): Some extended examples illustrating `mrgsolve` simulation workflow
 * [Quick hit demos](/topic/quick): Features that you might have a hard time finding in other documentation
-* [Site navagation](/tax/): A listing of all tagged content on this site, including blog posts and other help / demonstration content.
+
+## Links and Resources
+* [GitHub Page](http://www.github.com/metrumresearchgroup/mrgsolve): Browse source code, find useful examples, get help installing, report issues
+* [Site navagation](/tax/): A listing of all tagged content on this site, including blog posts and
+other help / demonstration content
 * [Metrum Research Group](http://metrumrg.com): Our main website
 
 
