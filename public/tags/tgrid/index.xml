@@ -79,7 +79,7 @@ idata&lt;/code&gt;&lt;/pre&gt;
   mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We see that ID 1 has a 24 hour end time, ID 2 has 48 hour simulation time, ID 3 with 72 hour simulation time, and ID 4 96 hour simulation time as reflected in the list of the designs.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|ID)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Check the arguments to &lt;code&gt;design&lt;/code&gt; (&lt;code&gt;?design&lt;/code&gt;). There is a &lt;code&gt;descol&lt;/code&gt; argument that is required. &lt;code&gt;descol&lt;/code&gt; in this function refers to a column in &lt;code&gt;idata_set&lt;/code&gt; to be used as the grouping variable to assign the sampling design. &lt;code&gt;as_deslist&lt;/code&gt; also had a &lt;code&gt;descol&lt;/code&gt; argument that referred to a column in the input data frame for that function. We don’t need to pass &lt;code&gt;descol&lt;/code&gt; to &lt;code&gt;design()&lt;/code&gt; because we created the design list with &lt;code&gt;as_deslist&lt;/code&gt;: &lt;code&gt;design()&lt;/code&gt; reads &lt;code&gt;descol&lt;/code&gt; from the attribute. We don’t &lt;strong&gt;have&lt;/strong&gt; to use &lt;code&gt;as_deslist&lt;/code&gt; to create the design list. It could be just a plan old &lt;code&gt;R&lt;/code&gt; list created by you with &lt;code&gt;tgrid&lt;/code&gt; objects. In that case, you must state what &lt;code&gt;descol&lt;/code&gt; is when you call &lt;code&gt;design()&lt;/code&gt;.&lt;br /&gt;
 And it can’t be emphasized enough here that you &lt;strong&gt;MUST&lt;/strong&gt; use an &lt;code&gt;idata_set&lt;/code&gt; for this to work and &lt;code&gt;idata_set&lt;/code&gt; must contain a valid &lt;code&gt;descol&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -116,9 +116,9 @@ out &amp;lt;-
   mrgsim(carry.out=&amp;quot;ARM&amp;quot;)
 
 plot(out, CP~time|factor(ARM))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(ID))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-10-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;list-cols-and-additional-times&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;code&gt;list-cols&lt;/code&gt; and &lt;code&gt;additional&lt;/code&gt; times&lt;/h3&gt;
@@ -146,7 +146,7 @@ des&lt;/code&gt;&lt;/pre&gt;
   design(as_deslist(des)) %&amp;gt;% 
   mrgsim %&amp;gt;% 
   plot(CP~time|factor(ID), type=&amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Ok … not the most lovely-looking result we’ve seen before, but maybe that’s just what you needed in this simulation.&lt;/p&gt;
 &lt;/div&gt;
 </description>

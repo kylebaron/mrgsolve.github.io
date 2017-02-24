@@ -57,7 +57,13 @@
   </url>
   
   <url>
+    <loc>/tags/estimation/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/events/</loc>
+    <lastmod>2017-02-23T08:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -78,8 +84,20 @@
   </url>
   
   <url>
+    <loc>/tags/pd-model/</loc>
+    <lastmod>2017-02-23T10:13:36+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/plugin/</loc>
     <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/population-simulation/</loc>
+    <lastmod>2017-01-05T13:09:02+00:00</lastmod>
     <priority>0</priority>
   </url>
   
