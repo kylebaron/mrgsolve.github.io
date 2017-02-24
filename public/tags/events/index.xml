@@ -49,13 +49,13 @@ library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 . 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
   ev(amt=100, ii=24, addl=6) %&amp;gt;%
   mrgsim %&amp;gt;% 
   plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Event expectations&lt;/h1&gt;
@@ -113,7 +113,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
