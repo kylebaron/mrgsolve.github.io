@@ -14,9 +14,9 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
   url="/"
   weight=1
 [[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/metrumresearchgroup/mrgsolve"
-    weight=3
+  name = "GitHub"
+  url = "https://github.com/metrumresearchgroup/mrgsolve"
+  weight=3
 [[menu.main]]
   name="User Guide"
   url="https://mrgsolve.github.io/user_guide"
@@ -33,10 +33,9 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
   name="Help Topics"
   url="/topic/"
   weight=2.5
- 
- [[params.navlinks]]
-   name="foo"
-   url="/topic/"
+[[params.navlinks]]
+  name="foo"
+  url="/topic/"
  
 [taxonimies]
 tag="tags"
@@ -44,17 +43,16 @@ category="categories"
 series="series"
   
 [params]
-    description = "Simulation from PKPD models in R."
+  description = "Simulation from PKPD models in R."
+  # options for highlight.js (version, additional languages, and theme)
+  highlightjsVersion = "9.9.0"
+  highlightjsLang = ["r", "yaml"]
+  highlightjsTheme = "github"
 
-    # options for highlight.js (version, additional languages, and theme)
-    highlightjsVersion = "9.9.0"
-    highlightjsLang = ["r", "yaml"]
-    highlightjsTheme = "github"
-
-    [params.logo]
-    url = "mrgsolve.png"
-    width = 400
-    height = 200
-    alt = "Logo"
+  [params.logo]
+  url = "mrgsolve.png"
+  width = 400
+  height = 200
+  alt = "Logo"
 
    

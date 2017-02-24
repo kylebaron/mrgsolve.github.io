@@ -1615,66 +1615,6 @@ approx(e$x,e$y, xout=13)&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>
-
-&lt;h2 id=&#34;about&#34;&gt;About&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is an &lt;code&gt;R&lt;/code&gt; package designed to facilitate simulation from hierarchical, ordinary
-differential equation (ODE) based models typically employed in drug development.
-The modeler creates a model specification file consisting of &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;C++&lt;/code&gt; code that
-is parsed, compiled, and dynamically loaded into the &lt;code&gt;R&lt;/code&gt; session. Input data are
-passed in and simulated data are returned as &lt;code&gt;R&lt;/code&gt; objects, so disk access is never
-required during the simulation cycle after compiling. Differential equations
-are solved with the &amp;lsquo;DLSODA&amp;rsquo; routine in &amp;lsquo;ODEPACK&amp;rsquo; [A. C. Hindmarsh, &amp;ldquo;ODEPACK,
-A Systematized Collection of ODE Solvers,&amp;rdquo; in Scientific Computing, R. S.
-Stepleman et al. (eds.), North-Holland, Amsterdam, 1983, pp.55-64.].&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h2 id=&#34;mrgsolve-is-free-open-source-software&#34;&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is free, open-source software&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is distributed as a package for &lt;code&gt;R&lt;/code&gt; and utilizes an ODE-solver from &lt;code&gt;ODEPACK&lt;/code&gt; which is freely-available in the public domain.  We develop &lt;code&gt;mrgsolve&lt;/code&gt; on &lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve&#34;&gt;github&lt;/a&gt;, with input and contributions from the pharmacometrics modeling and simulation community.  We welcome feature requests and
-bug reports on the GitHub site &lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve/issues&#34;&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
-
-&lt;hr&gt;
-
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve&#34;&gt;GitHub Page&lt;/a&gt;: Browse source code, find useful examples, get help installing, report issues&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://mrgsolve.github.io/user_guide&#34;&gt;User Guide&lt;/a&gt;: In-depth description and discussion about how &lt;code&gt;mrgsolve&lt;/code&gt; works, including code block reference&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://mrgsolve.github.io/docs&#34;&gt;R documentation&lt;/a&gt;: All &lt;code&gt;mrgsolve&lt;/code&gt; documentation that you would find in the &lt;code&gt;R&lt;/code&gt; help system&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://metrumrg.com&#34;&gt;Metrum Research Group&lt;/a&gt;: Our main website&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-
-
-
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-
-
-</description>
-    </item>
-    
-    <item>
       <title>Generate MAP Bayes Parameter Estimates</title>
       <link>/topic/map_bayes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

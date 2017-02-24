@@ -41,19 +41,6 @@
   </url>
   
   <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/data_set/</loc>
     <lastmod>2017-01-01T13:09:13-06:00</lastmod>
     <priority>0</priority>
