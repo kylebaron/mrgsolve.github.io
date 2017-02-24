@@ -88,7 +88,8 @@ ga('send', 'pageview');
 
 
 
-<pre class="r"><code>library(mrgsolve)</code></pre>
+<pre class="r"><code>library(mrgsolve)
+library(dplyr)</code></pre>
 <div id="pk-model" class="section level3">
 <h3>PK model</h3>
 <p>Here, we name the name of the model we want from the library (<code>pk2cmt</code>) and we point <code>mread</code> to the <code>project</code> directory where the internal model library is stored. This internal library is located wherever <code>mrgsolve</code> is installed. The install location for <code>mrgsolve</code> is not obvious, so we provide a function (<code>modlib</code>) that returns the currect path to the model library.</p>

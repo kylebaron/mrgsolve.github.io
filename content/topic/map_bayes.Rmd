@@ -3,21 +3,21 @@ title: "Generate MAP Bayes Parameter Estimates"
 author: 20170223T13:30:33
 ---
 
+```{r,echo=FALSE}
+library(knitr)
+knitr::opts_chunk$set(comment='.',fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
+```
+
 ```{r,message=FALSE}
 library(ggplot2)
 library(mrgsolve)
 library(minqa)
 library(dplyr)
 library(magrittr)
-
 ```
 
 
-```{r,echo=FALSE}
-#+ echo=FALSE
-library(knitr)
-opts_chunk$set(comment='.',fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
-```
+
 
 # About
 

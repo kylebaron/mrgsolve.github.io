@@ -13,13 +13,12 @@ output:
  
  
  
- 
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE,fig.align=TRUE)
+```
 ```{r,message=FALSE}
 library(mrgsolve)
-```
-
-```{r,echo=FALSE}
-knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE)
+library(dplyr)
 ```
 
 

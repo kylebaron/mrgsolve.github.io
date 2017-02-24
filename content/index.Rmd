@@ -34,14 +34,14 @@ bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresea
 
 The following is a simple example to illustrate the basics of how `mrgsolve` works.  You can find more examples and usage vignettes in the links above or in the "Help Topics" menu in the nav bar at the top of the [mrgsolve.github.io](https://mrgsolve.github.io) main page.
 
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(cache=TRUE,autodep=TRUE,message=FALSE,fig.align="center")
+```
+
 ```{r,message=FALSE}
 library(mrgsolve)
 ```
 
-
-```{r,echo=FALSE,message=FALSE}
-knitr::opts_chunk$set(cache=TRUE,autodep=TRUE,message=FALSE,fig.align="center")
-```
 
 First, a model object is created.  As an introduction, we will use a pre-coded model 
 from an internal library.

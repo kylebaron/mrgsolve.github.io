@@ -19,18 +19,18 @@ why / where this type of extension could be useful.
 
 # Example
 
+```{r,echo=FALSE}
+library(knitr)
+knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE)
+```
+
 ```{r,message=FALSE}
 library(dplyr)
 library(mrgsolve)
 library(magrittr)
 library(ggplot2)
-
 ```
 
-```{r,echo=FALSE}
-library(knitr)
-knitr::opts_chunk$set(comment='.',cache=TRUE, autodep=TRUE)
-```
 
 ```{r}
 code <- '

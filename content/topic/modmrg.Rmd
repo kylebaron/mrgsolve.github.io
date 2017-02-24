@@ -4,7 +4,6 @@ date:  2017-02-23T10:13:36
 ---
 
 ```{r, echo=FALSE}
-
 library(knitr)
 opts_chunk$set(comment='.',message=FALSE,fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
 ```
@@ -12,6 +11,7 @@ opts_chunk$set(comment='.',message=FALSE,fig.align="center",message=FALSE,cache=
 
 ```{r}
 library(mrgsolve)
+library(dplyr)
 ```
 
 

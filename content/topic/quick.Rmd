@@ -13,7 +13,7 @@ These are all miscellaneous features that may be difficult to find in other docu
 knitr::opts_chunk$set(message=FALSE,comment='.',cache=TRUE,autodeps=TRUE)
 ```
 
-```{r}
+```{r,message=FALSE}
 library(mrgsolve)
 library(dplyr)
 ```

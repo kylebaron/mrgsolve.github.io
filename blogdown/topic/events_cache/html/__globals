@@ -11,3 +11,4 @@ unnamed-chunk-10	ev
 unnamed-chunk-11	as_data_set	e1	e2	e3
 unnamed-chunk-12	modlib	mread
 unnamed-chunk-13	%>%	~	data	data_set	mod	mrgsim	plot
+setup2	library

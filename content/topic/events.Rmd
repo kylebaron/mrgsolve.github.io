@@ -2,10 +2,14 @@
 title: "Work with event objects"
 ---
 
+
 ```{r setup, echo=FALSE,message=FALSE}
-library(mrgsolve)
-options(mrgsolve_mread_quiet=TRUE)
 knitr::opts_chunk$set(echo = TRUE,comment='.',fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
+```
+
+```{r setup2}
+library(mrgsolve)
+library(dplyr)
 ```
 
 

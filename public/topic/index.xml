@@ -91,7 +91,8 @@ mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;pk-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;PK model&lt;/h3&gt;
 &lt;p&gt;Here, we name the name of the model we want from the library (&lt;code&gt;pk2cmt&lt;/code&gt;) and we point &lt;code&gt;mread&lt;/code&gt; to the &lt;code&gt;project&lt;/code&gt; directory where the internal model library is stored. This internal library is located wherever &lt;code&gt;mrgsolve&lt;/code&gt; is installed. The install location for &lt;code&gt;mrgsolve&lt;/code&gt; is not obvious, so we provide a function (&lt;code&gt;modlib&lt;/code&gt;) that returns the currect path to the model library.&lt;/p&gt;
@@ -293,6 +294,9 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lattice)
+library(ggplot2)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;load-packages-required-for-the-gallery&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Load packages required for the gallery&lt;/h1&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
@@ -333,9 +337,9 @@ mod&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. 
 . 
 . -------- mrgsolve model object (unix) --------
-.   Project: /private/var/fol...dbsj0x4637ptj4hnd7kg900000gp/T/Rtmp0fjQNV
+.   Project: /private/var/fol...dbsj0x4637ptj4hnd7kg900000gp/T/RtmpKM6RD6
 .   source:        gallery1.cpp
-.   shared object: gallery1-so-11adb49d2b01a 
+.   shared object: gallery1-so-2991a740065 
 . 
 .   compile date:  
 .   Time:          start: 0 end: 24 delta: 0.1
@@ -354,7 +358,7 @@ mod&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% init(GUT=1000) %&amp;gt;% mrgsim(end=72)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Model:  gallery1.cpp 
 . Dim:    721 x 5 
@@ -375,7 +379,7 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=1000, ii=12, addl=15) %&amp;gt;% mrgsim(end=336)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events object was just a simple data set that looks like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dosing &amp;lt;- events(out)
 dosing&lt;/code&gt;&lt;/pre&gt;
@@ -394,7 +398,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 3  3 3000 12    6    1   1    0 3000&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(dose) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=168)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(dose),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-different-bioavability-and-dosing-lag-time&#34; class=&#34;section level1&#34;&gt;
@@ -449,7 +453,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 
 plot(out, CP~time|factor(FORM),group=ALG, 
      scales=&amp;quot;same&amp;quot;, auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-residual-error&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK model with residual error&lt;/h1&gt;
@@ -490,7 +494,7 @@ out &amp;lt;-
 ggplot(data=out, aes(x=time)) + 
   geom_point(aes(y=DV),size=3) + 
   geom_line(aes(y=CP), col=&amp;quot;firebrick&amp;quot;,lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-15-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-continuous-pk&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by continuous PK&lt;/h1&gt;
@@ -535,7 +539,7 @@ out &amp;lt;- mod %&amp;gt;%
   Req(CP,RESPONSE) %&amp;gt;% mrgsim(end=480*2)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-metric-summarizing-exposure&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by metric summarizing exposure&lt;/h1&gt;
@@ -579,7 +583,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% obsonly %&amp;gt;% mrgsim(end=120)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;effect-compartment-model&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Effect compartment model&lt;/h1&gt;
@@ -615,7 +619,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
 &lt;p&gt;Simulate a snigle 200 unit dose&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=200) %&amp;gt;% obsonly %&amp;gt;% mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-21-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Simulate steady state PK/PD under Q12 hour dosing&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
   mod %&amp;gt;% 
@@ -623,7 +627,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
   mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;, end=168)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model-with-covariates-and-iov&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/h1&gt;
@@ -682,7 +686,7 @@ dose&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120, nid=5)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-25-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;$OMEGA&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And check the result&lt;/p&gt;
@@ -708,10 +712,10 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120,nid=5,seed=9765)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;ETAs&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,3))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-29-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,CP~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,1))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Just look at WT with no IIV/IOV&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% drop.re&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
@@ -722,12 +726,12 @@ out %&amp;gt;%
   as.tbl %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
   geom_line(lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-32-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Cmin versus weight&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% subset(time==240) %&amp;gt;%
   ggplot(data=.,aes(x=WT,y=CP)) + 
   geom_line(lwd=1) + geom_point(size=3) + xlab(&amp;quot;Cmin&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-with-dialysis-sessions-3-times-per-week&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK with dialysis sessions 3 times per week&lt;/h1&gt;
@@ -785,13 +789,13 @@ events&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Simulate&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(events) %&amp;gt;%  obsonly %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-42-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK plot with dialysis sessions marked in red&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% as.tbl %&amp;gt;% filter(time &amp;lt;=7*24) %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
   geom_path(data=dial,col=&amp;quot;firebrick&amp;quot;, lwd=6, alpha=0.4)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Warning: Removed 1 rows containing missing values (geom_path).&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-44-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level1&#34;&gt;
@@ -810,44 +814,82 @@ events&lt;/code&gt;&lt;/pre&gt;
 .  tz       America/Chicago             
 .  date     2017-02-23                  
 . 
-.  package       * version     date       source                           
-.  assertthat      0.1         2013-12-06 CRAN (R 3.3.2)                   
-.  backports       1.0.5       2017-01-18 cran (@1.0.5)                    
-.  blogdown        0.0.22      2017-02-22 Github (rstudio/blogdown@54cbcc6)
-.  bookdown        0.3.9       2017-02-22 Github (rstudio/bookdown@a5ad84c)
-.  codetools       0.2-15      2016-10-05 CRAN (R 3.3.0)                   
-.  colorspace      1.3-2       2016-12-14 CRAN (R 3.3.2)                   
-.  DBI             0.5-1       2016-09-10 CRAN (R 3.3.2)                   
-.  devtools        1.12.0.9000 2017-01-08 Github (hadley/devtools@1ce84b0) 
-.  digest          0.6.12      2017-01-27 CRAN (R 3.3.2)                   
-.  dplyr         * 0.5.0       2016-06-24 CRAN (R 3.3.2)                   
-.  evaluate        0.10        2016-10-11 CRAN (R 3.3.0)                   
-.  ggplot2       * 2.2.1       2016-12-30 CRAN (R 3.3.2)                   
-.  gtable          0.2.0       2016-02-26 CRAN (R 3.3.2)                   
-.  htmltools       0.3.5       2016-03-21 CRAN (R 3.3.2)                   
-.  knitr         * 1.15.1      2016-11-22 CRAN (R 3.3.2)                   
-.  labeling        0.3         2014-08-23 CRAN (R 3.3.2)                   
-.  lattice       * 0.20-34     2016-09-06 CRAN (R 3.3.0)                   
-.  lazyeval        0.2.0       2016-06-12 CRAN (R 3.3.2)                   
-.  magrittr      * 1.5         2014-11-22 CRAN (R 3.3.2)                   
-.  memoise         1.0.0       2016-01-29 CRAN (R 3.2.1)                   
-.  mrgsolve      * 0.7.10.9005 2017-02-22 local                            
-.  munsell         0.4.3       2016-02-13 CRAN (R 3.3.2)                   
-.  pkgbuild        0.0.0.9000  2017-01-07 Github (r-pkgs/pkgbuild@65eace0) 
-.  pkgload         0.0.0.9000  2017-01-07 Github (r-pkgs/pkgload@def2b10)  
-.  plyr            1.8.4       2016-06-08 CRAN (R 3.3.2)                   
-.  R6              2.2.0       2016-10-05 CRAN (R 3.3.2)                   
-.  Rcpp            0.12.9      2017-01-14 CRAN (R 3.3.2)                   
-.  RcppArmadillo   0.7.700.0.0 2017-02-08 CRAN (R 3.3.2)                   
-.  rmarkdown       1.3         2016-12-21 CRAN (R 3.3.2)                   
-.  rprojroot       1.2         2017-01-16 CRAN (R 3.3.0)                   
-.  scales          0.4.1       2016-11-09 CRAN (R 3.3.2)                   
-.  stringi         1.1.2       2016-10-01 CRAN (R 3.3.2)                   
-.  stringr         1.2.0       2017-02-18 cran (@1.2.0)                    
-.  tibble          1.2         2016-08-26 CRAN (R 3.3.2)                   
-.  tidyr         * 0.6.1       2017-01-10 CRAN (R 3.3.2)                   
-.  withr           1.0.2       2016-06-20 CRAN (R 3.3.0)                   
-.  yaml            2.1.14      2016-11-12 CRAN (R 3.3.0)&lt;/code&gt;&lt;/pre&gt;
+.  package       * version     date      
+.  assertthat      0.1         2013-12-06
+.  backports       1.0.5       2017-01-18
+.  blogdown        0.0.22      2017-02-22
+.  bookdown        0.3.9       2017-02-22
+.  codetools       0.2-15      2016-10-05
+.  colorspace      1.3-2       2016-12-14
+.  DBI             0.5-1       2016-09-10
+.  devtools        1.12.0.9000 2017-01-08
+.  digest          0.6.12      2017-01-27
+.  dplyr         * 0.5.0       2016-06-24
+.  evaluate        0.10        2016-10-11
+.  ggplot2       * 2.2.1       2016-12-30
+.  gtable          0.2.0       2016-02-26
+.  htmltools       0.3.5       2016-03-21
+.  knitr         * 1.15.1      2016-11-22
+.  labeling        0.3         2014-08-23
+.  lattice       * 0.20-34     2016-09-06
+.  lazyeval        0.2.0       2016-06-12
+.  magrittr      * 1.5         2014-11-22
+.  memoise         1.0.0       2016-01-29
+.  mrgsolve      * 0.7.10.9005 2017-02-23
+.  munsell         0.4.3       2016-02-13
+.  pkgbuild        0.0.0.9000  2017-01-07
+.  pkgload         0.0.0.9000  2017-01-07
+.  plyr            1.8.4       2016-06-08
+.  R6              2.2.0       2016-10-05
+.  Rcpp            0.12.9      2017-01-14
+.  RcppArmadillo   0.7.700.0.0 2017-02-08
+.  rmarkdown       1.3         2016-12-21
+.  rprojroot       1.2         2017-01-16
+.  scales          0.4.1       2016-11-09
+.  stringi         1.1.2       2016-10-01
+.  stringr         1.2.0       2017-02-18
+.  tibble          1.2         2016-08-26
+.  tidyr         * 0.6.1       2017-01-10
+.  withr           1.0.2       2016-06-20
+.  yaml            2.1.14      2016-11-12
+.  source                                       
+.  CRAN (R 3.3.2)                               
+.  cran (@1.0.5)                                
+.  Github (rstudio/blogdown@54cbcc6)            
+.  Github (rstudio/bookdown@a5ad84c)            
+.  CRAN (R 3.3.0)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  Github (hadley/devtools@1ce84b0)             
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.0)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.0)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.2.1)                               
+.  Github (metrumresearchgroup/mrgsolve@6d74d36)
+.  CRAN (R 3.3.2)                               
+.  Github (r-pkgs/pkgbuild@65eace0)             
+.  Github (r-pkgs/pkgload@def2b10)              
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.0)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  cran (@1.2.0)                                
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.2)                               
+.  CRAN (R 3.3.0)                               
+.  CRAN (R 3.3.0)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1139,6 +1181,8 @@ head(initial)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Event objects are simple ways to implement PK dosing events into your model simulation.&lt;/p&gt;

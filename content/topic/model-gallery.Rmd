@@ -9,12 +9,15 @@ output:
 ---
 
 
-```{r, echo=FALSE, message=FALSE}
+```{r,echo=FALSE}
+knitr::opts_chunk$set(comment='.', fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
+```
+
+
+```{r, message=FALSE}
 library(lattice)
-library(knitr)
 library(ggplot2)
 library(dplyr)
-opts_chunk$set(comment='.', fig.align="center",message=FALSE,cache=TRUE, autodep=TRUE)
 ```
 
 

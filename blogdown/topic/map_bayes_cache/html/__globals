@@ -15,3 +15,4 @@ unnamed-chunk-16	%>%	==	data	evid	filter	mod	update
 unnamed-chunk-17	%>%	>	$	filter	fit	head	mapbayes	pdata	pmod	time	y
 unnamed-chunk-18	%>%	>	filter	head	init	mapbayes	pdata	pmod	time	y
 unnamed-chunk-19	%>%	==	aes	data	DV	evid	filter	geom_line	geom_point	ggplot	initial	pred	time
+unnamed-chunk-2	library
