@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tgrid on mrgsolve</title>
+    <link>/tags/tgrid/index.xml</link>
+    <description>Recent content in Tgrid on mrgsolve</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/tgrid/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Flexible, heterogeneous simulation designs in a population</title>
+      <link>/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/</link>
+      <pubDate>Thu, 05 Jan 2017 13:09:02 +0000</pubDate>
+      
+      <guid>/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;Design lists help you assign different designs to different groups in a population or specific designs to specific individuals.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;assign-designs-to-individuals&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Assign designs to individuals&lt;/h3&gt;
+&lt;p&gt;To illustrate, let’s make a population of 4 individuals, all with different simulation &lt;strong&gt;end&lt;/strong&gt; times.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;des &amp;lt;- data_frame(ID=1:4, end=seq(24,96,24))
+
+des&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. # A tibble: 4 × 2
+.      ID   end
+.   &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+. 1     1    24
+. 2     2    48
+. 3     3    72
+. 4     4    96&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For simplicity, we will only vary the simulation end time in this example. See later examples where &lt;code&gt;start&lt;/code&gt;, &lt;code&gt;delta&lt;/code&gt; and &lt;code&gt;add&lt;/code&gt; can varied as well.&lt;/p&gt;
+&lt;p&gt;We can turn this in to a list of designs with &lt;code&gt;as_deslist&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;as_deslist(des, descol=&amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. $ID_1
+. start:  0  end:    24  delta:  1  offset: 0  min:    0   max:    24 
+. 
+. $ID_2
+. start:  0  end:    48  delta:  1  offset: 0  min:    0   max:    48 
+. 
+. $ID_3
+. start:  0  end:    72  delta:  1  offset: 0  min:    0   max:    72 
+. 
+. $ID_4
+. start:  0  end:    96  delta:  1  offset: 0  min:    0   max:    96 
+. 
+. attr(,&amp;quot;descol&amp;quot;)
+. [1] &amp;quot;ID&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;as_deslist&lt;/code&gt; returns one design for each individual, one for each unique level of &lt;code&gt;descol&lt;/code&gt;. The deslist is a list of &lt;code&gt;tgrid&lt;/code&gt; objects (see &lt;code&gt;?tgrid&lt;/code&gt;). Note also that &lt;code&gt;descol&lt;/code&gt; is retained as an attribute to be used later.&lt;/p&gt;
+&lt;p&gt;Let’s set up a simulation that includes these 4 IDs; we load a model and, importantly, set up an &lt;code&gt;idata_set&lt;/code&gt; for the simulation that includes all 4 IDs in the design list.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% ev(amt=100)
+
+idata &amp;lt;- select(des,ID)
+idata&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. # A tibble: 4 × 1
+.      ID
+.   &amp;lt;int&amp;gt;
+. 1     1
+. 2     2
+. 3     3
+. 4     4&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;des1 &amp;lt;- as_deslist(des,&amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we run the simulation, pass in the design list to &lt;code&gt;design&lt;/code&gt; in the pipeline&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
+  mod %&amp;gt;%
+  idata_set(idata) %&amp;gt;%
+  design(des1) %&amp;gt;%
+  mrgsim&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see that ID 1 has a 24 hour end time, ID 2 has 48 hour simulation time, ID 3 with 72 hour simulation time, and ID 4 96 hour simulation time as reflected in the list of the designs.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|ID)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Check the arguments to &lt;code&gt;design&lt;/code&gt; (&lt;code&gt;?design&lt;/code&gt;). There is a &lt;code&gt;descol&lt;/code&gt; argument that is required. &lt;code&gt;descol&lt;/code&gt; in this function refers to a column in &lt;code&gt;idata_set&lt;/code&gt; to be used as the grouping variable to assign the sampling design. &lt;code&gt;as_deslist&lt;/code&gt; also had a &lt;code&gt;descol&lt;/code&gt; argument that referred to a column in the input data frame for that function. We don’t need to pass &lt;code&gt;descol&lt;/code&gt; to &lt;code&gt;design()&lt;/code&gt; because we created the design list with &lt;code&gt;as_deslist&lt;/code&gt;: &lt;code&gt;design()&lt;/code&gt; reads &lt;code&gt;descol&lt;/code&gt; from the attribute. We don’t &lt;strong&gt;have&lt;/strong&gt; to use &lt;code&gt;as_deslist&lt;/code&gt; to create the design list. It could be just a plan old &lt;code&gt;R&lt;/code&gt; list created by you with &lt;code&gt;tgrid&lt;/code&gt; objects. In that case, you must state what &lt;code&gt;descol&lt;/code&gt; is when you call &lt;code&gt;design()&lt;/code&gt;.&lt;br /&gt;
+And it can’t be emphasized enough here that you &lt;strong&gt;MUST&lt;/strong&gt; use an &lt;code&gt;idata_set&lt;/code&gt; for this to work and &lt;code&gt;idata_set&lt;/code&gt; must contain a valid &lt;code&gt;descol&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;assign-designs-to-treatment-arms-or-groups&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Assign designs to treatment arms or groups&lt;/h3&gt;
+&lt;p&gt;Now, let’s simulate a trial with 5 patients in each of 4 treatment arms. In this trial, arm 1 lasts 24 hours, arm 2 last 48 hours … etc. But every patient with the arm 1 indicator will get simulated for 24 hours, every patient with arm 2 indicator will get simulated for 48 hours and so on.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;idata &amp;lt;- expand.idata(ARM=1:4,ID=1:5)
+
+head(idata)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   ID ARM
+. 1  1   1
+. 2  2   2
+. 3  3   3
+. 4  4   4
+. 5  5   1
+. 6  6   2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, let’s setup the designs based on &lt;code&gt;ARM&lt;/code&gt; rather than &lt;code&gt;ID&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;des &amp;lt;- distinct(idata,ARM) %&amp;gt;% mutate(end=seq(24,96,24))
+
+des&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   ARM end
+. 1   1  24
+. 2   2  48
+. 3   3  72
+. 4   4  96&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The simulation works the same way&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(11)
+
+out &amp;lt;- 
+  mod %&amp;gt;% 
+  idata_set(idata) %&amp;gt;%
+  omat(dmat(1,1,1,1)/10) %&amp;gt;%
+  design(as_deslist(des,&amp;quot;ARM&amp;quot;)) %&amp;gt;% 
+  mrgsim(carry.out=&amp;quot;ARM&amp;quot;)
+
+plot(out, CP~time|factor(ARM))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(ID))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;list-cols-and-additional-times&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;list-cols&lt;/code&gt; and &lt;code&gt;additional&lt;/code&gt; times&lt;/h3&gt;
+&lt;p&gt;Hopefully it’s clear that columns named &lt;code&gt;start&lt;/code&gt;, &lt;code&gt;end&lt;/code&gt;, and &lt;code&gt;delta&lt;/code&gt; in the the input data frame passed to &lt;code&gt;as_deslist&lt;/code&gt; are just numeric values that form the time grid object (see &lt;code&gt;?tgrid&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;What about &lt;code&gt;add&lt;/code&gt;, the vector of ad-hoc times for the simulation? These, too, can be accommodated with a &lt;code&gt;list-col&lt;/code&gt; column in the input data frame. Note that &lt;code&gt;list-cols&lt;/code&gt; are only really supported in specialized &lt;code&gt;tibble&lt;/code&gt; type data frames.&lt;/p&gt;
+&lt;p&gt;These are random times for IDs 1 and 2&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(12)
+t1 &amp;lt;- c(0,sample(1:24,12))
+t2 &amp;lt;- c(0,sample(1:96,12))
+
+t1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.  [1]  0  2 19 21  6  4  1 20 11 23 16 22 17&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.  [1]  0 37 96 25 41 43 50 60 11 20 69  9 61&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: When we simulate with &lt;code&gt;end &amp;lt; 0&lt;/code&gt;, &lt;code&gt;mrgsolve&lt;/code&gt; knows to ignore &lt;code&gt;start/end/delta&lt;/code&gt; and only use the times in &lt;code&gt;add&lt;/code&gt; for observations.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;des &amp;lt;- data_frame(ID=1:2, end=-1, add=list(t1,t2))
+des&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. # A tibble: 2 × 3
+.      ID   end        add
+.   &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;list&amp;gt;
+. 1     1    -1 &amp;lt;dbl [13]&amp;gt;
+. 2     2    -1 &amp;lt;dbl [13]&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% 
+  idata_set(des, select=ID) %&amp;gt;%
+  design(as_deslist(des)) %&amp;gt;% 
+  mrgsim %&amp;gt;% 
+  plot(CP~time|factor(ID), type=&amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Ok … not the most lovely-looking result we’ve seen before, but maybe that’s just what you needed in this simulation.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
