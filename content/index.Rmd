@@ -27,7 +27,7 @@ bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresea
 * [User Guide](http://mrgsolve.github.io/user_guide): In-depth description and discussion about how `mrgsolve` works, including code block reference
 * [R documentation](http://mrgsolve.github.io/docs): All `mrgsolve` documentation that you would find in the `R` help system
 * [Quick hit demos](/topic/quick): Features that you might have a hard time finding in other documentation
-* [Site navagation](/tax/)
+* [Site navagation](/tax/): A listing of all tagged content on this site, including blog posts and other help / demonstration content.
 * [Metrum Research Group](http://metrumrg.com): Our main website
 
 

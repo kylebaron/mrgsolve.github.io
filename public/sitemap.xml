@@ -90,6 +90,18 @@
   </url>
   
   <url>
+    <loc>/tags/rcpp/</loc>
+    <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/simeta/</loc>
+    <lastmod>2017-01-01T13:09:13-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/</loc>
   </url>
   
@@ -101,6 +113,12 @@
   <url>
     <loc>/tax/</loc>
     <lastmod>2017-02-24T09:42:22-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tgrid/</loc>
+    <lastmod>2017-01-05T13:09:02+00:00</lastmod>
     <priority>0</priority>
   </url>
   
