@@ -325,7 +325,7 @@ library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;Lag time for oral doses&lt;/li&gt;
 &lt;li&gt;Combined additive and proportional error model
 &lt;ul&gt;
-&lt;li&gt;Note: we resimulate residual error variates using &lt;code&gt;simeta&lt;/code&gt; until the simulated concentration is positive&lt;/li&gt;
+&lt;li&gt;Note: we resimulate residual error variates using &lt;code&gt;simeps&lt;/code&gt; until the simulated concentration is positive&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Here’s the model specification&lt;/strong&gt;&lt;/p&gt;

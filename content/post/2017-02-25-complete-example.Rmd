@@ -38,7 +38,7 @@ library(ggplot2)
 - Reduced bioavailability fraction for oral doses
 - Lag time for oral doses
 - Combined additive and proportional error model
-    - Note: we resimulate residual error variates using `simeta` until the simulated concentration is positive
+    - Note: we resimulate residual error variates using `simeps` until the simulated concentration is positive
 
 
 __Here's the model specification__
