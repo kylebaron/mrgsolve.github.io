@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Simeps on mrgsolve</title>
+    <link>/tags/simeps/index.xml</link>
+    <description>Recent content in Simeps on mrgsolve</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/simeps/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Resimulate random effect variates on demand</title>
+      <link>/2017/01/01/resimulate-random-effect-variates-on-demand/</link>
+      <pubDate>Sun, 01 Jan 2017 13:09:13 -0600</pubDate>
+      
+      <guid>/2017/01/01/resimulate-random-effect-variates-on-demand/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#simeta-example&#34;&gt;&lt;code&gt;simeta&lt;/code&gt; example&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#simulate-without-simeta&#34;&gt;Simulate without &lt;code&gt;simeta&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#simulate-with-simeta&#34;&gt;Simulate with &lt;code&gt;simeta&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#simeps-example&#34;&gt;&lt;code&gt;simeps&lt;/code&gt; example&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#simulate-without-simeps&#34;&gt;Simulate without &lt;code&gt;simeps&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#simulate-with-simeps&#34;&gt;Simulate with &lt;code&gt;simeps&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;&lt;BR&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;simeta-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;simeta&lt;/code&gt; example&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In this example, we want to simulate a patient-specific baseline response that is between 80 and 120.&lt;/li&gt;
+&lt;li&gt;In the code, we start a loop that calls &lt;code&gt;simeta&lt;/code&gt; with no arguments until the baseline is between the specified bounds&lt;/li&gt;
+&lt;li&gt;For this example, we only calculate &lt;code&gt;BASE&lt;/code&gt; when &lt;code&gt;NEWIND &amp;lt;=1&lt;/code&gt; … or whenever we are working on the first record of an individual. This ensures that we don’t re-simulate &lt;code&gt;BASE&lt;/code&gt; at every simulation record.&lt;/li&gt;
+&lt;li&gt;We have also implemented a counter (&lt;code&gt;i&lt;/code&gt;) that ensures we only try to resimulate 100 times. If a value for &lt;code&gt;BASE&lt;/code&gt; cannot be generated in 100 tries, we give up.&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;You probably won’t need to implement &lt;code&gt;FLAG&lt;/code&gt; for your problem. I am only using &lt;code&gt;FLAG&lt;/code&gt; here so we can selectively call the &lt;code&gt;simeta&lt;/code&gt; code to demonstrate how it is working.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM TVBASE = 100, FLAG = 0
+
+$CMT RESPONSE
+
+$MAIN 
+
+if(NEWIND &amp;lt;=1) {
+
+  capture BASE = TVBASE*exp(EBASE);
+
+  int i = 0;
+
+  if(FLAG &amp;gt; 0) {
+    while((BASE &amp;lt; 80) || (BASE &amp;gt; 120)) {
+      if(++i &amp;gt; 100) {
+        report(&amp;quot;There was a problem simulating BASE&amp;quot;);
+      }
+      simeta();
+      BASE = TVBASE*exp(EBASE);
+    }
+  }
+  
+  RESPONSE_0 = BASE;
+}
+
+
+$OMEGA @labels EBASE
+1
+
+$CAPTURE EBASE
+&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mcode(&amp;quot;simeta&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;simulate-without-simeta&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Simulate without &lt;code&gt;simeta&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system.time({
+  out &amp;lt;- mod %&amp;gt;% mrgsim(nid=100, end=-1)
+  sum &amp;lt;- summary(out)
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    user  system elapsed 
+.   0.012   0.000   0.012&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE           EBASE        
+.  Min.   :  1.00   Min.   :0   Min.   :  14.97   Min.   :-1.8989  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.:  55.63   1st Qu.:-0.5865  
+.  Median : 50.50   Median :0   Median : 117.65   Median : 0.1625  
+.  Mean   : 50.50   Mean   :0   Mean   : 192.33   Mean   : 0.1915  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.: 245.73   3rd Qu.: 0.8990  
+.  Max.   :100.00   Max.   :0   Max.   :1372.70   Max.   : 2.6194  
+.       BASE        
+.  Min.   :  14.97  
+.  1st Qu.:  55.63  
+.  Median : 117.65  
+.  Mean   : 192.33  
+.  3rd Qu.: 245.73  
+.  Max.   :1372.70&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we simulate with &lt;code&gt;FLAG=0&lt;/code&gt;, the &lt;code&gt;simeta&lt;/code&gt; code &lt;strong&gt;isn’t&lt;/strong&gt; called and we &lt;code&gt;BASE&lt;/code&gt; values all over the place.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simulate-with-simeta&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Simulate with &lt;code&gt;simeta&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system.time({
+  out &amp;lt;- mod %&amp;gt;% mrgsim(nid=100, end=-1, param=list(FLAG=1))
+  sum &amp;lt;- summary(out)
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    user  system elapsed 
+.   0.008   0.000   0.008&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID              time      RESPONSE          EBASE          
+.  Min.   :  1.00   Min.   :0   Min.   : 80.04   Min.   :-0.222648  
+.  1st Qu.: 25.75   1st Qu.:0   1st Qu.: 90.44   1st Qu.:-0.100474  
+.  Median : 50.50   Median :0   Median :100.98   Median : 0.009781  
+.  Mean   : 50.50   Mean   :0   Mean   :101.00   Mean   : 0.002831  
+.  3rd Qu.: 75.25   3rd Qu.:0   3rd Qu.:111.00   3rd Qu.: 0.104401  
+.  Max.   :100.00   Max.   :0   Max.   :119.97   Max.   : 0.182069  
+.       BASE       
+.  Min.   : 80.04  
+.  1st Qu.: 90.44  
+.  Median :100.98  
+.  Mean   :101.00  
+.  3rd Qu.:111.00  
+.  Max.   :119.97&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we simulate with &lt;code&gt;FLAG=1&lt;/code&gt;, the &lt;code&gt;simeta&lt;/code&gt; code &lt;strong&gt;is&lt;/strong&gt; called and we &lt;code&gt;BASE&lt;/code&gt; values within the specified bounds.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simeps-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;simeps&lt;/code&gt; example&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In this example, we want to re-simulate the residual error variate to make sure we have a concentration that is positive.&lt;/li&gt;
+&lt;li&gt;We set up a loop that looks like the &lt;code&gt;simeta&lt;/code&gt; example, but we work in &lt;code&gt;$TABLE&lt;/code&gt; this time because we are calculating &lt;code&gt;CP&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL = 1, V = 20, FLAG=0
+
+$SIGMA 50
+
+$PKMODEL cmt=&amp;quot;CENT&amp;quot;
+
+$TABLE
+capture CP = CENT/V + EPS(1);
+
+int i = 0;
+while(CP &amp;lt; 0 &amp;amp;&amp;amp; FLAG &amp;gt; 0) {
+  if(++i &amp;gt; 100) {
+    report(&amp;quot;Problem simulating positive CP&amp;quot;);
+  }
+  simeps();
+  CP = CENT/V + EPS(1);
+}
+
+&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mcode(&amp;quot;simeps&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Compiling simeps ...&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. done.&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;simulate-without-simeps&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Simulate without &lt;code&gt;simeps&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system.time({
+  out &amp;lt;- mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(end=48)
+  sum &amp;lt;- summary(out)
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    user  system elapsed 
+.    0.01    0.00    0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID         time            CENT              CP           
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   :-20.18905  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: -3.46786  
+.  Median :1   Median :23.50   Median : 29.38   Median : -0.03189  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : -0.21637  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.:  4.33185  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   : 14.10283&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Negative&lt;/strong&gt; concentrations are simulated when we &lt;strong&gt;don’t&lt;/strong&gt; call the &lt;code&gt;simeps&lt;/code&gt; loop.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simulate-with-simeps&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Simulate with &lt;code&gt;simeps&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;system.time({
+  out &amp;lt;- mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(end=48, param=list(FLAG=1))
+  sum &amp;lt;- summary(out)
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    user  system elapsed 
+.    0.01    0.00    0.01&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ID         time            CENT              CP          
+.  Min.   :1   Min.   : 0.00   Min.   :  0.00   Min.   : 0.01688  
+.  1st Qu.:1   1st Qu.:11.25   1st Qu.: 15.93   1st Qu.: 2.44887  
+.  Median :1   Median :23.50   Median : 29.38   Median : 6.05270  
+.  Mean   :1   Mean   :23.52   Mean   : 37.47   Mean   : 6.16352  
+.  3rd Qu.:1   3rd Qu.:35.75   3rd Qu.: 54.21   3rd Qu.: 9.21095  
+.  Max.   :1   Max.   :48.00   Max.   :100.00   Max.   :14.05398&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Better … all concentrations are positive.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
