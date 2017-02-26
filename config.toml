@@ -42,7 +42,7 @@ categories="categories"
   highlightjsTheme = "github"
 
   [params.logo]
-  url = "mrgsolve.png"
+  url = "mrgsolve_transparent.png"
   width = 400
   height = 200
   alt = "Logo"
