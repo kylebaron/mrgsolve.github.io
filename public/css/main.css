@@ -97,7 +97,7 @@ code .MathJax {
 .content {
   max-width: 900px;
   margin: 40px auto 10px;
-  padding: 0 15px;
+  padding: 0 25px;
   font-size: 16px;
   line-height: 1.7;
   color: #555;
@@ -288,7 +288,7 @@ code .MathJax {
   }
 
   .archive-title {
-    font-size: 28px;
+    font-size: 38px;
   }
 
   .archive-item-date {

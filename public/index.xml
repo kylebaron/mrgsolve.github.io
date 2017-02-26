@@ -30,6 +30,96 @@
     
     <item>
       <title>Quick hit feature demos</title>
+      <link>/2017/02/23/quick/</link>
+      <pubDate>Thu, 23 Feb 2017 16:49:01 -0600</pubDate>
+      
+      <guid>/2017/02/23/quick/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#operator-for-model-object-gets-the-parameter-value&#34;&gt;&lt;code&gt;$&lt;/code&gt; operator for model object gets the parameter value&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#zero-all-random-effect-variances-on-the-fly&#34;&gt;Zero all random effect variances on the fly&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#plot-formulae&#34;&gt;Plot formulae&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;These are all miscellaneous features that may be difficult to find in other documentation.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;operator-for-model-object-gets-the-parameter-value&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;$&lt;/code&gt; operator for model object gets the parameter value&lt;/h1&gt;
+&lt;p&gt;If our model parameters are&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house()
+param(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+.  Model parameters (N=13):
+.  name value . name  value
+.  CL   1     | SEXCL 0.7  
+.  F1   1     | SEXVC 0.85 
+.  IC50 10    | VC    20   
+.  KA   1.2   | WT    70   
+.  KIN  100   | WTCL  0.75 
+.  KOUT 2     | WTVC  1    
+.  SEX  0     | .     .&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we can pick a parameter value with&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod$CL&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. CL 
+.  1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod$WT&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. WT 
+. 70&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;zero-all-random-effect-variances-on-the-fly&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Zero all random effect variances on the fly&lt;/h1&gt;
+&lt;p&gt;If your model has random effects, you can easily and temporarily zero them out.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib()) %&amp;gt;% update(end=96) %&amp;gt;% Req(DV,CL,V)
+
+omat(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. $...
+.       [,1] [,2] [,3]
+. ECL:   0.3  0.0  0.0
+. EV:    0.0  0.1  0.0
+. EKA:   0.0  0.0  0.5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is easy to simulate either with or without the random effects in the simulation: this change can be made on the fly.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;zero_re&lt;/code&gt; to make all random effect variances zero&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% zero_re %&amp;gt;% omat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. $...
+.       [,1] [,2] [,3]
+. ECL:     0    0    0
+. EV:      0    0    0
+. EKA:     0    0    0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;By default, both &lt;code&gt;OMEGA&lt;/code&gt; and &lt;code&gt;SIGMA&lt;/code&gt; are zeroed. Check the arguments for &lt;code&gt;zero_re&lt;/code&gt; to see how to selectively zero &lt;code&gt;OMEGA&lt;/code&gt; or &lt;code&gt;SIGMA&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Compare the population output&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;with&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% zero_re %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-formulae&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plot formulae&lt;/h1&gt;
+&lt;p&gt;We commonly plot simulated output with a special plot method. By default, you get all compartments and output variables in the plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% events(ev(amt=100))
+
+mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The plot can be customized with a formula selecting variables to plot. Other arguments to &lt;code&gt;lattice::xyplot&lt;/code&gt; can be passed as well.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot(CP+RESP ~ time, lty=2, col=&amp;quot;firebrick&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Quick hit feature demos</title>
       <link>/topic/quick/</link>
       <pubDate>Thu, 23 Feb 2017 16:49:01 -0600</pubDate>
       
@@ -99,10 +189,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default, both &lt;code&gt;OMEGA&lt;/code&gt; and &lt;code&gt;SIGMA&lt;/code&gt; are zeroed. Check the arguments for &lt;code&gt;zero_re&lt;/code&gt; to see how to selectively zero &lt;code&gt;OMEGA&lt;/code&gt; or &lt;code&gt;SIGMA&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Compare the population output&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;with&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% zero_re %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plot-formulae&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Plot formulae&lt;/h1&gt;
@@ -110,20 +200,262 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% events(ev(amt=100))
 
 mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot can be customized with a formula selecting variables to plot. Other arguments to &lt;code&gt;lattice::xyplot&lt;/code&gt; can be passed as well.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot(CP+RESP ~ time, lty=2, col=&amp;quot;firebrick&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Generate MAP Bayes Parameter Estimates</title>
+      <link>/2017/02/23/generate-map-bayes-parameter-estimates/</link>
+      <pubDate>Thu, 23 Feb 2017 13:30:33 +0000</pubDate>
+      
+      <guid>/2017/02/23/generate-map-bayes-parameter-estimates/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+library(mrgsolve)
+library(minqa)
+library(dplyr)
+library(magrittr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;about&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;About&lt;/h1&gt;
+&lt;p&gt;This tutorial illustrates how to do MAP Bayes estimation with &lt;code&gt;mrgsolve&lt;/code&gt;.&lt;br /&gt;
+The setup was adapted from an existing project, where only a single individual was considered. With some additional &lt;code&gt;R&lt;/code&gt; coding, it could be expanded to consider multiple individuals in a single run.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;one-compartment-model-keep-it-simple-for-now&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;One compartment model, keep it simple for now&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The model specification code below is for a one-compartment model, where &lt;code&gt;mrgsolve&lt;/code&gt; will calculate the amount in &lt;code&gt;CENT&lt;/code&gt; from closed-form equations&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For now, &lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt; are filled with zeros; we’ll update it later&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The control stream is set up so that we can either simulate the etas or pass them in. &lt;code&gt;ETA(1)&lt;/code&gt; and &lt;code&gt;ETA(2)&lt;/code&gt; are the etas that &lt;code&gt;mrgsolve&lt;/code&gt; will draw from &lt;code&gt;$OMEGA&lt;/code&gt;. &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; are fixed and known at the time of time of the simulation. The optimizer will search for values of &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; that optimize the objective function. Note that &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; must be in the parameter list for this to work&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We do a trick where &lt;code&gt;CL=TVCL*exp(ETA1+ETA(1));&lt;/code&gt; The assumption is that either &lt;code&gt;ETA1&lt;/code&gt; (simulating) is zero or &lt;code&gt;ETA(1)&lt;/code&gt; is zero (estimating)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;We table out &lt;code&gt;ETA(1)&lt;/code&gt; and &lt;code&gt;ETA(2)&lt;/code&gt; so we can know the true (simulated) values (but not both zero and not both non-zero)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;DV&lt;/code&gt; is output as a function of &lt;code&gt;EPS(1)&lt;/code&gt;; this will be zero until we add in values for &lt;code&gt;$SIGMA&lt;/code&gt;. But when we’re estimating, we need to make sure that &lt;code&gt;EPS(1)&lt;/code&gt; is zero; the prediction shouldn’t have any randomness in it (just the individual prediction based on known etas)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$SET request=&amp;quot;&amp;quot;
+
+$PARAM TVCL=1.5, TVVC=23.4, ETA1=0, ETA2=0
+
+$CMT CENT
+
+$PKMODEL ncmt=1
+
+$OMEGA 0 0
+$SIGMA 0
+
+$MAIN
+double CL = TVCL*exp(ETA1 + ETA(1));
+double V =  TVVC*exp(ETA2 + ETA(2));
+
+$TABLE 
+double DV = (CENT/V)*(1+EPS(1));
+double ET1 = ETA(1);
+double ET2 = ETA(2);
+
+$CAPTURE DV ET1 ET2
+&amp;#39;
+
+mod &amp;lt;- mcode(&amp;quot;map&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;first-simulate-some-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;First, simulate some data&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt;;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The result may look better or worse depending on what we choose here&lt;/li&gt;
+&lt;li&gt;These will be used to both simulate and fit the data&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;cmat&lt;/code&gt; call makes a &lt;code&gt;2x2&lt;/code&gt; matrix where the off-diagonal is a correlation (&lt;code&gt;?cmat&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;omega &amp;lt;- cmat(0.23,-0.78, 0.62)
+omega.inv &amp;lt;- solve(omega)
+sigma &amp;lt;- matrix(0.0032)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just a single dose to &lt;code&gt;CENT&lt;/code&gt; with an events object&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dose &amp;lt;- ev(amt=750,cmt=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Take these times for concentration observations&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sampl &amp;lt;- c(0.5,12,24)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Simulate&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Here, we’re populating &lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt; so that the simulated data will be random&lt;/li&gt;
+&lt;li&gt;It is important to &lt;code&gt;carry.out&lt;/code&gt; all of the items that we will need in the estimation data set (doses, evid, etc)&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;end=-1&lt;/code&gt; with &lt;code&gt;add=sampl&lt;/code&gt; makes sure that we only get observation records at the times listed in &lt;code&gt;sampl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1012) 
+sim &amp;lt;- 
+  mod %&amp;gt;%
+  ev(dose) %&amp;gt;%
+  omat(omega) %&amp;gt;%
+  smat(sigma) %&amp;gt;%
+  carry.out(amt,evid,cmt) %&amp;gt;%
+  mrgsim(end=-1, add=sampl)
+
+sim&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Model:  map.cpp 
+. Dim:    4 x 8 
+. Time:   0 to 24 
+. ID:     1 
+.      ID time evid amt cmt     DV    ET1     ET2
+. [1,]  1  0.0    1 750   1 41.067 0.5196 -0.2728
+. [2,]  1  0.5    0   0   0 42.749 0.5196 -0.2728
+. [3,]  1 12.0    0   0   0  6.932 0.5196 -0.2728
+. [4,]  1 24.0    0   0   0  1.375 0.5196 -0.2728&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;create-input-for-optimization&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Create input for optimization&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Using the simulated data as the starting point here&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sim %&amp;lt;&amp;gt;% as.data.frame&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Observed data (&lt;code&gt;y&lt;/code&gt;)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Just select &lt;code&gt;DV&lt;/code&gt; from observation records&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;y &amp;lt;- sim %&amp;gt;% filter(evid==0) %&amp;gt;% select(DV) %&amp;gt;% unlist %&amp;gt;% unname
+
+y&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. [1] 42.749445  6.932391  1.374557&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create a data set to use in the optimization&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We need to drop &lt;code&gt;ET1&lt;/code&gt; and &lt;code&gt;ET2&lt;/code&gt; since they are in the parameter list&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- sim %&amp;gt;% select(-ET1, -ET2)
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   ID time evid amt cmt        DV
+. 1  1  0.0    1 750   1 41.067037
+. 2  1  0.5    0   0   0 42.749445
+. 3  1 12.0    0   0   0  6.932391
+. 4  1 24.0    0   0   0  1.374557&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;optimize&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Optimize&lt;/h1&gt;
+&lt;p&gt;This function takes in a set of proposed &lt;span class=&#34;math inline&#34;&gt;\(\eta\)&lt;/span&gt;s along with the observed data vector, the data set and a model object and returns the value of the EBE objective function&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;When we do the estimation, the fixed effects and random effect variances are fixed.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The estimates are the &lt;span class=&#34;math inline&#34;&gt;\(\eta\)&lt;/span&gt; for clearance and volume&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Arguments:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eta&lt;/code&gt; the current values from the optimizer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y&lt;/code&gt; the observed data&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d&lt;/code&gt; the data set that generated &lt;code&gt;y&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;m&lt;/code&gt; the model object&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pred&lt;/code&gt; if &lt;code&gt;TRUE&lt;/code&gt;, just return predicted values&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;what-is-this-function-doing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What is this function doing?&lt;/h2&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;get the matrix for residual error&lt;/li&gt;
+&lt;li&gt;Make sure &lt;code&gt;eta&lt;/code&gt; is a list&lt;/li&gt;
+&lt;li&gt;Make sure &lt;code&gt;eta&lt;/code&gt; is properly named (i.e. &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Copy &lt;code&gt;eta&lt;/code&gt; into a matrix that is one row&lt;/li&gt;
+&lt;li&gt;Update the model object (&lt;code&gt;m&lt;/code&gt;) with the current values of &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;If we are estimating (&lt;code&gt;!pred&lt;/code&gt;), request only observations in the output (&lt;code&gt;obsonly&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Simulate from data set &lt;code&gt;d&lt;/code&gt; and save output to &lt;code&gt;out&lt;/code&gt; object&lt;/li&gt;
+&lt;li&gt;If we are just requesting predictions (&lt;code&gt;if(pred)&lt;/code&gt;) return the simulated data&lt;/li&gt;
+&lt;li&gt;The final lines calculate the EBE objective function; see &lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3339294/&#34;&gt;this paper&lt;/a&gt; for reference&lt;/li&gt;
+&lt;li&gt;Notice that the function returns a single value (a number); the optimizer will minimize this value&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mapbayes &amp;lt;- function(eta,y,d,m,pred=FALSE) {
+    
+  sig2 &amp;lt;- as.numeric(sigma)
+  eta %&amp;lt;&amp;gt;% as.list
+  names(eta) &amp;lt;- names(init)
+  eta_m &amp;lt;- eta %&amp;gt;% unlist %&amp;gt;% matrix(nrow=1)
+  m %&amp;lt;&amp;gt;% param(eta)
+  if(!pred) m %&amp;lt;&amp;gt;% obsonly
+  out &amp;lt;- m %&amp;gt;% drop.re() %&amp;gt;% data_set(d) %&amp;gt;% mrgsim
+  if(pred) return(out %&amp;gt;% as.tbl)
+  # http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3339294/
+  sig2j &amp;lt;- out$DV^2*sig2
+  sqwres &amp;lt;- log(sig2j) + (1/sig2j)*(y-out$DV)^2
+  nOn &amp;lt;- diag(eta_m %*% omega.inv %*% t(eta_m))
+  return(sum(sqwres) + nOn)
+
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;initial-estimate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initial estimate&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Note again that we are optimizing the etas here&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;init &amp;lt;- c(ETA1=-0.3, ETA2=0.2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Fit the data&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;newuoa&lt;/code&gt; is from the &lt;code&gt;minqa&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;Other optimizers (via &lt;code&gt;optim&lt;/code&gt;) could probably also be used&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Arguments to &lt;code&gt;newuoa&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;First: the initial estimates&lt;/li&gt;
+&lt;li&gt;Second: the function to optimize&lt;/li&gt;
+&lt;li&gt;The other argument are passed to &lt;code&gt;mapbayes&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- newuoa(init,mapbayes,y=y,m=mod,d=data)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here are the final estimates&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit$par&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. [1]  0.4995400 -0.3274858&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here are the simulated values&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;slice(sim,1) %&amp;gt;% select(ET1, ET2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.        ET1        ET2
+. 1 0.519569 -0.2727675&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;look-at-the-result&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Look at the result&lt;/h1&gt;
+&lt;p&gt;A data set and model to get predictions; this will give us a smooth prediction line&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pdata &amp;lt;- data %&amp;gt;% filter(evid==1)
+pmod &amp;lt;- mod %&amp;gt;% update(end=24, delta=0.1) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Predicted line based on final estimates&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pred &amp;lt;- mapbayes(fit$par,y,pdata,pmod,pred=TRUE) %&amp;gt;% filter(time &amp;gt; 0)
+head(pred)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. # A tibble: 6 × 5
+.      ID  time       DV   ET1   ET2
+.   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+. 1     1   0.1 43.82331     0     0
+. 2     1   0.2 43.18567     0     0
+. 3     1   0.3 42.55731     0     0
+. 4     1   0.4 41.93809     0     0
+. 5     1   0.5 41.32789     0     0
+. 6     1   0.6 40.72656     0     0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Predicted line based on initial estimates&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;initial &amp;lt;- mapbayes(init,y,pdata,pmod,pred=TRUE) %&amp;gt;% filter(time &amp;gt; 0)
+head(initial)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. # A tibble: 6 × 5
+.      ID  time       DV   ET1   ET2
+.   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+. 1     1   0.1 26.13954     0     0
+. 2     1   0.2 26.03811     0     0
+. 3     1   0.3 25.93707     0     0
+. 4     1   0.4 25.83642     0     0
+. 5     1   0.5 25.73616     0     0
+. 6     1   0.6 25.63629     0     0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plot&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot() + 
+  geom_line(data=pred, aes(time,DV),col=&amp;quot;firebrick&amp;quot;, lwd=1) + 
+  geom_line(data=initial,aes(time,DV), lty=2, col=&amp;quot;darkgreen&amp;quot;, lwd=1) + 
+  geom_point(data=data %&amp;gt;% filter(evid==0), aes(time,DV), col=&amp;quot;darkslateblue&amp;quot;,size=3)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/map_bayes_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
     
     <item>
       <title>Access Models in the Internal Library</title>
-      <link>/topic/modmrg/</link>
+      <link>/2017/02/23/access-models-in-the-internal-library/</link>
       <pubDate>Thu, 23 Feb 2017 10:13:36 +0000</pubDate>
       
-      <guid>/topic/modmrg/</guid>
+      <guid>/2017/02/23/access-models-in-the-internal-library/</guid>
       <description>&lt;!-- BLOGDOWN-HEAD --&gt;
 
 
@@ -145,7 +477,7 @@ mod %&amp;gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&amp;gt;%
   mrgsim(end=320) %&amp;gt;% 
   plot(CP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;see(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. 
 . Model file:  pk2cmt.cpp 
@@ -231,7 +563,7 @@ out &amp;lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pkpd-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;PK/PD model&lt;/h3&gt;
@@ -292,7 +624,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
 .  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=700,time=50) %&amp;gt;% param(n=1.5,KOUT=0.02) %&amp;gt;%
   mrgsim(end=480) %&amp;gt;% plot(CP+RESP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Population PK model&lt;/h3&gt;
@@ -301,7 +633,788 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
   ev(amt=100) %&amp;gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&amp;gt;%
   plot(DV+ECL~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Access Models in the Internal Library</title>
+      <link>/topic/modmrg/</link>
+      <pubDate>Thu, 23 Feb 2017 10:13:36 +0000</pubDate>
+      
+      <guid>/topic/modmrg/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;pk-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;PK model&lt;/h3&gt;
+&lt;p&gt;Here, we name the name of the model we want from the library (&lt;code&gt;pk2cmt&lt;/code&gt;) and we point &lt;code&gt;mread&lt;/code&gt; to the &lt;code&gt;project&lt;/code&gt; directory where the internal model library is stored. This internal library is located wherever &lt;code&gt;mrgsolve&lt;/code&gt; is installed. The install location for &lt;code&gt;mrgsolve&lt;/code&gt; is not obvious, so we provide a function (&lt;code&gt;modlib&lt;/code&gt;) that returns the currect path to the model library.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;pk2cmt&amp;quot;, modlib())
+
+mod %&amp;gt;%
+  ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&amp;gt;%
+  mrgsim(end=320) %&amp;gt;% 
+  plot(CP~.)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;see(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+. Model file:  pk2cmt.cpp 
+.  $PROB
+.  # Model: `pk2cmt`
+.    - Two-compartment PK model
+.        - Dual first-order absorption
+.        - Optional nonlinear clearance from `CENT`
+.    - Source: `mrgsolve` internal library
+.    - Date: `r Sys.Date()`
+.    - Version: `r packageVersion(&amp;quot;mrgsolve&amp;quot;)`
+.    
+.  $PARAM @annotated
+.  CL   :  1  : Clearance (volume/time)
+.  VC   : 20  : Central volume (volume)
+.  Q    :  2  : Inter-compartmental clearance (volume/time)
+.  VP   : 10  : Peripheral volume of distribution (volume)
+.  KA1  :  1  : Absorption rate constant 1 (1/time)
+.  KA2  :  1  : Absorption rate constant 2 (1/time)
+.  VMAX :  0  : Maximum velocity (mass/time)
+.  KM   :  2  : Michaelis Constant (mass/volume)
+.  
+.  $CMT  @annotated
+.  EV1    : First extravascular compartment (mass)
+.  CENT   : Central compartment (mass)
+.  PERIPH : Peripheral compartment (mass) 
+.  EV2    : Second extravascular compartment (mass)
+.    
+.  $GLOBAL 
+.  #define CP (CENT/VC)
+.  #define CT (PERIPH/VP)
+.  #define CLNL (VMAX/(KM+CP))
+.  
+.  $ODE
+.  dxdt_EV1 = -KA1*EV1;
+.  dxdt_EV2 = -KA2*EV2;
+.  dxdt_CENT = KA1*EV1 + KA2*EV2 - (CL+CLNL+Q)*CP  + Q*CT;
+.  dxdt_PERIPH = Q*CP - Q*CT;
+.  
+.  $CAPTURE  @annotated
+.  CP : Plasma concentration (mass/time)
+. &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To get a list of available models&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;?modlib
+modlib(list=TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   effect
+.   modpk1
+.   modpk2
+.   modpk1po
+.   modpk2po
+.   tmdd
+.   viral1
+.   viral2
+.   emax
+.   irm1
+.   irm2
+.   irm3
+.   irm4
+.   pk1cmt
+.   pk2cmt
+.   pk3cmt
+.   pk1
+.   pk2
+.   pkpdExample
+.   popex
+. &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;modlib()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. [1] &amp;quot;/Users/kyleb/Rlibs/lib/mrgsolve/models&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;viral-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Viral model&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;viral1&amp;quot;,modlib())
+
+e &amp;lt;- 
+  ev(amt=50, cmt=&amp;quot;expos&amp;quot;,time=2) + 
+  ev(amt=0, cmt=&amp;quot;expos&amp;quot;, evid=8,time=11)
+
+out &amp;lt;- 
+  mod %&amp;gt;%
+  ev(e) %&amp;gt;%
+  update(end=28,delta=0.1) %&amp;gt;%
+  knobs(delta=seq(0.2,0.8,0.1))
+
+
+plot(out,logChange~time,groups=delta,auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pkpd-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;PK/PD model&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;irm1&amp;quot;, modlib())
+
+see(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+. Model file:  irm1.cpp 
+.  $PROB
+.  # Model: `irm1`
+.    - Indirect response model, type 1
+.        - Inhibition of response input
+.        - Two-compartment PK model
+.        - Optional nonlinear clearance
+.    - Source: `mrgsolve` internal library
+.    - Date: `r Sys.Date()`
+.    - Version: `r packageVersion(&amp;quot;mrgsolve&amp;quot;)`
+.  
+.  $PARAM @annotated
+.  CL   :  1  : Clearance (volume/time)
+.  VC   : 20  : Central volume (volume)
+.  Q    :  2  : Inter-compartmental clearance (volume/time)
+.  VP   : 10  : Peripheral volume of distribution (volume)
+.  KA1  :  1  : Absorption rate constant 1 (1/time)
+.  KA2  :  1  : Absorption rate constant 2 (1/time)
+.  KIN  : 10  : Response in rate constant (1/time)
+.  KOUT :  2  : Response out rate constant (1/time)
+.  IC50 :  2  : Concentration for 50% of max inhibition (mass/volume)
+.  IMAX :  1  : Maximum inhibition 
+.  n    :  1  : Emax model sigmoidicity
+.  VMAX :  0  : Maximum reaction velocity (mass/time)
+.  KM   :  2  : Michaelis constant (mass/volume)
+.  
+.  $CMT  @annotated
+.  EV1    : First extravascular compartment (mass)
+.  CENT   : Central compartment (mass)
+.  PERIPH : Peripheral compartment (mass) 
+.  RESP   : Response compartment
+.  EV2    : Second extravascular compartment (mass)
+.  
+.  $GLOBAL
+.  #define CP (CENT/VC)
+.  #define CT (PERIPH/VP)
+.  #define CLNL (VMAX/(KM+CP))
+.  #define INH (IMAX*pow(CP,n)/(pow(IC50,n)+pow(CP,n)))
+.  
+.  $MAIN
+.  RESP_0 = KIN/KOUT;
+.  
+.  $ODE
+.  dxdt_EV1    = -KA1*EV1;
+.  dxdt_EV2    = -KA2*EV2;
+.  dxdt_CENT   =  KA1*EV1 + KA2*EV2 - (CL+CLNL+Q)*CP  + Q*CT;
+.  dxdt_PERIPH =  Q*CP - Q*CT;
+.  dxdt_RESP   =  KIN*(1-INH) - KOUT*RESP;
+.  
+.  $CAPTURE @annotated
+.  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=700,time=50) %&amp;gt;% param(n=1.5,KOUT=0.02) %&amp;gt;%
+  mrgsim(end=480) %&amp;gt;% plot(CP+RESP~.)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;population-pk-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Population PK model&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
+  ev(amt=100) %&amp;gt;% 
+  mrgsim(nid=100, end=96, delta=0.25) %&amp;gt;%
+  plot(DV+ECL~.)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Model Gallery</title>
+      <link>/2017/02/23/model-gallery/</link>
+      <pubDate>Thu, 23 Feb 2017 08:00:00 +0000</pubDate>
+      
+      <guid>/2017/02/23/model-gallery/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#load-packages-required-for-the-gallery&#34;&gt;Load packages required for the gallery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#simple-pk-model&#34;&gt;Simple PK model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pk-model-with-different-bioavability-and-dosing-lag-time&#34;&gt;PK model with different bioavability and dosing lag time&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pk-model-with-residual-error&#34;&gt;PK model with residual error&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#indirect-response-model-driven-by-continuous-pk&#34;&gt;Indirect response model driven by continuous PK&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#indirect-response-model-driven-by-metric-summarizing-exposure&#34;&gt;Indirect response model driven by metric summarizing exposure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#effect-compartment-model&#34;&gt;Effect compartment model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#population-pk-model-with-covariates-and-iov&#34;&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pk-with-dialysis-sessions-3-times-per-week&#34;&gt;PK with dialysis sessions 3 times per week&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#session-info&#34;&gt;Session Info&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(lattice)
+library(ggplot2)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;load-packages-required-for-the-gallery&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Load packages required for the gallery&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+library(tidyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simple-pk-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Simple PK model&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We set a simulation grid of 0.1 units in &lt;code&gt;$SET&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Compartment number (2) and names (&lt;code&gt;GUT&lt;/code&gt; and &lt;code&gt;CENT&lt;/code&gt;) are established in &lt;code&gt;$CMT&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;For dosing purposes, &lt;code&gt;GUT&lt;/code&gt; is compartment 1 and &lt;code&gt;CENT&lt;/code&gt; is compartment 2 due to the order of their declaration&lt;/li&gt;
+&lt;li&gt;Compartment names and numbers can be checked with &lt;code&gt;init(mod)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL = 1.3, VC=28, KA=0.6
+
+$SET delta=0.1
+
+$CMT GUT CENT
+
+$ODE
+dxdt_GUT = -KA*GUT;
+dxdt_CENT = KA*GUT - (CL/VC)*CENT;
+
+$TABLE double CP = CENT/VC;
+
+$CAPTURE CP
+&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Compile and load&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;gallery1&amp;quot;, tempdir(),code)
+
+
+mod&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. 
+. 
+. -------- mrgsolve model object (unix) --------
+.   Project: /private/var/fol...dbsj0x4637ptj4hnd7kg900000gp/T/RtmpFurpew
+.   source:        gallery1.cpp
+.   shared object: gallery1-so-7c522aee111c 
+. 
+.   compile date:  
+.   Time:          start: 0 end: 24 delta: 0.1
+.   &amp;gt;              add: &amp;lt;none&amp;gt;
+.   &amp;gt;              tscale: 1
+. 
+.   Compartments:  GUT CENT [2]
+.   Parameters:    CL VC KA [3]
+.   Omega:         0x0 
+.   Sigma:         0x0 
+. 
+.   Solver:        atol: 1e-08 rtol: 1e-08
+.   &amp;gt;              maxsteps: 2000 hmin: 0 hmax: 0&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;run-with-initial-value&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Run with initial value&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% init(GUT=1000) %&amp;gt;% mrgsim(end=72)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Model:  gallery1.cpp 
+. Dim:    721 x 5 
+. Time:   0 to 72 
+. ID:     1 
+.      ID time    GUT  CENT     CP
+. [1,]  1  0.0 1000.0   0.0  0.000
+. [2,]  1  0.1  941.8  58.1  2.075
+. [3,]  1  0.2  886.9 112.5  4.019
+. [4,]  1  0.3  835.3 163.6  5.841
+. [5,]  1  0.4  786.6 211.3  7.547
+. [6,]  1  0.5  740.8 256.0  9.145
+. [7,]  1  0.6  697.7 297.9 10.639
+. [8,]  1  0.7  657.0 337.1 12.038&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;run-with-events-object&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Run with &lt;code&gt;events&lt;/code&gt; object&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=1000, ii=12, addl=15) %&amp;gt;% mrgsim(end=336)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The events object was just a simple data set that looks like this&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dosing &amp;lt;- events(out)
+dosing&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt  amt ii addl evid
+. 1    0   1 1000 12   15    1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;run-with-data-set&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Run with data set&lt;/h2&gt;
+&lt;p&gt;Just like the events object, but we can make it more complicated, specify more people, etc…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=c(300,1000,3000), ii=12, addl=6) %&amp;gt;% mutate(dose=amt)
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   ID  amt ii addl evid cmt time dose
+. 1  1  300 12    6    1   1    0  300
+. 2  2 1000 12    6    1   1    0 1000
+. 3  3 3000 12    6    1   1    0 3000&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(dose) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=168)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(dose),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pk-model-with-different-bioavability-and-dosing-lag-time&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;PK model with different bioavability and dosing lag time&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set &lt;code&gt;F_CENT&lt;/code&gt; and &lt;code&gt;ALAG_CENT&lt;/code&gt; in &lt;code&gt;$MAIN&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Since &lt;code&gt;F_CENT&lt;/code&gt; is set to &lt;code&gt;F1&lt;/code&gt; and &lt;code&gt;ALAG_CENT&lt;/code&gt; is set to &lt;code&gt;ALG&lt;/code&gt;; since &lt;code&gt;F1&lt;/code&gt; and &lt;code&gt;ALG&lt;/code&gt; are named in &lt;code&gt;$PARAM&lt;/code&gt;, we can update them on the &lt;code&gt;R&lt;/code&gt; side either through &lt;code&gt;param&lt;/code&gt; or in an input data set that is also determined on the &lt;code&gt;R&lt;/code&gt; side of things&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL = 1.3, VC=28, KA=0.6, ALG=0, F1=1,FORM=1
+
+$SET delta=0.1
+
+$CMT CENT
+
+$MAIN
+F_CENT = 1;
+
+// Formulation 2 has lower bioavailability
+if(FORM==2) F_CENT = F1;
+
+// Same lag time across formulations
+ALAG_CENT = ALG;
+
+
+$ODE dxdt_CENT = - (CL/VC)*CENT;
+
+$TABLE double CP = CENT/VC;
+
+$CAPTURE CP
+
+&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Compile and load&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;gallery2&amp;quot;, tempdir(), code)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dose into the central compartment. Also, &lt;code&gt;ALG&lt;/code&gt;, &lt;code&gt;F1&lt;/code&gt;, and &lt;code&gt;FORM&lt;/code&gt; are updated via the data set and therefore need to be columns in the data set and listed in &lt;code&gt;$PARAM&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- 
+  expand.ev(amt=1000, ALG=seq(0,12,4),FORM=c(1,2)) %&amp;gt;% 
+  mutate(F1 = ifelse(FORM==1,1,0.5))
+
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   ID  amt ALG FORM evid cmt time  F1
+. 1  1 1000   0    1    1   1    0 1.0
+. 2  2 1000   4    1    1   1    0 1.0
+. 3  3 1000   8    1    1   1    0 1.0
+. 4  4 1000  12    1    1   1    0 1.0
+. 5  5 1000   0    2    1   1    0 0.5
+. 6  6 1000   4    2    1   1    0 0.5
+. 7  7 1000   8    2    1   1    0 0.5
+. 8  8 1000  12    2    1   1    0 0.5&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(FORM,ALG) %&amp;gt;% mrgsim(end=72)
+
+plot(out, CP~time|factor(FORM),group=ALG, 
+     scales=&amp;quot;same&amp;quot;, auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pk-model-with-residual-error&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;PK model with residual error&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$SIGMA&lt;/code&gt; sets the variance of &lt;code&gt;EPS(n)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Setting &lt;code&gt;end&lt;/code&gt; to a value less than 0 will signal &lt;code&gt;mrgsolve&lt;/code&gt; to skip the simulation time grid&lt;/li&gt;
+&lt;li&gt;We specify &lt;code&gt;add&lt;/code&gt; to get a specific set of simulation times (not necessarily evenly spaced)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL = 1.3, VC=28, KA=0.6
+
+$GLOBAL #define CP (CENT/VC)
+
+$SIGMA 0.025
+
+$SET end=-1, add=c(0,0.25,0.5,1,2,4,6,8,10,12,16,24,36,48)
+
+$CMT GUT CENT
+
+$ODE
+dxdt_GUT = -KA*GUT;
+dxdt_CENT = KA*GUT - (CL/VC)*CENT;
+
+$CAPTURE CP DV
+
+$TABLE double DV = CP*exp(EPS(1));
+&amp;#39;
+
+mod &amp;lt;- mread(&amp;quot;ruv&amp;quot;, tempdir(), code) &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(3203)
+out &amp;lt;- 
+  mod %&amp;gt;% 
+  init(GUT=1000) %&amp;gt;% 
+  obsonly %&amp;gt;% 
+  mrgsim(Req=&amp;quot;CP,DV&amp;quot;) %&amp;gt;% as.data.frame
+
+ggplot(data=out, aes(x=time)) + 
+  geom_point(aes(y=DV),size=3) + 
+  geom_line(aes(y=CP), col=&amp;quot;firebrick&amp;quot;,lwd=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;indirect-response-model-driven-by-continuous-pk&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Indirect response model driven by continuous PK&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;CP&lt;/code&gt; is “defined” in &lt;code&gt;$GLOBAL&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INH&lt;/code&gt; is declared as a double precision variable in &lt;code&gt;$ODE&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INH&lt;/code&gt; will be available globally (&lt;code&gt;mrgsolve&lt;/code&gt; will declare the variable in &lt;code&gt;$GLOBAL&lt;/code&gt; for you)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;INH&lt;/code&gt; can be changed at any time, but &lt;code&gt;CP&lt;/code&gt; cannot&lt;/li&gt;
+&lt;li&gt;Both &lt;code&gt;CP&lt;/code&gt; and &lt;code&gt;INH&lt;/code&gt; can be inserted into output in &lt;code&gt;$TABLE&lt;/code&gt; or &lt;code&gt;$CAPTURE&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL = 5.3, VC=28, KA=0.6, KIN=20, KOUT=0.01, IC50=10
+
+$SET delta=0.1
+
+$CMT GUT CENT RESPONSE
+
+$GLOBAL
+#define CP (CENT/VC)
+
+$MAIN
+RESPONSE_0 = KIN/KOUT;
+
+$ODE
+
+double INH = CP/(IC50+CP);
+
+dxdt_GUT = -KA*GUT;
+dxdt_CENT = KA*GUT - (CL/VC)*CENT;
+
+dxdt_RESPONSE = KIN*(1-INH) - KOUT*RESPONSE;
+
+
+$CAPTURE CP INH
+&amp;#39;
+
+mod &amp;lt;- mread(&amp;quot;gallery3&amp;quot;, tempdir(), code)
+
+out &amp;lt;- mod %&amp;gt;% 
+  ev(time=120,amt=1500,rate=5) %&amp;gt;% 
+  Req(CP,RESPONSE) %&amp;gt;% mrgsim(end=480*2)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;indirect-response-model-driven-by-metric-summarizing-exposure&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Indirect response model driven by metric summarizing exposure&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Take out the PK model&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AUC&lt;/code&gt; will drive the PD model&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AUC&lt;/code&gt; is declared in &lt;code&gt;$PARAM&lt;/code&gt;; we will manipulate that value (AUC&amp;gt;0 for on treatment, AUC==0 for off treatment) through the input data set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM AUC=0, KIN=100, KOUT=0.2, AUC50=10
+
+$SET delta=0.1
+
+$CMT RESPONSE
+
+$GLOBAL
+#define INH (AUC/(AUC50+AUC))
+
+$MAIN
+RESPONSE_0 = KIN/KOUT;
+
+$ODE
+
+dxdt_RESPONSE = KIN*(1-INH) - KOUT*RESPONSE;
+
+$CAPTURE AUC
+&amp;#39;
+
+mod &amp;lt;- mread(&amp;quot;gallery5&amp;quot;, tempdir(), code)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make a template data set with &lt;code&gt;evid&lt;/code&gt;=2 and &lt;code&gt;AUC&lt;/code&gt; to drive the PD model&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- 
+  ev(ID=1,evid=2,AUC=15, ii=48,addl=0,amt=0) %then% 
+  ev(ID=1,evid=2,AUC=0,amt=0)
+
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   ID time cmt AUC ii addl amt evid
+. 1  1    0   1  15 48    0   0    2
+. 2  1   48   1   0  0    0   0    2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% obsonly %&amp;gt;% mrgsim(end=120)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;effect-compartment-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Effect compartment model&lt;/h1&gt;
+&lt;p&gt;About this model specification code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This code replicates model PD21 in Gabrielsson and Weiner 2007.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM  
+VC = 2.44, KA = 0.92, K10 = 0.44, K12 = 0.36, K21 = 0.24
+E0 = 157, EMAX = 29.95, EC50=4.956, KEO=1.305
+
+$SET delta=0.1, end=36
+
+$CMT GUT CENT PERIPH CE
+
+$ODE 
+double CP = CENT/VC;
+
+dxdt_GUT = -KA*GUT;
+dxdt_CENT = KA*GUT - K10*CENT - K12*CENT + K21*PERIPH;
+dxdt_PERIPH = K12*CENT - K21*PERIPH;
+dxdt_CE = KEO*(CP-CE);
+
+$TABLE
+capture EFFECT = E0 - EMAX*CE/(CE+EC50);
+CP = CENT/VC;
+
+$CAPTURE EFFECT CP
+&amp;#39;
+
+mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Simulate a snigle 200 unit dose&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=200) %&amp;gt;% obsonly %&amp;gt;% mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Simulate steady state PK/PD under Q12 hour dosing&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
+  mod %&amp;gt;% 
+  ev(amt=200,ss=1,ii=12,addl=10)%&amp;gt;%
+  mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;, end=168)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;population-pk-model-with-covariates-and-iov&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;About this control stream&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;IOV&lt;/code&gt; is declared as double precision variable that is set to either &lt;code&gt;ETA(4)&lt;/code&gt; or &lt;code&gt;ETA(5)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;We need to make sure that &lt;span class=&#34;math inline&#34;&gt;\(\omega^2_{4}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\omega^2_{5}\)&lt;/span&gt; are equal&lt;/li&gt;
+&lt;li&gt;We assign different names to the first and second &lt;code&gt;$OMEGA&lt;/code&gt; matrices so we can update them by name later&lt;/li&gt;
+&lt;li&gt;We are tabling out some &lt;code&gt;ETAs&lt;/code&gt; to look at them later as well; this is for demonstration purposes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM TVCL = 1.3, TVVC=28, TVKA=0.6, WT=70, OCC=1
+
+$SET delta=0.1
+
+$CMT GUT CENT
+
+$MAIN
+
+double IOV = EOC1;
+if(OCC==2) IOV = EOC2;
+
+double CLi = exp(log(TVCL) + 0.75*log(WT/70) + ECL + IOV);
+double VCi = exp(log(TVVC) + EVC);
+double KAi = exp(log(TVKA) + EKA);
+
+$OMEGA 
+@name IIV @labels ECL EVC EKA
+0 0 0
+$OMEGA @name IOV @labels EOC1 EOC2
+0 0
+
+$SIGMA 0
+
+$ODE
+dxdt_GUT = -KAi*GUT;
+dxdt_CENT = KAi*GUT - (CLi/VCi)*CENT;
+
+$TABLE
+double CP = CENT/VCi;
+double ETA1 = ETA(1);
+double ETA2 = ETA(2);
+
+$CAPTURE IOV CP ETA1 ETA2
+&amp;#39;
+
+mod &amp;lt;- mread(&amp;quot;gallery4&amp;quot;, tempdir(), code)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Set up dosing events; occasion 2 is the second dose&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dose &amp;lt;- ev(amt=300,OCC=1) + ev(amt=300,time=48,OCC=2)
+dose&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt OCC evid
+. 1    0   1 300   1    1
+. 2   48   1 300   2    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ETAs are all zeros per the model specification code&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120, nid=5)
+
+plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Update &lt;code&gt;$OMEGA&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And check the result&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;revar(mod)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. $omega
+. $IIV
+.             [,1]       [,2] [,3]
+. ECL:  0.10000000 0.07794229    0
+. EVC:  0.07794229 0.30000000    0
+. EKA:  0.00000000 0.00000000    0
+. 
+. $IOV
+.        [,1] [,2]
+. EOC1:   0.5  0.0
+. EOC2:   0.0  0.5
+. 
+. 
+. $sigma
+. $...
+.     [,1]
+. 1:     0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Simulate and plot&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120,nid=5,seed=9765)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ETAs&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;PK&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,CP~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,1))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Just look at WT with no IIV/IOV&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% drop.re&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
+
+out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=240, carry.out=&amp;quot;WT&amp;quot;)
+
+out %&amp;gt;% 
+  as.tbl %&amp;gt;%
+  ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
+  geom_line(lwd=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Cmin versus weight&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% subset(time==240) %&amp;gt;%
+  ggplot(data=.,aes(x=WT,y=CP)) + 
+  geom_line(lwd=1) + geom_point(size=3) + xlab(&amp;quot;Cmin&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pk-with-dialysis-sessions-3-times-per-week&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;PK with dialysis sessions 3 times per week&lt;/h1&gt;
+&lt;div id=&#34;section&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;’&lt;/h2&gt;
+&lt;p&gt;About this control stream&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GUT&lt;/code&gt; and &lt;code&gt;CENT&lt;/code&gt; are regular compartment; we have to provide a differential equation for each&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DIAL&lt;/code&gt; is a compartment that only holds a value; &lt;code&gt;dxdt_DIAL&lt;/code&gt; will automatically be set to &lt;code&gt;0&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CLadd&lt;/code&gt; is the additional drug clearance while on dialysis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
+$PARAM CL=0.7, VC=16, KA=1.8, CLadd = 2.1
+
+$CMT GUT CENT
+
+$VCMT DIAL
+
+$ODE
+dxdt_GUT = -KA*GUT;
+
+dxdt_CENT = KA*GUT -  (CL + CLadd*DIAL)*CENT/VC;
+
+$TABLE double CP = CENT/VC;
+
+$CAPTURE CP
+&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;dialysis&amp;quot;, tempdir(), code) %&amp;gt;% update(end=336, delta=0.25)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Data assembly for doses and dialysis sessions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Set up three weeks of dosing&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;doses &amp;lt;- expand.ev(amt=300, ii=24, addl=13)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;MWF dialysis sessions&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mon &amp;lt;- expand.ev(time=0,ii=7*24,addl=2,cmt=3,evid=8,amt=1)
+wed &amp;lt;- mon %&amp;gt;% mutate(time=2*24)
+fri &amp;lt;- wed %&amp;gt;% mutate(time=4*24)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dialysis starts 8 hours after the AM dose&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dial_start &amp;lt;- bind_rows(mon,wed,fri) %&amp;gt;% mutate(time=time+8)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dialysis lasts 3 hours&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dial_end &amp;lt;- dial_start %&amp;gt;% mutate(time = time+3, amt=0)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Doses and dialysis&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;events &amp;lt;- 
+  bind_rows(dial_start,dial_end,doses) %&amp;gt;% 
+  arrange(time) %&amp;gt;% as.data.frame %&amp;gt;% as.ev
+
+events&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   ID time  ii addl cmt evid amt
+. 1  1    0  24   13   1    1 300
+. 2  1    8 168    2   3    8   1
+. 3  1   11 168    2   3    8   0
+. 4  1   56 168    2   3    8   1
+. 5  1   59 168    2   3    8   0
+. 6  1  104 168    2   3    8   1
+. 7  1  107 168    2   3    8   0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Simulate&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(events) %&amp;gt;%  obsonly %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;PK plot with dialysis sessions marked in red&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% as.tbl %&amp;gt;% filter(time &amp;lt;=7*24) %&amp;gt;%
+  ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
+  geom_path(data=dial,col=&amp;quot;firebrick&amp;quot;, lwd=6, alpha=0.4)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Warning: Removed 1 rows containing missing values (geom_path).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;p&gt;J. Gabrielsson and D. Weiner. Pharmacokinetic and Pharmacodynamic Data Analysis: Concepts and Applications, Fourth Edition. Taylor &amp;amp; Francis, 2007.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Session Info&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::session_info()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.  setting  value                       
+.  version  R version 3.3.2 (2016-10-31)
+.  system   x86_64, darwin13.4.0        
+.  ui       X11                         
+.  language (EN)                        
+.  collate  en_US.UTF-8                 
+.  tz       America/Chicago             
+.  date     2017-02-25                  
+. 
+.  package       * version     date       source                           
+.  assertthat      0.1         2013-12-06 CRAN (R 3.3.2)                   
+.  backports       1.0.5       2017-01-18 cran (@1.0.5)                    
+.  blogdown        0.0.22      2017-02-22 Github (rstudio/blogdown@54cbcc6)
+.  bookdown        0.3.9       2017-02-22 Github (rstudio/bookdown@a5ad84c)
+.  codetools       0.2-15      2016-10-05 CRAN (R 3.3.0)                   
+.  colorspace      1.3-2       2016-12-14 CRAN (R 3.3.2)                   
+.  DBI             0.5-1       2016-09-10 CRAN (R 3.3.2)                   
+.  devtools        1.12.0.9000 2017-01-08 Github (hadley/devtools@1ce84b0) 
+.  digest          0.6.12      2017-01-27 CRAN (R 3.3.2)                   
+.  dplyr         * 0.5.0       2016-06-24 CRAN (R 3.3.2)                   
+.  evaluate        0.10        2016-10-11 CRAN (R 3.3.0)                   
+.  ggplot2       * 2.2.1       2016-12-30 CRAN (R 3.3.2)                   
+.  gtable          0.2.0       2016-02-26 CRAN (R 3.3.2)                   
+.  htmltools       0.3.5       2016-03-21 CRAN (R 3.3.2)                   
+.  knitr           1.15.1      2016-11-22 CRAN (R 3.3.2)                   
+.  labeling        0.3         2014-08-23 CRAN (R 3.3.2)                   
+.  lattice       * 0.20-34     2016-09-06 CRAN (R 3.3.0)                   
+.  lazyeval        0.2.0       2016-06-12 CRAN (R 3.3.2)                   
+.  magrittr      * 1.5         2014-11-22 CRAN (R 3.3.2)                   
+.  memoise         1.0.0       2016-01-29 CRAN (R 3.2.1)                   
+.  mrgsolve      * 0.7.10.9005 2017-02-24 local                            
+.  munsell         0.4.3       2016-02-13 CRAN (R 3.3.2)                   
+.  pkgbuild        0.0.0.9000  2017-01-07 Github (r-pkgs/pkgbuild@65eace0) 
+.  pkgload         0.0.0.9000  2017-01-07 Github (r-pkgs/pkgload@def2b10)  
+.  plyr            1.8.4       2016-06-08 CRAN (R 3.3.2)                   
+.  R6              2.2.0       2016-10-05 CRAN (R 3.3.2)                   
+.  Rcpp            0.12.9      2017-01-14 CRAN (R 3.3.2)                   
+.  RcppArmadillo   0.7.700.0.0 2017-02-08 CRAN (R 3.3.2)                   
+.  rmarkdown       1.3         2016-12-21 CRAN (R 3.3.2)                   
+.  rprojroot       1.2         2017-01-16 CRAN (R 3.3.0)                   
+.  scales          0.4.1       2016-11-09 CRAN (R 3.3.2)                   
+.  stringi         1.1.2       2016-10-01 CRAN (R 3.3.2)                   
+.  stringr         1.2.0       2017-02-18 cran (@1.2.0)                    
+.  tibble          1.2         2016-08-26 CRAN (R 3.3.2)                   
+.  tidyr         * 0.6.1       2017-01-10 CRAN (R 3.3.2)                   
+.  withr           1.0.2       2016-06-20 CRAN (R 3.3.0)                   
+.  yaml            2.1.14      2016-11-12 CRAN (R 3.3.0)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -401,7 +1514,7 @@ mod&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% init(GUT=1000) %&amp;gt;% mrgsim(end=72)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Model:  gallery1.cpp 
 . Dim:    721 x 5 
@@ -422,7 +1535,7 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=1000, ii=12, addl=15) %&amp;gt;% mrgsim(end=336)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events object was just a simple data set that looks like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dosing &amp;lt;- events(out)
 dosing&lt;/code&gt;&lt;/pre&gt;
@@ -441,7 +1554,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 3  3 3000 12    6    1   1    0 3000&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(dose) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=168)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(dose),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-different-bioavability-and-dosing-lag-time&#34; class=&#34;section level1&#34;&gt;
@@ -496,7 +1609,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 
 plot(out, CP~time|factor(FORM),group=ALG, 
      scales=&amp;quot;same&amp;quot;, auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-residual-error&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK model with residual error&lt;/h1&gt;
@@ -537,7 +1650,7 @@ out &amp;lt;-
 ggplot(data=out, aes(x=time)) + 
   geom_point(aes(y=DV),size=3) + 
   geom_line(aes(y=CP), col=&amp;quot;firebrick&amp;quot;,lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-continuous-pk&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by continuous PK&lt;/h1&gt;
@@ -582,7 +1695,7 @@ out &amp;lt;- mod %&amp;gt;%
   Req(CP,RESPONSE) %&amp;gt;% mrgsim(end=480*2)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-metric-summarizing-exposure&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by metric summarizing exposure&lt;/h1&gt;
@@ -626,7 +1739,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% obsonly %&amp;gt;% mrgsim(end=120)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;effect-compartment-model&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Effect compartment model&lt;/h1&gt;
@@ -662,7 +1775,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
 &lt;p&gt;Simulate a snigle 200 unit dose&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=200) %&amp;gt;% obsonly %&amp;gt;% mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Simulate steady state PK/PD under Q12 hour dosing&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
   mod %&amp;gt;% 
@@ -670,7 +1783,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
   mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;, end=168)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model-with-covariates-and-iov&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/h1&gt;
@@ -729,7 +1842,7 @@ dose&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120, nid=5)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;$OMEGA&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And check the result&lt;/p&gt;
@@ -755,10 +1868,10 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120,nid=5,seed=9765)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;ETAs&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,3))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,CP~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,1))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Just look at WT with no IIV/IOV&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% drop.re&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
@@ -769,12 +1882,12 @@ out %&amp;gt;%
   as.tbl %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
   geom_line(lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Cmin versus weight&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% subset(time==240) %&amp;gt;%
   ggplot(data=.,aes(x=WT,y=CP)) + 
   geom_line(lwd=1) + geom_point(size=3) + xlab(&amp;quot;Cmin&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-with-dialysis-sessions-3-times-per-week&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK with dialysis sessions 3 times per week&lt;/h1&gt;
@@ -832,13 +1945,13 @@ events&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Simulate&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(events) %&amp;gt;%  obsonly %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK plot with dialysis sessions marked in red&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% as.tbl %&amp;gt;% filter(time &amp;lt;=7*24) %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
   geom_path(data=dial,col=&amp;quot;firebrick&amp;quot;, lwd=6, alpha=0.4)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Warning: Removed 1 rows containing missing values (geom_path).&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level1&#34;&gt;
@@ -938,6 +2051,226 @@ events&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>Work with event objects</title>
+      <link>/2017/01/31/work-with-event-objects/</link>
+      <pubDate>Tue, 31 Jan 2017 08:00:00 +0000</pubDate>
+      
+      <guid>/2017/01/31/work-with-event-objects/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Event objects are simple ways to implement PK dosing events into your model simulation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Setup&lt;/h1&gt;
+&lt;p&gt;Let’s illustrate event objects with a one-compartment, PK model. We read this model from the &lt;code&gt;mrgsolve&lt;/code&gt; internal model library.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;pk1cmt&amp;quot;, modlib(), end=216, delta=0.1)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;events&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Events&lt;/h1&gt;
+&lt;p&gt;Events are constructed with the &lt;code&gt;ev&lt;/code&gt; function&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e &amp;lt;- ev(amt=100, ii=24, addl=6)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will implement 100 unit doses every 24 hours for a total of 7 doses. &lt;code&gt;e&lt;/code&gt; has class &lt;code&gt;ev&lt;/code&gt;, but really it is just a data frame&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt ii addl evid
+. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;as.data.frame(e)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   time cmt amt ii addl evid
+. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
+  ev(amt=100, ii=24, addl=6) %&amp;gt;%
+  mrgsim %&amp;gt;% 
+  plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Event expectations&lt;/h1&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;amt&lt;/code&gt; is required&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;evid=0&lt;/code&gt; is forbidden&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;time&lt;/code&gt; is 0&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;evid&lt;/code&gt; is 1&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;cmt&lt;/code&gt; is 1&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Also by default, &lt;code&gt;rate&lt;/code&gt;, &lt;code&gt;ss&lt;/code&gt; and &lt;code&gt;ii&lt;/code&gt; are 0.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;combine-events&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Combine events&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; has operators defined that allow you to combine events. Let’s first define some event objects.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=500)
+e2 &amp;lt;- ev(amt=250, ii=24, addl=4)
+e3 &amp;lt;- ev(amt=500, ii=24, addl=0)
+e4 &amp;lt;- ev(amt=250, ii=24, addl=4, time=24)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can combine &lt;code&gt;e1&lt;/code&gt; and &lt;code&gt;e3&lt;/code&gt; with a collection operator&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(e1,e4)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt evid ii addl
+. 1    0   1 500    1  0    0
+. 2   24   1 250    1 24    4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; also defines a &lt;code&gt;%then$&lt;/code&gt; operator that lets you execute one event and &lt;code&gt;%then%&lt;/code&gt; a second event&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e3 %then% e2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt ii addl evid
+. 1    0   1 500 24    0    1
+. 2   24   1 250 24    4    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that &lt;code&gt;e3&lt;/code&gt; has both &lt;code&gt;ii&lt;/code&gt; and &lt;code&gt;addl&lt;/code&gt; defined. This is required for &lt;code&gt;mrgsolve&lt;/code&gt; to know when to start &lt;code&gt;e2&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;combine-event-objects-to-create-a-data-set&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Combine event objects to create a data set&lt;/h1&gt;
+&lt;p&gt;We can take several event objects and combine them into a single simulation data frame with the &lt;code&gt;as_data_set&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100, ii=24, addl=6, ID=1:5)
+e2 &amp;lt;- ev(amt=50,  ii=12, addl=13, ID=1:3)
+e3 &amp;lt;- ev(amt=200, ii=24, addl=2, ID=1:2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When combined into a data set, we get * N=5 IDs receiving 100 mg Q24h x7 * N=3 IDs receiving 50 mg Q12h x 14 * N=2 IDs receiving 200 mg Q48h x 3&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- as_data_set(e1,e2,e3)
+
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    ID time cmt evid amt ii addl
+. 1   1    0   1    1 100 24    6
+. 2   2    0   1    1 100 24    6
+. 3   3    0   1    1 100 24    6
+. 4   4    0   1    1 100 24    6
+. 5   5    0   1    1 100 24    6
+. 6   6    0   1    1  50 12   13
+. 7   7    0   1    1  50 12   13
+. 8   8    0   1    1  50 12   13
+. 9   9    0   1    1 200 24    2
+. 10 10    0   1    1 200 24    2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Work with event objects</title>
+      <link>/topic/events/</link>
+      <pubDate>Tue, 31 Jan 2017 08:00:00 +0000</pubDate>
+      
+      <guid>/topic/events/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+
+
+
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Event objects are simple ways to implement PK dosing events into your model simulation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Setup&lt;/h1&gt;
+&lt;p&gt;Let’s illustrate event objects with a one-compartment, PK model. We read this model from the &lt;code&gt;mrgsolve&lt;/code&gt; internal model library.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;pk1cmt&amp;quot;, modlib(), end=216, delta=0.1)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;events&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Events&lt;/h1&gt;
+&lt;p&gt;Events are constructed with the &lt;code&gt;ev&lt;/code&gt; function&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e &amp;lt;- ev(amt=100, ii=24, addl=6)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will implement 100 unit doses every 24 hours for a total of 7 doses. &lt;code&gt;e&lt;/code&gt; has class &lt;code&gt;ev&lt;/code&gt;, but really it is just a data frame&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt ii addl evid
+. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;as.data.frame(e)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.   time cmt amt ii addl evid
+. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
+  ev(amt=100, ii=24, addl=6) %&amp;gt;%
+  mrgsim %&amp;gt;% 
+  plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Event expectations&lt;/h1&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;amt&lt;/code&gt; is required&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;evid=0&lt;/code&gt; is forbidden&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;time&lt;/code&gt; is 0&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;evid&lt;/code&gt; is 1&lt;/li&gt;
+&lt;li&gt;Default &lt;code&gt;cmt&lt;/code&gt; is 1&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Also by default, &lt;code&gt;rate&lt;/code&gt;, &lt;code&gt;ss&lt;/code&gt; and &lt;code&gt;ii&lt;/code&gt; are 0.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;combine-events&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Combine events&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; has operators defined that allow you to combine events. Let’s first define some event objects.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=500)
+e2 &amp;lt;- ev(amt=250, ii=24, addl=4)
+e3 &amp;lt;- ev(amt=500, ii=24, addl=0)
+e4 &amp;lt;- ev(amt=250, ii=24, addl=4, time=24)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can combine &lt;code&gt;e1&lt;/code&gt; and &lt;code&gt;e3&lt;/code&gt; with a collection operator&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(e1,e4)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt evid ii addl
+. 1    0   1 500    1  0    0
+. 2   24   1 250    1 24    4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; also defines a &lt;code&gt;%then$&lt;/code&gt; operator that lets you execute one event and &lt;code&gt;%then%&lt;/code&gt; a second event&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e3 %then% e2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;. Events:
+.   time cmt amt ii addl evid
+. 1    0   1 500 24    0    1
+. 2   24   1 250 24    4    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that &lt;code&gt;e3&lt;/code&gt; has both &lt;code&gt;ii&lt;/code&gt; and &lt;code&gt;addl&lt;/code&gt; defined. This is required for &lt;code&gt;mrgsolve&lt;/code&gt; to know when to start &lt;code&gt;e2&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;combine-event-objects-to-create-a-data-set&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Combine event objects to create a data set&lt;/h1&gt;
+&lt;p&gt;We can take several event objects and combine them into a single simulation data frame with the &lt;code&gt;as_data_set&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100, ii=24, addl=6, ID=1:5)
+e2 &amp;lt;- ev(amt=50,  ii=12, addl=13, ID=1:3)
+e3 &amp;lt;- ev(amt=200, ii=24, addl=2, ID=1:2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When combined into a data set, we get * N=5 IDs receiving 100 mg Q24h x7 * N=3 IDs receiving 50 mg Q12h x 14 * N=2 IDs receiving 200 mg Q48h x 3&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- as_data_set(e1,e2,e3)
+
+data&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;.    ID time cmt evid amt ii addl
+. 1   1    0   1    1 100 24    6
+. 2   2    0   1    1 100 24    6
+. 3   3    0   1    1 100 24    6
+. 4   4    0   1    1 100 24    6
+. 5   5    0   1    1 100 24    6
+. 6   6    0   1    1  50 12   13
+. 7   7    0   1    1  50 12   13
+. 8   8    0   1    1  50 12   13
+. 9   9    0   1    1 200 24    2
+. 10 10    0   1    1 200 24    2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Flexible, heterogeneous simulation designs in a population</title>
       <link>/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/</link>
       <pubDate>Thu, 05 Jan 2017 13:09:02 +0000</pubDate>
@@ -1008,7 +2341,7 @@ idata&lt;/code&gt;&lt;/pre&gt;
   mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We see that ID 1 has a 24 hour end time, ID 2 has 48 hour simulation time, ID 3 with 72 hour simulation time, and ID 4 96 hour simulation time as reflected in the list of the designs.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|ID)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Check the arguments to &lt;code&gt;design&lt;/code&gt; (&lt;code&gt;?design&lt;/code&gt;). There is a &lt;code&gt;descol&lt;/code&gt; argument that is required. &lt;code&gt;descol&lt;/code&gt; in this function refers to a column in &lt;code&gt;idata_set&lt;/code&gt; to be used as the grouping variable to assign the sampling design. &lt;code&gt;as_deslist&lt;/code&gt; also had a &lt;code&gt;descol&lt;/code&gt; argument that referred to a column in the input data frame for that function. We don’t need to pass &lt;code&gt;descol&lt;/code&gt; to &lt;code&gt;design()&lt;/code&gt; because we created the design list with &lt;code&gt;as_deslist&lt;/code&gt;: &lt;code&gt;design()&lt;/code&gt; reads &lt;code&gt;descol&lt;/code&gt; from the attribute. We don’t &lt;strong&gt;have&lt;/strong&gt; to use &lt;code&gt;as_deslist&lt;/code&gt; to create the design list. It could be just a plan old &lt;code&gt;R&lt;/code&gt; list created by you with &lt;code&gt;tgrid&lt;/code&gt; objects. In that case, you must state what &lt;code&gt;descol&lt;/code&gt; is when you call &lt;code&gt;design()&lt;/code&gt;.&lt;br /&gt;
 And it can’t be emphasized enough here that you &lt;strong&gt;MUST&lt;/strong&gt; use an &lt;code&gt;idata_set&lt;/code&gt; for this to work and &lt;code&gt;idata_set&lt;/code&gt; must contain a valid &lt;code&gt;descol&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -1045,9 +2378,9 @@ out &amp;lt;-
   mrgsim(carry.out=&amp;quot;ARM&amp;quot;)
 
 plot(out, CP~time|factor(ARM))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(ID))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-10-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-10-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;list-cols-and-additional-times&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;code&gt;list-cols&lt;/code&gt; and &lt;code&gt;additional&lt;/code&gt; times&lt;/h3&gt;
@@ -1075,7 +2408,7 @@ des&lt;/code&gt;&lt;/pre&gt;
   design(as_deslist(des)) %&amp;gt;% 
   mrgsim %&amp;gt;% 
   plot(CP~time|factor(ID), type=&amp;#39;b&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/05/flexible-heterogeneous-simulation-designs-in-a-population/figures/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-04-as_deslist_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Ok … not the most lovely-looking result we’ve seen before, but maybe that’s just what you needed in this simulation.&lt;/p&gt;
 &lt;/div&gt;
 </description>
@@ -1131,7 +2464,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 mod %&amp;gt;% 
   mrgsim(data=data) %&amp;gt;% 
   plot(CP~time|factor(ID),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as_data_set&#34; class=&#34;section level3&#34;&gt;
@@ -1212,7 +2545,7 @@ mod %&amp;gt;%
   data_set(data) %&amp;gt;% 
   mrgsim() %&amp;gt;% 
   plot&lt;/code&gt;&lt;/pre&gt;
-&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;
+&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as.data.frame.ev&#34; class=&#34;section level3&#34;&gt;
@@ -1286,7 +2619,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 2  1   48   1 250    1 168    3
 . 3  1   96   1 250    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Or, you can do 100 mg doses on Monday, Wednesday, Friday, and 50 mg doses on Tuesday, Thursday, with drug holiday on weekends&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100,ID=1)
 e2 &amp;lt;- ev(amt=50,ID=1)
@@ -1300,7 +2633,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 5  1   96   1 100    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And simulate&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The same thing can be accomplished like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- ev_days(e1,days=&amp;quot;m,w,f&amp;quot;,addl=3)
 b &amp;lt;- ev_days(e2,days=&amp;quot;t,th&amp;quot;,addl=3)
@@ -1658,543 +2991,6 @@ approx(e$x,e$y, xout=13)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Because many different data types could possibly be in the mix now, we need to take an extra step or two to access those objects. This means an extra step to go into the &lt;code&gt;$ENV&lt;/code&gt; environment, and &lt;code&gt;get&lt;/code&gt; an object. This usually only needs to be done &lt;strong&gt;ONCE&lt;/strong&gt; … at the start of the problem. We go get the required objects and have them ready to use as the simulation proceeds. This is essentially what the &lt;code&gt;$PREAMBLE&lt;/code&gt; block is for: it is a C++ function (like &lt;code&gt;$MAIN&lt;/code&gt;) that gets called once and lets you set up the C++ environment as you please … including extracting objects from your &lt;code&gt;$ENV&lt;/code&gt; (or potentially from &lt;code&gt;.GlobalEnv&lt;/code&gt;) or from other &lt;code&gt;R&lt;/code&gt; packages.&lt;/p&gt;
 &lt;p&gt;You will see illustrated below several functions in the &lt;code&gt;mrgx&lt;/code&gt; plugin that help you do this. Remember also that since we are importing &lt;code&gt;R&lt;/code&gt; objects that are &lt;code&gt;vectors&lt;/code&gt;, &lt;code&gt;matrices&lt;/code&gt;, and &lt;code&gt;functions&lt;/code&gt;, we also need to invoke the &lt;code&gt;Rcpp&lt;/code&gt; plugin.&lt;/p&gt;
 &lt;p&gt;Note that we are getting and calling an &lt;code&gt;R&lt;/code&gt; function in this problem. This is fine if no other alternative is available / possible. But be aware that there will be &lt;strong&gt;some&lt;/strong&gt; performance ding for this. It would be much more efficient to code an &lt;code&gt;Rcpp&lt;/code&gt; version of &lt;code&gt;approx&lt;/code&gt;. We have that function and it does speed things up. Hopefully another vignette coming that illustrates how to set up that function.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/topic/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/topic/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-
-
-
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div id=&#34;extended-examples&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Extended examples&lt;/h2&gt;
-&lt;p&gt;A complete listing of tagged content can be found &lt;a href=&#34;./tax/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;quick&#34;&gt;Brief feature demonstrations&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;map_bayes&#34;&gt;Generate MAP Bayes estimates&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;modmrg&#34;&gt;Internal model library&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;model-gallery&#34;&gt;Model gallery&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;events&#34;&gt;Working with event objects&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Generate MAP Bayes Parameter Estimates</title>
-      <link>/topic/map_bayes/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/topic/map_bayes/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-
-
-
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
-library(mrgsolve)
-library(minqa)
-library(dplyr)
-library(magrittr)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;about&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;About&lt;/h1&gt;
-&lt;p&gt;This tutorial illustrates how to do MAP Bayes estimation with &lt;code&gt;mrgsolve&lt;/code&gt;.&lt;br /&gt;
-The setup was adapted from an existing project, where only a single individual was considered. With some additional &lt;code&gt;R&lt;/code&gt; coding, it could be expanded to consider multiple individuals in a single run.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;one-compartment-model-keep-it-simple-for-now&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;One compartment model, keep it simple for now&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The model specification code below is for a one-compartment model, where &lt;code&gt;mrgsolve&lt;/code&gt; will calculate the amount in &lt;code&gt;CENT&lt;/code&gt; from closed-form equations&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;For now, &lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt; are filled with zeros; we’ll update it later&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The control stream is set up so that we can either simulate the etas or pass them in. &lt;code&gt;ETA(1)&lt;/code&gt; and &lt;code&gt;ETA(2)&lt;/code&gt; are the etas that &lt;code&gt;mrgsolve&lt;/code&gt; will draw from &lt;code&gt;$OMEGA&lt;/code&gt;. &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; are fixed and known at the time of time of the simulation. The optimizer will search for values of &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; that optimize the objective function. Note that &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt; must be in the parameter list for this to work&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;We do a trick where &lt;code&gt;CL=TVCL*exp(ETA1+ETA(1));&lt;/code&gt; The assumption is that either &lt;code&gt;ETA1&lt;/code&gt; (simulating) is zero or &lt;code&gt;ETA(1)&lt;/code&gt; is zero (estimating)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;We table out &lt;code&gt;ETA(1)&lt;/code&gt; and &lt;code&gt;ETA(2)&lt;/code&gt; so we can know the true (simulated) values (but not both zero and not both non-zero)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;DV&lt;/code&gt; is output as a function of &lt;code&gt;EPS(1)&lt;/code&gt;; this will be zero until we add in values for &lt;code&gt;$SIGMA&lt;/code&gt;. But when we’re estimating, we need to make sure that &lt;code&gt;EPS(1)&lt;/code&gt; is zero; the prediction shouldn’t have any randomness in it (just the individual prediction based on known etas)&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
-$SET request=&amp;quot;&amp;quot;
-
-$PARAM TVCL=1.5, TVVC=23.4, ETA1=0, ETA2=0
-
-$CMT CENT
-
-$PKMODEL ncmt=1
-
-$OMEGA 0 0
-$SIGMA 0
-
-$MAIN
-double CL = TVCL*exp(ETA1 + ETA(1));
-double V =  TVVC*exp(ETA2 + ETA(2));
-
-$TABLE 
-double DV = (CENT/V)*(1+EPS(1));
-double ET1 = ETA(1);
-double ET2 = ETA(2);
-
-$CAPTURE DV ET1 ET2
-&amp;#39;
-
-mod &amp;lt;- mcode(&amp;quot;map&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;first-simulate-some-data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;First, simulate some data&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt;;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The result may look better or worse depending on what we choose here&lt;/li&gt;
-&lt;li&gt;These will be used to both simulate and fit the data&lt;/li&gt;
-&lt;li&gt;The &lt;code&gt;cmat&lt;/code&gt; call makes a &lt;code&gt;2x2&lt;/code&gt; matrix where the off-diagonal is a correlation (&lt;code&gt;?cmat&lt;/code&gt;).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;omega &amp;lt;- cmat(0.23,-0.78, 0.62)
-omega.inv &amp;lt;- solve(omega)
-sigma &amp;lt;- matrix(0.0032)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Just a single dose to &lt;code&gt;CENT&lt;/code&gt; with an events object&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dose &amp;lt;- ev(amt=750,cmt=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Take these times for concentration observations&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sampl &amp;lt;- c(0.5,12,24)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Simulate&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Here, we’re populating &lt;code&gt;$OMEGA&lt;/code&gt; and &lt;code&gt;$SIGMA&lt;/code&gt; so that the simulated data will be random&lt;/li&gt;
-&lt;li&gt;It is important to &lt;code&gt;carry.out&lt;/code&gt; all of the items that we will need in the estimation data set (doses, evid, etc)&lt;/li&gt;
-&lt;li&gt;Using &lt;code&gt;end=-1&lt;/code&gt; with &lt;code&gt;add=sampl&lt;/code&gt; makes sure that we only get observation records at the times listed in &lt;code&gt;sampl&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(1012) 
-sim &amp;lt;- 
-  mod %&amp;gt;%
-  ev(dose) %&amp;gt;%
-  omat(omega) %&amp;gt;%
-  smat(sigma) %&amp;gt;%
-  carry.out(amt,evid,cmt) %&amp;gt;%
-  mrgsim(end=-1, add=sampl)
-
-sim&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Model:  map.cpp 
-. Dim:    4 x 8 
-. Time:   0 to 24 
-. ID:     1 
-.      ID time evid amt cmt     DV    ET1     ET2
-. [1,]  1  0.0    1 750   1 41.067 0.5196 -0.2728
-. [2,]  1  0.5    0   0   0 42.749 0.5196 -0.2728
-. [3,]  1 12.0    0   0   0  6.932 0.5196 -0.2728
-. [4,]  1 24.0    0   0   0  1.375 0.5196 -0.2728&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;create-input-for-optimization&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Create input for optimization&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Using the simulated data as the starting point here&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sim %&amp;lt;&amp;gt;% as.data.frame&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Observed data (&lt;code&gt;y&lt;/code&gt;)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Just select &lt;code&gt;DV&lt;/code&gt; from observation records&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;y &amp;lt;- sim %&amp;gt;% filter(evid==0) %&amp;gt;% select(DV) %&amp;gt;% unlist %&amp;gt;% unname
-
-y&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. [1] 42.749445  6.932391  1.374557&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Create a data set to use in the optimization&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;We need to drop &lt;code&gt;ET1&lt;/code&gt; and &lt;code&gt;ET2&lt;/code&gt; since they are in the parameter list&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- sim %&amp;gt;% select(-ET1, -ET2)
-data&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.   ID time evid amt cmt        DV
-. 1  1  0.0    1 750   1 41.067037
-. 2  1  0.5    0   0   0 42.749445
-. 3  1 12.0    0   0   0  6.932391
-. 4  1 24.0    0   0   0  1.374557&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;optimize&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Optimize&lt;/h1&gt;
-&lt;p&gt;This function takes in a set of proposed &lt;span class=&#34;math inline&#34;&gt;\(\eta\)&lt;/span&gt;s along with the observed data vector, the data set and a model object and returns the value of the EBE objective function&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;When we do the estimation, the fixed effects and random effect variances are fixed.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;The estimates are the &lt;span class=&#34;math inline&#34;&gt;\(\eta\)&lt;/span&gt; for clearance and volume&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Arguments:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;eta&lt;/code&gt; the current values from the optimizer&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;y&lt;/code&gt; the observed data&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d&lt;/code&gt; the data set that generated &lt;code&gt;y&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;m&lt;/code&gt; the model object&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pred&lt;/code&gt; if &lt;code&gt;TRUE&lt;/code&gt;, just return predicted values&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;what-is-this-function-doing&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What is this function doing?&lt;/h2&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;get the matrix for residual error&lt;/li&gt;
-&lt;li&gt;Make sure &lt;code&gt;eta&lt;/code&gt; is a list&lt;/li&gt;
-&lt;li&gt;Make sure &lt;code&gt;eta&lt;/code&gt; is properly named (i.e. &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Copy &lt;code&gt;eta&lt;/code&gt; into a matrix that is one row&lt;/li&gt;
-&lt;li&gt;Update the model object (&lt;code&gt;m&lt;/code&gt;) with the current values of &lt;code&gt;ETA1&lt;/code&gt; and &lt;code&gt;ETA2&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;If we are estimating (&lt;code&gt;!pred&lt;/code&gt;), request only observations in the output (&lt;code&gt;obsonly&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Simulate from data set &lt;code&gt;d&lt;/code&gt; and save output to &lt;code&gt;out&lt;/code&gt; object&lt;/li&gt;
-&lt;li&gt;If we are just requesting predictions (&lt;code&gt;if(pred)&lt;/code&gt;) return the simulated data&lt;/li&gt;
-&lt;li&gt;The final lines calculate the EBE objective function; see &lt;a href=&#34;http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3339294/&#34;&gt;this paper&lt;/a&gt; for reference&lt;/li&gt;
-&lt;li&gt;Notice that the function returns a single value (a number); the optimizer will minimize this value&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mapbayes &amp;lt;- function(eta,y,d,m,pred=FALSE) {
-    
-  sig2 &amp;lt;- as.numeric(sigma)
-  eta %&amp;lt;&amp;gt;% as.list
-  names(eta) &amp;lt;- names(init)
-  eta_m &amp;lt;- eta %&amp;gt;% unlist %&amp;gt;% matrix(nrow=1)
-  m %&amp;lt;&amp;gt;% param(eta)
-  if(!pred) m %&amp;lt;&amp;gt;% obsonly
-  out &amp;lt;- m %&amp;gt;% drop.re() %&amp;gt;% data_set(d) %&amp;gt;% mrgsim
-  if(pred) return(out %&amp;gt;% as.tbl)
-  # http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3339294/
-  sig2j &amp;lt;- out$DV^2*sig2
-  sqwres &amp;lt;- log(sig2j) + (1/sig2j)*(y-out$DV)^2
-  nOn &amp;lt;- diag(eta_m %*% omega.inv %*% t(eta_m))
-  return(sum(sqwres) + nOn)
-
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;initial-estimate&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Initial estimate&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Note again that we are optimizing the etas here&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;init &amp;lt;- c(ETA1=-0.3, ETA2=0.2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Fit the data&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;newuoa&lt;/code&gt; is from the &lt;code&gt;minqa&lt;/code&gt; package&lt;/li&gt;
-&lt;li&gt;Other optimizers (via &lt;code&gt;optim&lt;/code&gt;) could probably also be used&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Arguments to &lt;code&gt;newuoa&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;First: the initial estimates&lt;/li&gt;
-&lt;li&gt;Second: the function to optimize&lt;/li&gt;
-&lt;li&gt;The other argument are passed to &lt;code&gt;mapbayes&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- newuoa(init,mapbayes,y=y,m=mod,d=data)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here are the final estimates&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit$par&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. [1]  0.4995400 -0.3274858&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here are the simulated values&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;slice(sim,1) %&amp;gt;% select(ET1, ET2)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.        ET1        ET2
-. 1 0.519569 -0.2727675&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;look-at-the-result&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Look at the result&lt;/h1&gt;
-&lt;p&gt;A data set and model to get predictions; this will give us a smooth prediction line&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pdata &amp;lt;- data %&amp;gt;% filter(evid==1)
-pmod &amp;lt;- mod %&amp;gt;% update(end=24, delta=0.1) &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Predicted line based on final estimates&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pred &amp;lt;- mapbayes(fit$par,y,pdata,pmod,pred=TRUE) %&amp;gt;% filter(time &amp;gt; 0)
-head(pred)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. # A tibble: 6 × 5
-.      ID  time       DV   ET1   ET2
-.   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-. 1     1   0.1 43.82331     0     0
-. 2     1   0.2 43.18567     0     0
-. 3     1   0.3 42.55731     0     0
-. 4     1   0.4 41.93809     0     0
-. 5     1   0.5 41.32789     0     0
-. 6     1   0.6 40.72656     0     0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Predicted line based on initial estimates&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;initial &amp;lt;- mapbayes(init,y,pdata,pmod,pred=TRUE) %&amp;gt;% filter(time &amp;gt; 0)
-head(initial)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. # A tibble: 6 × 5
-.      ID  time       DV   ET1   ET2
-.   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-. 1     1   0.1 26.13954     0     0
-. 2     1   0.2 26.03811     0     0
-. 3     1   0.3 25.93707     0     0
-. 4     1   0.4 25.83642     0     0
-. 5     1   0.5 25.73616     0     0
-. 6     1   0.6 25.63629     0     0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Plot&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot() + 
-  geom_line(data=pred, aes(time,DV),col=&amp;quot;firebrick&amp;quot;, lwd=1) + 
-  geom_line(data=initial,aes(time,DV), lty=2, col=&amp;quot;darkgreen&amp;quot;, lwd=1) + 
-  geom_point(data=data %&amp;gt;% filter(evid==0), aes(time,DV), col=&amp;quot;darkslateblue&amp;quot;,size=3)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/map_bayes/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Simulation from PK/PD and QSP models in R</title>
-      <link>/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-
-
-
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;div id=&#34;free-workshop&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Free workshop&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Developing Interactive Visualization Tools for Model-Supported R&amp;amp;D&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Saturday, March 18th Washington, DC&lt;/li&gt;
-&lt;li&gt;Info: &lt;a href=&#34;http://metrumrg.com/events/index.html&#34; class=&#34;uri&#34;&gt;http://metrumrg.com/events/index.html&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;about&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;About&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is an &lt;code&gt;R&lt;/code&gt; package designed to facilitate simulation from hierarchical, ordinary differential equation (ODE) based models typically employed in drug development. The modeler creates a model specification file consisting of &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;C++&lt;/code&gt; code that is parsed, compiled, and dynamically loaded into the &lt;code&gt;R&lt;/code&gt; session. Input data are passed in and simulated data are returned as &lt;code&gt;R&lt;/code&gt; objects, so disk access is never required during the simulation cycle after compiling.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;mrgsolve-is-free-open-source-software&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is free, open-source software&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; is distributed as a package for &lt;code&gt;R&lt;/code&gt; and &lt;img src=&#34;./images/mrgsolve_sticker_812418_1.png&#34; width=&#34;100px&#34; align=&#34;right&#34;&gt; utilizes an ODE-solver from &lt;code&gt;ODEPACK&lt;/code&gt; which is freely-available in the public domain. We develop &lt;code&gt;mrgsolve&lt;/code&gt; on &lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve&#34;&gt;github&lt;/a&gt;, with input and contributions from the pharmacometrics modeling and simulation community. We welcome feature requests and bug reports on the GitHub site &lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve/issues&#34;&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;documentation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Documentation&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://mrgsolve.github.io/user_guide&#34;&gt;User Guide&lt;/a&gt;: In-depth description and discussion about how &lt;code&gt;mrgsolve&lt;/code&gt; works, including code block reference&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://mrgsolve.github.io/docs&#34;&gt;R documentation&lt;/a&gt;: All &lt;code&gt;mrgsolve&lt;/code&gt; documentation that you would find in the &lt;code&gt;R&lt;/code&gt; help system&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;./topic/&#34;&gt;Help topics&lt;/a&gt;: Some extended examples illustrating &lt;code&gt;mrgsolve&lt;/code&gt; simulation workflow&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;./topic/quick&#34;&gt;Quick hit demos&lt;/a&gt;: Features that you might have a hard time finding in other documentation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;links-and-resources&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Links and Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.github.com/metrumresearchgroup/mrgsolve&#34;&gt;GitHub Page&lt;/a&gt;: Browse source code, find useful examples, get help installing, report issues&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;./tax/&#34;&gt;Site navagation&lt;/a&gt;: A listing of all tagged content on this site, including blog posts and other help / demonstration content&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://metrumrg.com&#34;&gt;Metrum Research Group&lt;/a&gt;: Our main website&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;an-example&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;An example&lt;/h2&gt;
-&lt;p&gt;The following is a simple example to illustrate the basics of how &lt;code&gt;mrgsolve&lt;/code&gt; works. You can find more examples and usage vignettes in the links above or in the “Help Topics” menu in the nav bar at the top of the &lt;a href=&#34;https://mrgsolve.github.io&#34;&gt;mrgsolve.github.io&lt;/a&gt; main page.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;First, a model object is created. As an introduction, we will use a pre-coded model from an internal library.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;irm1&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;An overview about this model&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. 
-. 
-. -------- mrgsolve model object (unix) --------
-.   Project: /Users/kyleb/Rlibs/lib/mrgsolve/models
-.   source:        irm1.cpp
-.   shared object: irm1-so-128c96a73f62d 
-. 
-.   compile date:  
-.   Time:          start: 0 end: 24 delta: 1
-.   &amp;gt;              add: &amp;lt;none&amp;gt;
-.   &amp;gt;              tscale: 1
-. 
-.   Compartments:  EV1 CENT PERIPH RESP EV2 [5]
-.   Parameters:    CL VC Q VP KA1 KA2
-.   &amp;gt;              KIN KOUT IC50 IMAX n VMAX
-.   &amp;gt;              KM [13]
-.   Omega:         0x0 
-.   Sigma:         0x0 
-. 
-.   Solver:        atol: 1e-08 rtol: 1e-08
-.   &amp;gt;              maxsteps: 2000 hmin: 0 hmax: 0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Next, let’s create an intervention for the model. We do this with an event object.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e &amp;lt;- ev(amt=100, ii=24, addl=3)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now, we simulate with our model object (&lt;code&gt;mod&lt;/code&gt;) and the event object (&lt;code&gt;e&lt;/code&gt;)&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(e) %&amp;gt;% mrgsim(end=240,delta=0.1)
-out&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Model:  irm1.cpp 
-. Dim:    2402 x 8 
-. Time:   0 to 240 
-. ID:     1 
-.      ID time    EV1   CENT  PERIPH  RESP EV2     CP
-. [1,]  1  0.0   0.00  0.000 0.00000 5.000   0 0.0000
-. [2,]  1  0.0 100.00  0.000 0.00000 5.000   0 0.0000
-. [3,]  1  0.1  90.48  9.444 0.04781 4.903   0 0.4722
-. [4,]  1  0.2  81.87 17.851 0.18294 4.688   0 0.8926
-. [5,]  1  0.3  74.08 25.323 0.39390 4.426   0 1.2662
-. [6,]  1  0.4  67.03 31.953 0.67040 4.151   0 1.5977
-. [7,]  1  0.5  60.65 37.824 1.00324 3.882   0 1.8912
-. [8,]  1  0.6  54.88 43.013 1.38417 3.628   0 2.1507&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And plot&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;The source code for this model:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(mrgsolve:::code(mod),sep=&amp;quot;\n&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;  $PROB
-  # Model: `irm1`
-    - Indirect response model, type 1
-        - Inhibition of response input
-        - Two-compartment PK model
-        - Optional nonlinear clearance
-    - Source: `mrgsolve` internal library
-    - Date: `r Sys.Date()`
-    - Version: `r packageVersion(&amp;quot;mrgsolve&amp;quot;)`
-  
-  $PARAM @annotated
-  CL   :  1  : Clearance (volume/time)
-  VC   : 20  : Central volume (volume)
-  Q    :  2  : Inter-compartmental clearance (volume/time)
-  VP   : 10  : Peripheral volume of distribution (volume)
-  KA1  :  1  : Absorption rate constant 1 (1/time)
-  KA2  :  1  : Absorption rate constant 2 (1/time)
-  KIN  : 10  : Response in rate constant (1/time)
-  KOUT :  2  : Response out rate constant (1/time)
-  IC50 :  2  : Concentration for 50% of max inhibition (mass/volume)
-  IMAX :  1  : Maximum inhibition 
-  n    :  1  : Emax model sigmoidicity
-  VMAX :  0  : Maximum reaction velocity (mass/time)
-  KM   :  2  : Michaelis constant (mass/volume)
-  
-  $CMT  @annotated
-  EV1    : First extravascular compartment (mass)
-  CENT   : Central compartment (mass)
-  PERIPH : Peripheral compartment (mass) 
-  RESP   : Response compartment
-  EV2    : Second extravascular compartment (mass)
-  
-  $GLOBAL
-  #define CP (CENT/VC)
-  #define CT (PERIPH/VP)
-  #define CLNL (VMAX/(KM+CP))
-  #define INH (IMAX*pow(CP,n)/(pow(IC50,n)+pow(CP,n)))
-  
-  $MAIN
-  RESP_0 = KIN/KOUT;
-  
-  $ODE
-  dxdt_EV1    = -KA1*EV1;
-  dxdt_EV2    = -KA2*EV2;
-  dxdt_CENT   =  KA1*EV1 + KA2*EV2 - (CL+CLNL+Q)*CP  + Q*CT;
-  dxdt_PERIPH =  Q*CP - Q*CT;
-  dxdt_RESP   =  KIN*(1-INH) - KOUT*RESP;
-  
-  $CAPTURE @annotated
-  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Work with event objects</title>
-      <link>/topic/events/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/topic/events/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-
-
-
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)
-library(dplyr)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;Event objects are simple ways to implement PK dosing events into your model simulation.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;setup&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Setup&lt;/h1&gt;
-&lt;p&gt;Let’s illustrate event objects with a one-compartment, PK model. We read this model from the &lt;code&gt;mrgsolve&lt;/code&gt; internal model library.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;pk1cmt&amp;quot;, modlib(), end=216, delta=0.1)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;events&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Events&lt;/h1&gt;
-&lt;p&gt;Events are constructed with the &lt;code&gt;ev&lt;/code&gt; function&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e &amp;lt;- ev(amt=100, ii=24, addl=6)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This will implement 100 unit doses every 24 hours for a total of 7 doses. &lt;code&gt;e&lt;/code&gt; has class &lt;code&gt;ev&lt;/code&gt;, but really it is just a data frame&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Events:
-.   time cmt amt ii addl evid
-. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;as.data.frame(e)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.   time cmt amt ii addl evid
-. 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
-  ev(amt=100, ii=24, addl=6) %&amp;gt;%
-  mrgsim %&amp;gt;% 
-  plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Event expectations&lt;/h1&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;code&gt;amt&lt;/code&gt; is required&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;evid=0&lt;/code&gt; is forbidden&lt;/li&gt;
-&lt;li&gt;Default &lt;code&gt;time&lt;/code&gt; is 0&lt;/li&gt;
-&lt;li&gt;Default &lt;code&gt;evid&lt;/code&gt; is 1&lt;/li&gt;
-&lt;li&gt;Default &lt;code&gt;cmt&lt;/code&gt; is 1&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Also by default, &lt;code&gt;rate&lt;/code&gt;, &lt;code&gt;ss&lt;/code&gt; and &lt;code&gt;ii&lt;/code&gt; are 0.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;combine-events&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Combine events&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; has operators defined that allow you to combine events. Let’s first define some event objects.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=500)
-e2 &amp;lt;- ev(amt=250, ii=24, addl=4)
-e3 &amp;lt;- ev(amt=500, ii=24, addl=0)
-e4 &amp;lt;- ev(amt=250, ii=24, addl=4, time=24)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can combine &lt;code&gt;e1&lt;/code&gt; and &lt;code&gt;e3&lt;/code&gt; with a collection operator&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(e1,e4)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Events:
-.   time cmt amt evid ii addl
-. 1    0   1 500    1  0    0
-. 2   24   1 250    1 24    4&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;mrgsolve&lt;/code&gt; also defines a &lt;code&gt;%then$&lt;/code&gt; operator that lets you execute one event and &lt;code&gt;%then%&lt;/code&gt; a second event&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e3 %then% e2&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;. Events:
-.   time cmt amt ii addl evid
-. 1    0   1 500 24    0    1
-. 2   24   1 250 24    4    1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Notice that &lt;code&gt;e3&lt;/code&gt; has both &lt;code&gt;ii&lt;/code&gt; and &lt;code&gt;addl&lt;/code&gt; defined. This is required for &lt;code&gt;mrgsolve&lt;/code&gt; to know when to start &lt;code&gt;e2&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;combine-event-objects-to-create-a-data-set&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Combine event objects to create a data set&lt;/h1&gt;
-&lt;p&gt;We can take several event objects and combine them into a single simulation data frame with the &lt;code&gt;as_data_set&lt;/code&gt; function.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100, ii=24, addl=6, ID=1:5)
-e2 &amp;lt;- ev(amt=50,  ii=12, addl=13, ID=1:3)
-e3 &amp;lt;- ev(amt=200, ii=24, addl=2, ID=1:2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;When combined into a data set, we get * N=5 IDs receiving 100 mg Q24h x7 * N=3 IDs receiving 50 mg Q12h x 14 * N=2 IDs receiving 200 mg Q48h x 3&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- as_data_set(e1,e2,e3)
-
-data&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;.    ID time cmt evid amt ii addl
-. 1   1    0   1    1 100 24    6
-. 2   2    0   1    1 100 24    6
-. 3   3    0   1    1 100 24    6
-. 4   4    0   1    1 100 24    6
-. 5   5    0   1    1 100 24    6
-. 6   6    0   1    1  50 12   13
-. 7   7    0   1    1  50 12   13
-. 8   8    0   1    1  50 12   13
-. 9   9    0   1    1 200 24    2
-. 10 10    0   1    1 200 24    2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

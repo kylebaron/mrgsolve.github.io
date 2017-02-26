@@ -1,6 +1,6 @@
 ---
 title: "Work with event objects"
-tags: "events"
+date: 2017-01-31T08:00:00
 ---
 
 
