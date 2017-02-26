@@ -3,6 +3,12 @@ title: "Simulation from PK/PD and QSP models in R"
 type: page
 ---
 
+```{r,echo=FALSE,message=FALSE}
+knitr::opts_chunk$set(cache=TRUE,autodep=TRUE,message=FALSE,fig.align="center")
+source("ref.R")
+```
+
+
 ## Free workshop
 - __Developing Interactive Visualization Tools for Model-Supported R&D__
 - Saturday, March 18th Washington, DC
@@ -24,7 +30,7 @@ bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresea
 ## Documentation
 * [User Guide](http://mrgsolve.github.io/user_guide): In-depth description and discussion about how `mrgsolve` works, including code block reference
 * [R documentation](http://mrgsolve.github.io/docs): All `mrgsolve` documentation that you would find in the `R` help system
-* [Quick hit demos](/blog/quick): Features that you might have a hard time finding in other documentation
+* [Quick hit demos](`r .ref$quick`): Features that you might have a hard time finding in other documentation
 
 ## Links and Resources
 * [GitHub Page](http://www.github.com/metrumresearchgroup/mrgsolve): Browse source code, find useful examples, get help installing, report issues
@@ -37,9 +43,7 @@ other help / demonstration content
 
 The following is a simple example to illustrate the basics of how `mrgsolve` works.  You can find more examples and usage vignettes in the links above or in the "Help Topics" menu in the nav bar at the top of the [mrgsolve.github.io](https://mrgsolve.github.io) main page.
 
-```{r,echo=FALSE,message=FALSE}
-knitr::opts_chunk$set(cache=TRUE,autodep=TRUE,message=FALSE,fig.align="center")
-```
+
 
 ```{r,message=FALSE}
 library(mrgsolve)
