@@ -58,7 +58,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 mod %&amp;gt;% 
   mrgsim(data=data) %&amp;gt;% 
   plot(CP~time|factor(ID),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as_data_set&#34; class=&#34;section level3&#34;&gt;
@@ -139,7 +139,7 @@ mod %&amp;gt;%
   data_set(data) %&amp;gt;% 
   mrgsim() %&amp;gt;% 
   plot&lt;/code&gt;&lt;/pre&gt;
-&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;
+&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;
 &lt;hr&gt;
 &lt;/div&gt;
 &lt;div id=&#34;as.data.frame.ev&#34; class=&#34;section level3&#34;&gt;
@@ -213,7 +213,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 2  1   48   1 250    1 168    3
 . 3  1   96   1 250    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Or, you can do 100 mg doses on Monday, Wednesday, Friday, and 50 mg doses on Tuesday, Thursday, with drug holiday on weekends&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;e1 &amp;lt;- ev(amt=100,ID=1)
 e2 &amp;lt;- ev(amt=50,ID=1)
@@ -227,7 +227,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 5  1   96   1 100    1 168    3&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And simulate&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(data=data,end=168*4) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/01/generating-input-data-sets-for-mrgsolve/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto auto auto 0;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The same thing can be accomplished like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- ev_days(e1,days=&amp;quot;m,w,f&amp;quot;,addl=3)
 b &amp;lt;- ev_days(e2,days=&amp;quot;t,th&amp;quot;,addl=3)
