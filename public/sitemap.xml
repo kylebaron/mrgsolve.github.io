@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/2017/02/25/setting-initial-conditions/</loc>
+    <lastmod>2017-02-25T23:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/02/25/complete-example/</loc>
+    <lastmod>2017-02-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tax/</loc>
     <lastmod>2017-02-24T09:42:22-06:00</lastmod>
   </url>
@@ -47,6 +57,11 @@
   </url>
   
   <url>
+    <loc>/topic/</loc>
+    <lastmod>2017-02-04T08:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/01/31/work-with-event-objects/</loc>
     <lastmod>2017-01-31T08:00:00+00:00</lastmod>
   </url>
@@ -74,11 +89,6 @@
   <url>
     <loc>/2017/01/01/work-with-r-objects-in-your-model/</loc>
     <lastmod>2017-01-01T13:09:13-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/topic/</loc>
-    <lastmod>2017-01-01T08:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -139,7 +149,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-02-23T16:49:01-06:00</lastmod>
+    <lastmod>2017-02-25T23:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -190,7 +200,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-02-24T09:42:22-06:00</lastmod>
+    <lastmod>2017-02-25T23:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
