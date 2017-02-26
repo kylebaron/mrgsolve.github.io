@@ -3,8 +3,8 @@ export PATH := /Applications/RStudio.app/Contents/MacOS/pandoc:$(PATH)
 DEST := ../../mrgsolve.github.io/
 
 publish:
-	#cp -r public/ ${DEST}
-	rsync -arv --delete public/ ../../mrgsolve.github.io
+	cp -r public/ ${DEST}
+	#rsync -arv --delete public/ ../../mrgsolve.github.io
 	cd ${DEST} && git add * && git commit -am "publish"	
 
 
