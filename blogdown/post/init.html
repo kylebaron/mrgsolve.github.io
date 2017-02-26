@@ -4,6 +4,7 @@ title: "Setting initial conditions"
 output: 
   blogdown::html_page:
     toc: true
+    number_sections: true
 tags: "initial conditions"
 ---
 
@@ -17,28 +18,28 @@ tags: "initial conditions"
 
 <div id="TOC">
 <ul>
-<li><a href="#short-answer">Short answer</a><ul>
-<li><a href="#set-initials-in-main">Set initials in <code>$MAIN</code></a></li>
-<li><a href="#set-initials-in-the-init-list">Set initials in the <code>init</code> list</a></li>
-<li><a href="#dont-use-initial-conditions-as-a-dosing-mechanism">Don’t use initial conditions as a dosing mechanism</a></li>
+<li><a href="#short-answer"><span class="toc-section-number">1</span> Short answer</a><ul>
+<li><a href="#set-initials-in-main"><span class="toc-section-number">1.1</span> Set initials in <code>$MAIN</code></a></li>
+<li><a href="#set-initials-in-the-init-list"><span class="toc-section-number">1.2</span> Set initials in the <code>init</code> list</a></li>
+<li><a href="#dont-use-initial-conditions-as-a-dosing-mechanism"><span class="toc-section-number">1.3</span> Don’t use initial conditions as a dosing mechanism</a></li>
 </ul></li>
-<li><a href="#long-answer">Long answer</a><ul>
-<li><a href="#make-a-model-only-to-examine-init-behavior">Make a model only to examine <code>init</code> behavior</a></li>
-<li><a href="#example-pkpd-model-with-initial-condition">Example PK/PD model with initial condition</a></li>
-<li><a href="#calling-init-will-let-you-check-to-see-what-is-going-on">Calling <code>init</code> will let you check to see what is going on</a></li>
+<li><a href="#long-answer"><span class="toc-section-number">2</span> Long answer</a><ul>
+<li><a href="#make-a-model-only-to-examine-init-behavior"><span class="toc-section-number">2.1</span> Make a model only to examine <code>init</code> behavior</a></li>
+<li><a href="#example-pkpd-model-with-initial-condition"><span class="toc-section-number">2.2</span> Example PK/PD model with initial condition</a></li>
+<li><a href="#calling-init-will-let-you-check-to-see-what-is-going-on"><span class="toc-section-number">2.3</span> Calling <code>init</code> will let you check to see what is going on</a></li>
 </ul></li>
-<li><a href="#extra-bonus-set-initial-conditions-via-idata">Extra bonus: set initial conditions via <code>idata</code></a></li>
-<li><a href="#session-info">Session Info</a></li>
+<li><a href="#extra-bonus-set-initial-conditions-via-idata"><span class="toc-section-number">3</span> Extra bonus: set initial conditions via <code>idata</code></a></li>
+<li><a href="#session-info"><span class="toc-section-number">4</span> Session Info</a></li>
 </ul>
 </div>
 <!-- /BLOGDOWN-BODY-BEFORE -->
 
 <pre class="r"><code>library(mrgsolve)</code></pre>
 <div id="short-answer" class="section level1">
-<h1>Short answer</h1>
+<h1><span class="header-section-number">1</span> Short answer</h1>
 <p>There are two commonly-used ways to set initial conditions: in <code>$MAIN</code> and in the initial condition list.</p>
 <div id="set-initials-in-main" class="section level2">
-<h2>Set initials in <code>$MAIN</code></h2>
+<h2><span class="header-section-number">1.1</span> Set initials in <code>$MAIN</code></h2>
 <p>For a compartment called <code>CMT</code>, there is a variable available to you called <code>CMT_0</code> that you can use to set the initial condition of that compartment in <code>$MAIN</code>. For example:</p>
 <pre class="r"><code>code &lt;- &#39;
 $PARAM KIN = 200, KOUT = 50
@@ -51,7 +52,7 @@ RESP_0 = KIN/KOUT;
 <p>This is the most commonly-used way to set initial conditions: the initial condition for the <code>RESP</code> compartment is set equal to <code>KIN</code> divided by <code>KOUT</code>. If you had a parameter called <code>BASE</code>, you could also write <code>RESP_0 = BASE;</code>. In these examples, we’re using data items from <code>$PARAM</code>. But the initial condition could be set to any numeric value in the model, including individual parameters derived from parameters, covariates, and random effects. Note that you should never declare <code>RESP_0</code> (e.g. <code>double RESP_0</code>): it just appears for you to use.</p>
 </div>
 <div id="set-initials-in-the-init-list" class="section level2">
-<h2>Set initials in the <code>init</code> list</h2>
+<h2><span class="header-section-number">1.2</span> Set initials in the <code>init</code> list</h2>
 <p>You can also set initial conditions in the initials list. Most commonly, this means declaring compartments with <code>$INIT</code> rather than <code>$CMT</code>. For example</p>
 <pre class="r"><code>code &lt;- &#39;
 $INIT RESP = 4
@@ -73,12 +74,12 @@ init(mod)</code></pre>
 <p>This method is commonly used to set initial conditions in large QSP models where the compartment starts out as some known or assumed steady state value.</p>
 </div>
 <div id="dont-use-initial-conditions-as-a-dosing-mechanism" class="section level2">
-<h2>Don’t use initial conditions as a dosing mechanism</h2>
+<h2><span class="header-section-number">1.3</span> Don’t use initial conditions as a dosing mechanism</h2>
 <p>Using an initial condition to put a starting dose in a compartment is not recommended. Always use a dosing event for that.</p>
 </div>
 </div>
 <div id="long-answer" class="section level1">
-<h1>Long answer</h1>
+<h1><span class="header-section-number">2</span> Long answer</h1>
 <p>The following is from a wiki post I did on the topic. It’s pedantic. But hopefully helpful to learn what <code>mrgsolve</code> is doing for those who want to know.</p>
 <ul>
 <li><code>mrgsolve</code> keeps a base list of compartments and initial conditions that you can update <strong>either</strong> from <code>R</code> or from inside the model specification
@@ -100,7 +101,7 @@ init(mod)</code></pre>
 <li>For larger systems models, we often just set the initial value via the base list</li>
 </ul>
 <div id="make-a-model-only-to-examine-init-behavior" class="section level2">
-<h2>Make a model only to examine <code>init</code> behavior</h2>
+<h2><span class="header-section-number">2.1</span> Make a model only to examine <code>init</code> behavior</h2>
 <p>Note: <code>IFLAG</code> is my invention only for this demo. The demo is always responsible for setting and interpreting the value (it is not reserved in any way and <code>mrgsolve</code> does not control the value).</p>
 <p>For this demo</p>
 <ul>
@@ -153,7 +154,7 @@ dplot &lt;- function(x) plot(x,ylim=c(0,400))</code></pre>
 <p><img src="#####content/post/init_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 </div>
 <div id="example-pkpd-model-with-initial-condition" class="section level2">
-<h2>Example PK/PD model with initial condition</h2>
+<h2><span class="header-section-number">2.2</span> Example PK/PD model with initial condition</h2>
 <p>Just to be clear, there is no need to set any sort of flag to set the initial condition.</p>
 <pre class="r"><code>code &lt;- &#39;
 $PARAM AUC=0, AUC50 = 75, KIN=200, KOUT=5
@@ -187,7 +188,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 . [8,]  1    7   40</code></pre>
 </div>
 <div id="calling-init-will-let-you-check-to-see-what-is-going-on" class="section level2">
-<h2>Calling <code>init</code> will let you check to see what is going on</h2>
+<h2><span class="header-section-number">2.3</span> Calling <code>init</code> will let you check to see what is going on</h2>
 <ul>
 <li>It’s a good idea to get in the habit of doing this when things aren’t clear</li>
 <li><code>init</code> first takes the base initial condition list, then calls <code>$MAIN</code> and does any calculation you have in there; so the result is the calculated initials</li>
@@ -205,7 +206,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 </div>
 </div>
 <div id="extra-bonus-set-initial-conditions-via-idata" class="section level1">
-<h1>Extra bonus: set initial conditions via <code>idata</code></h1>
+<h1><span class="header-section-number">3</span> Extra bonus: set initial conditions via <code>idata</code></h1>
 <p>Go back to house model</p>
 <pre class="r"><code>mod &lt;- mrgsolve:::house()
 init(mod)</code></pre>
@@ -239,7 +240,7 @@ idata %&gt;% head</code></pre>
 <p><img src="#####content/post/init_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="session-info" class="section level1">
-<h1>Session Info</h1>
+<h1><span class="header-section-number">4</span> Session Info</h1>
 <pre><code>. R version 3.3.2 (2016-10-31)
 . Platform: x86_64-apple-darwin13.4.0 (64-bit)
 . Running under: OS X Mavericks 10.9.5

@@ -89,17 +89,17 @@ ga('send', 'pageview');
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#population-pk-model">Population PK model</a></li>
-<li><a href="#input-data-set">Input data set</a></li>
-<li><a href="#simulation">Simulation</a></li>
-<li><a href="#output-presentation">Output presentation</a></li>
-<li><a href="#summary">Summary</a></li>
+<li><a href="#introduction"><span class="toc-section-number">0.1</span> Introduction</a></li>
+<li><a href="#population-pk-model"><span class="toc-section-number">0.2</span> Population PK model</a></li>
+<li><a href="#input-data-set"><span class="toc-section-number">0.3</span> Input data set</a></li>
+<li><a href="#simulation"><span class="toc-section-number">0.4</span> Simulation</a></li>
+<li><a href="#output-presentation"><span class="toc-section-number">0.5</span> Output presentation</a></li>
+<li><a href="#summary"><span class="toc-section-number">0.6</span> Summary</a></li>
 </ul>
 </div>
 
 <div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<h2><span class="header-section-number">0.1</span> Introduction</h2>
 <p>We had a user who was learning <code>mrgsolve</code> ask for a “complete example”. I wasn’t sure what exactly that meant, but I created this example and I’m sharing it today on the blog.</p>
 <p>This is an invented example to illustrate features and workflow for <code>mrgsolve</code>. If you attend one of our training workshops, we work examples using published models to answer real questions you’ll encounter in drug development. So compared to the workshop material, this is a bit contrived. But I wanted to show how you might tackle a problem involving a population model from end to end.</p>
 <pre class="r"><code>library(mrgsolve)
@@ -108,7 +108,7 @@ library(dmutate)
 library(ggplot2)</code></pre>
 </div>
 <div id="population-pk-model" class="section level2">
-<h2>Population PK model</h2>
+<h2><span class="header-section-number">0.2</span> Population PK model</h2>
 <ul>
 <li>One compartment with first order absorption</li>
 <li>There are no ODEs in this model; the system is advanced for each time step through closed-form equations for the amount in each compartment</li>
@@ -161,7 +161,7 @@ $CAPTURE WT CL
 <pre class="r"><code>mod &lt;- mcode_cache(&quot;demo&quot;, code)</code></pre>
 </div>
 <div id="input-data-set" class="section level2">
-<h2>Input data set</h2>
+<h2><span class="header-section-number">0.3</span> Input data set</h2>
 <ul>
 <li><code>N=2000</code> patients are simulated in this example</li>
 <li>We simulate patient-level weight and sex using the <a href="https://github.com/kylebmetrum/dmutate"><code>dmutate</code></a> package</li>
@@ -208,7 +208,7 @@ head(data)</code></pre>
 <p><strong>NOTE</strong>: this is just one way to set up a <code>data_set</code> for <code>mrgsolve</code>. It might not be the best approach for your problem: maybe it’s too complicated, maybe not complicated enough. See other examples in the blog about creating input data sets or using event objects in your simulations.</p>
 </div>
 <div id="simulation" class="section level2">
-<h2>Simulation</h2>
+<h2><span class="header-section-number">0.4</span> Simulation</h2>
 <ul>
 <li>We “carry” (copy) the dose group indicator into the simulated output (<code>carry_out</code>)</li>
 <li>Also, we only collect observation records in the output (<code>obsonly</code>)</li>
@@ -239,7 +239,7 @@ out</code></pre>
 . [8,]  1    7      0  0.04367 60.52 52.56 0.9589  3822 5287.74</code></pre>
 </div>
 <div id="output-presentation" class="section level2">
-<h2>Output presentation</h2>
+<h2><span class="header-section-number">0.5</span> Output presentation</h2>
 <ul>
 <li>For some plots, we use a <code>plot</code> method for <code>mrgsims</code> objects (the object that is returned from the <code>mrgsim</code> function</li>
 <li>For the other plots, it’s really just turning the <code>mrgsims</code> object into a <code>data.frame</code> and have at it with <code>ggplot2</code></li>
@@ -263,7 +263,7 @@ out</code></pre>
 <p><img src="figures/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="summary" class="section level2">
-<h2>Summary</h2>
+<h2><span class="header-section-number">0.6</span> Summary</h2>
 <p>This example illustrated how to code a population PK model in <code>mrgsolve</code> format, create input data sets with varied dosing and covariate values, simulate, and plot some results. I also hope this example illustrates the design priorities for the <code>mrgsolve</code> workflow: we always try to leverage existing functionality available in <code>R</code> (such as <code>dmutate</code>, <code>dplyr</code> and <code>ggplot</code>) rather than re-creating our own inside the <code>mrgsolve</code> package. This might require you to write some more code, but ultimately it gives greater flexibility to get the simulation that you need for your project.</p>
 <p>We regularly do work with models that are more complicated and design simulations that have bigger demands than this example here. We’d be happy to discuss more-complicated applications that you might be needing for your project work. For now we hope this example will give you some ideas how you can add complexity to your simulation project today.</p>
 </div>

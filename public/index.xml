@@ -25,28 +25,28 @@
 
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#short-answer&#34;&gt;Short answer&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#set-initials-in-main&#34;&gt;Set initials in &lt;code&gt;$MAIN&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#set-initials-in-the-init-list&#34;&gt;Set initials in the &lt;code&gt;init&lt;/code&gt; list&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#dont-use-initial-conditions-as-a-dosing-mechanism&#34;&gt;Don’t use initial conditions as a dosing mechanism&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#short-answer&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;1&lt;/span&gt; Short answer&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#set-initials-in-main&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;1.1&lt;/span&gt; Set initials in &lt;code&gt;$MAIN&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#set-initials-in-the-init-list&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;1.2&lt;/span&gt; Set initials in the &lt;code&gt;init&lt;/code&gt; list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dont-use-initial-conditions-as-a-dosing-mechanism&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;1.3&lt;/span&gt; Don’t use initial conditions as a dosing mechanism&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#long-answer&#34;&gt;Long answer&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#make-a-model-only-to-examine-init-behavior&#34;&gt;Make a model only to examine &lt;code&gt;init&lt;/code&gt; behavior&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#example-pkpd-model-with-initial-condition&#34;&gt;Example PK/PD model with initial condition&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#calling-init-will-let-you-check-to-see-what-is-going-on&#34;&gt;Calling &lt;code&gt;init&lt;/code&gt; will let you check to see what is going on&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#long-answer&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;2&lt;/span&gt; Long answer&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#make-a-model-only-to-examine-init-behavior&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;2.1&lt;/span&gt; Make a model only to examine &lt;code&gt;init&lt;/code&gt; behavior&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#example-pkpd-model-with-initial-condition&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;2.2&lt;/span&gt; Example PK/PD model with initial condition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#calling-init-will-let-you-check-to-see-what-is-going-on&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;2.3&lt;/span&gt; Calling &lt;code&gt;init&lt;/code&gt; will let you check to see what is going on&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#extra-bonus-set-initial-conditions-via-idata&#34;&gt;Extra bonus: set initial conditions via &lt;code&gt;idata&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#session-info&#34;&gt;Session Info&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#extra-bonus-set-initial-conditions-via-idata&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;3&lt;/span&gt; Extra bonus: set initial conditions via &lt;code&gt;idata&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#session-info&#34;&gt;&lt;span class=&#34;toc-section-number&#34;&gt;4&lt;/span&gt; Session Info&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(mrgsolve)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;short-answer&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Short answer&lt;/h1&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;1&lt;/span&gt; Short answer&lt;/h1&gt;
 &lt;p&gt;There are two commonly-used ways to set initial conditions: in &lt;code&gt;$MAIN&lt;/code&gt; and in the initial condition list.&lt;/p&gt;
 &lt;div id=&#34;set-initials-in-main&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Set initials in &lt;code&gt;$MAIN&lt;/code&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;1.1&lt;/span&gt; Set initials in &lt;code&gt;$MAIN&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;For a compartment called &lt;code&gt;CMT&lt;/code&gt;, there is a variable available to you called &lt;code&gt;CMT_0&lt;/code&gt; that you can use to set the initial condition of that compartment in &lt;code&gt;$MAIN&lt;/code&gt;. For example:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
 $PARAM KIN = 200, KOUT = 50
@@ -59,7 +59,7 @@ RESP_0 = KIN/KOUT;
 &lt;p&gt;This is the most commonly-used way to set initial conditions: the initial condition for the &lt;code&gt;RESP&lt;/code&gt; compartment is set equal to &lt;code&gt;KIN&lt;/code&gt; divided by &lt;code&gt;KOUT&lt;/code&gt;. If you had a parameter called &lt;code&gt;BASE&lt;/code&gt;, you could also write &lt;code&gt;RESP_0 = BASE;&lt;/code&gt;. In these examples, we’re using data items from &lt;code&gt;$PARAM&lt;/code&gt;. But the initial condition could be set to any numeric value in the model, including individual parameters derived from parameters, covariates, and random effects. Note that you should never declare &lt;code&gt;RESP_0&lt;/code&gt; (e.g. &lt;code&gt;double RESP_0&lt;/code&gt;): it just appears for you to use.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;set-initials-in-the-init-list&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Set initials in the &lt;code&gt;init&lt;/code&gt; list&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;1.2&lt;/span&gt; Set initials in the &lt;code&gt;init&lt;/code&gt; list&lt;/h2&gt;
 &lt;p&gt;You can also set initial conditions in the initials list. Most commonly, this means declaring compartments with &lt;code&gt;$INIT&lt;/code&gt; rather than &lt;code&gt;$CMT&lt;/code&gt;. For example&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
 $INIT RESP = 4
@@ -81,12 +81,12 @@ init(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This method is commonly used to set initial conditions in large QSP models where the compartment starts out as some known or assumed steady state value.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;dont-use-initial-conditions-as-a-dosing-mechanism&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Don’t use initial conditions as a dosing mechanism&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;1.3&lt;/span&gt; Don’t use initial conditions as a dosing mechanism&lt;/h2&gt;
 &lt;p&gt;Using an initial condition to put a starting dose in a compartment is not recommended. Always use a dosing event for that.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;long-answer&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Long answer&lt;/h1&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;2&lt;/span&gt; Long answer&lt;/h1&gt;
 &lt;p&gt;The following is from a wiki post I did on the topic. It’s pedantic. But hopefully helpful to learn what &lt;code&gt;mrgsolve&lt;/code&gt; is doing for those who want to know.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;mrgsolve&lt;/code&gt; keeps a base list of compartments and initial conditions that you can update &lt;strong&gt;either&lt;/strong&gt; from &lt;code&gt;R&lt;/code&gt; or from inside the model specification
@@ -108,7 +108,7 @@ init(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;For larger systems models, we often just set the initial value via the base list&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div id=&#34;make-a-model-only-to-examine-init-behavior&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Make a model only to examine &lt;code&gt;init&lt;/code&gt; behavior&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.1&lt;/span&gt; Make a model only to examine &lt;code&gt;init&lt;/code&gt; behavior&lt;/h2&gt;
 &lt;p&gt;Note: &lt;code&gt;IFLAG&lt;/code&gt; is my invention only for this demo. The demo is always responsible for setting and interpreting the value (it is not reserved in any way and &lt;code&gt;mrgsolve&lt;/code&gt; does not control the value).&lt;/p&gt;
 &lt;p&gt;For this demo&lt;/p&gt;
 &lt;ul&gt;
@@ -161,7 +161,7 @@ dplot &amp;lt;- function(x) plot(x,ylim=c(0,400))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-11-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;example-pkpd-model-with-initial-condition&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Example PK/PD model with initial condition&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.2&lt;/span&gt; Example PK/PD model with initial condition&lt;/h2&gt;
 &lt;p&gt;Just to be clear, there is no need to set any sort of flag to set the initial condition.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;code &amp;lt;- &amp;#39;
 $PARAM AUC=0, AUC50 = 75, KIN=200, KOUT=5
@@ -195,7 +195,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 . [8,]  1    7   40&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;calling-init-will-let-you-check-to-see-what-is-going-on&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Calling &lt;code&gt;init&lt;/code&gt; will let you check to see what is going on&lt;/h2&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.3&lt;/span&gt; Calling &lt;code&gt;init&lt;/code&gt; will let you check to see what is going on&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;It’s a good idea to get in the habit of doing this when things aren’t clear&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;init&lt;/code&gt; first takes the base initial condition list, then calls &lt;code&gt;$MAIN&lt;/code&gt; and does any calculation you have in there; so the result is the calculated initials&lt;/li&gt;
@@ -213,7 +213,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extra-bonus-set-initial-conditions-via-idata&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Extra bonus: set initial conditions via &lt;code&gt;idata&lt;/code&gt;&lt;/h1&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;3&lt;/span&gt; Extra bonus: set initial conditions via &lt;code&gt;idata&lt;/code&gt;&lt;/h1&gt;
 &lt;p&gt;Go back to house model&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house()
 init(mod)&lt;/code&gt;&lt;/pre&gt;
@@ -247,7 +247,7 @@ idata %&amp;gt;% head&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Session Info&lt;/h1&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;4&lt;/span&gt; Session Info&lt;/h1&gt;
 &lt;pre&gt;&lt;code&gt;. R version 3.3.2 (2016-10-31)
 . Platform: x86_64-apple-darwin13.4.0 (64-bit)
 . Running under: OS X Mavericks 10.9.5
@@ -280,11 +280,11 @@ idata %&amp;gt;% head&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
-      <title>Complete example</title>
-      <link>/2017/02/25/complete-example/</link>
+      <title>A Complete Example</title>
+      <link>/2017/02/25/a-complete-example/</link>
       <pubDate>Sat, 25 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/02/25/complete-example/</guid>
+      <guid>/2017/02/25/a-complete-example/</guid>
       <description>&lt;!-- BLOGDOWN-HEAD --&gt;
 
 
@@ -455,19 +455,19 @@ out&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;This shows the plot method for &lt;code&gt;mrgsims&lt;/code&gt; objects&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, IPRED+DV~., subset=ID==10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/complete-example/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;mrgsims&lt;/code&gt; object can be passed right into &lt;code&gt;dplyr::filter&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tr &amp;lt;- filter(out, time==240)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Simulated day 10 concentration versus patient weight by dose/weight group&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(tr, aes(x=WT,y=DV)) + 
   geom_point() +  facet_wrap(~dosegr) +
   geom_smooth(method=&amp;quot;loess&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/complete-example/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Density plots of day 10 concentrations in the two dose/weight groups&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(tr,aes(x=DV,fill=factor(dosegr))) + 
   geom_density(alpha=0.5) +
   scale_fill_brewer(palette=&amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/complete-example/figures/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;

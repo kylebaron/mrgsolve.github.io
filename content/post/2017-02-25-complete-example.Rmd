@@ -1,5 +1,5 @@
 ---
-title: Complete example
+title: A Complete Example
 date: '2017-02-25'
 output: 
   blogdown::html_page:
