@@ -63,10 +63,10 @@ code .MathJax {
 }
 
 .nav-logo img {
-  display: block;
+  /*display: block;*/
   max-height: 40px;
   width: auto;
-  border-radius: 0%;
+ /* border-radius: 0%;*/
 }
 
 .nav-links {

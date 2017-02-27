@@ -25,9 +25,10 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
   name="Blog"
   url="/post/"
   weight=2
-[[params.navlinks]]
-  name="foo"
-  url="/topic/"
+[[menu.main]]
+  name="MetrumRG"
+  url="http://metrumrg.com"
+  weight=5
 
 [taxonimies]
 tag="tags"
@@ -35,7 +36,7 @@ categories="categories"
 
   
 [params]
-  description = "Simulation from PKPD models in R."
+  description = "Simulate from ODE-based PKPD & QSP models in R."
   # options for highlight.js (version, additional languages, and theme)
   highlightjsVersion = "9.9.0"
   highlightjsLang = ["r", "yaml"]
@@ -43,8 +44,6 @@ categories="categories"
 
   [params.logo]
   url = "mrgsolve_transparent.png"
-  width = 400
-  height = 200
   alt = "Logo"
 
    
