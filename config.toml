@@ -36,7 +36,7 @@ categories="categories"
 
   
 [params]
-  description = "Simulate from ODE-based PKPD & QSP models in R."
+  description = "Simulate from ODE-based PKPD & QSP models in R"
   # options for highlight.js (version, additional languages, and theme)
   highlightjsVersion = "9.9.0"
   highlightjsLang = ["r", "yaml"]

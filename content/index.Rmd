@@ -1,5 +1,5 @@
 ---
-title: "Simulate from PKPD & QSP models in R."
+title: "Simulate from PKPD & QSP models in R"
 type: page
 ---
 
