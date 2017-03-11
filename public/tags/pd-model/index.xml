@@ -35,7 +35,7 @@ mod %&amp;gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&amp;gt;%
   mrgsim(end=320) %&amp;gt;% 
   plot(CP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;see(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. 
 . Model file:  pk2cmt.cpp 
@@ -121,7 +121,7 @@ out &amp;lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pkpd-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;PK/PD model&lt;/h3&gt;
@@ -182,7 +182,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
 .  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=700,time=50) %&amp;gt;% param(n=1.5,KOUT=0.02) %&amp;gt;%
   mrgsim(end=480) %&amp;gt;% plot(CP+RESP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Population PK model&lt;/h3&gt;
@@ -191,7 +191,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
   ev(amt=100) %&amp;gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&amp;gt;%
   plot(DV+ECL~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

@@ -8,6 +8,9 @@ knitr::opts_chunk$set(cache=TRUE,autodep=TRUE,message=FALSE,fig.align="center")
 source("ref.R")
 ```
 
+[![CRAN](http://www.r-pkg.org/badges/version/mrgsolve)](https://cran.r-project.org/package=mrgsolve)
+[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) 
+[![questions](https://www.codewake.com/badges/ask_question.svg)](https://github.com/metrumresearchgroup/mrgsolve/issues)
 
 ## Free workshop
 - __Developing Interactive Visualization Tools for Model-Supported R&D__
@@ -79,7 +82,7 @@ plot(out)
 
 
 The source code for this model:
-```{r,comment=" "}
+```{r,comment=" ",echo=FALSE}
 cat(mrgsolve:::code(mod),sep="\n")
 ```
 

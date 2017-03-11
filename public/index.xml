@@ -274,14 +274,14 @@ dplot &amp;lt;- function(x) plot(x,ylim=c(0,400))&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;So, if we don’t update something in &lt;code&gt;$MAIN&lt;/code&gt; the initial condition is as we set it in the base list&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% dplot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Next, we update the base initial condition for &lt;code&gt;A&lt;/code&gt; to 100&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Note:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The code in &lt;code&gt;$MAIN&lt;/code&gt; still doesn’t get run because &lt;code&gt;IFLAG&lt;/code&gt; is 0&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% init(A = 100) %&amp;gt;% mrgsim %&amp;gt;% dplot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Now, turn on &lt;code&gt;IFLAG&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Note:&lt;/p&gt;
 &lt;ul&gt;
@@ -289,9 +289,9 @@ dplot &amp;lt;- function(x) plot(x,ylim=c(0,400))&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;code&gt;A_0&lt;/code&gt; is set to the value of &lt;code&gt;BASE&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% param(IFLAG=1) %&amp;gt;% mrgsim %&amp;gt;% dplot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% param(IFLAG=1, BASE=300) %&amp;gt;% mrgsim %&amp;gt;% dplot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-11-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-11-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;example-pkpd-model-with-initial-condition&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.2&lt;/span&gt; Example PK/PD model with initial condition&lt;/h2&gt;
@@ -310,7 +310,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mcode(&amp;quot;init_long2&amp;quot;, code)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The initial condition is set to 40 per the values of &lt;code&gt;KIN&lt;/code&gt; and &lt;code&gt;KOUT&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Even when we change &lt;code&gt;RESP_0&lt;/code&gt; in &lt;code&gt;R&lt;/code&gt;, the calculation in &lt;code&gt;$MAIN&lt;/code&gt; gets the final say&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% init(RESP=1E9) %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Model:  init_long2.cpp 
@@ -377,7 +377,7 @@ idata %&amp;gt;% head&lt;/code&gt;&lt;/pre&gt;
   idata_set(idata) %&amp;gt;% 
   mrgsim(end=40)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CENT~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/setting-initial-conditions/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/init_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;4&lt;/span&gt; Session Info&lt;/h1&gt;
@@ -588,19 +588,19 @@ out&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;This shows the plot method for &lt;code&gt;mrgsims&lt;/code&gt; objects&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, IPRED+DV~., subset=ID==10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;mrgsims&lt;/code&gt; object can be passed right into &lt;code&gt;dplyr::filter&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tr &amp;lt;- filter(out, time==240)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Simulated day 10 concentration versus patient weight by dose/weight group&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(tr, aes(x=WT,y=DV)) + 
   geom_point() +  facet_wrap(~dosegr) +
   geom_smooth(method=&amp;quot;loess&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Density plots of day 10 concentrations in the two dose/weight groups&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(tr,aes(x=DV,fill=factor(dosegr))) + 
   geom_density(alpha=0.5) +
   scale_fill_brewer(palette=&amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/25/a-complete-example/figures/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
@@ -700,10 +700,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default, both &lt;code&gt;OMEGA&lt;/code&gt; and &lt;code&gt;SIGMA&lt;/code&gt; are zeroed. Check the arguments for &lt;code&gt;zero_re&lt;/code&gt; to see how to selectively zero &lt;code&gt;OMEGA&lt;/code&gt; or &lt;code&gt;SIGMA&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Compare the population output&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/quick/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;with&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% zero_re %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/quick/figures/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plot-formulae&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Plot formulae&lt;/h1&gt;
@@ -711,10 +711,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% events(ev(amt=100))
 
 mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/quick/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot can be customized with a formula selecting variables to plot. Other arguments to &lt;code&gt;lattice::xyplot&lt;/code&gt; can be passed as well.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot(CP+RESP ~ time, lty=2, col=&amp;quot;firebrick&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/quick/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/quick_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -790,10 +790,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;By default, both &lt;code&gt;OMEGA&lt;/code&gt; and &lt;code&gt;SIGMA&lt;/code&gt; are zeroed. Check the arguments for &lt;code&gt;zero_re&lt;/code&gt; to see how to selectively zero &lt;code&gt;OMEGA&lt;/code&gt; or &lt;code&gt;SIGMA&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Compare the population output&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;with&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=100) %&amp;gt;% zero_re %&amp;gt;% mrgsim(nid=20) %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plot-formulae&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Plot formulae&lt;/h1&gt;
@@ -801,10 +801,10 @@ omat(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mrgsolve:::house() %&amp;gt;% events(ev(amt=100))
 
 mod %&amp;gt;% mrgsim %&amp;gt;% plot&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The plot can be customized with a formula selecting variables to plot. Other arguments to &lt;code&gt;lattice::xyplot&lt;/code&gt; can be passed as well.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim %&amp;gt;% plot(CP+RESP ~ time, lty=2, col=&amp;quot;firebrick&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/quick/figures/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/quick_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -836,7 +836,7 @@ mod %&amp;gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&amp;gt;%
   mrgsim(end=320) %&amp;gt;% 
   plot(CP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;see(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. 
 . Model file:  pk2cmt.cpp 
@@ -922,7 +922,7 @@ out &amp;lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pkpd-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;PK/PD model&lt;/h3&gt;
@@ -983,7 +983,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
 .  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=700,time=50) %&amp;gt;% param(n=1.5,KOUT=0.02) %&amp;gt;%
   mrgsim(end=480) %&amp;gt;% plot(CP+RESP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Population PK model&lt;/h3&gt;
@@ -992,7 +992,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
   ev(amt=100) %&amp;gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&amp;gt;%
   plot(DV+ECL~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/access-models-in-the-internal-library/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/modmrg_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1024,7 +1024,7 @@ mod %&amp;gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&amp;gt;%
   mrgsim(end=320) %&amp;gt;% 
   plot(CP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;see(mod)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. 
 . Model file:  pk2cmt.cpp 
@@ -1110,7 +1110,7 @@ out &amp;lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pkpd-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;PK/PD model&lt;/h3&gt;
@@ -1171,7 +1171,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
 .  CP : Plasma concentration (mass/volume)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% ev(amt=700,time=50) %&amp;gt;% param(n=1.5,KOUT=0.02) %&amp;gt;%
   mrgsim(end=480) %&amp;gt;% plot(CP+RESP~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Population PK model&lt;/h3&gt;
@@ -1180,7 +1180,7 @@ see(mod)&lt;/code&gt;&lt;/pre&gt;
   ev(amt=100) %&amp;gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&amp;gt;%
   plot(DV+ECL~.)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/modmrg/figures/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/modmrg_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1422,7 +1422,7 @@ head(initial)&lt;/code&gt;&lt;/pre&gt;
   geom_line(data=pred, aes(time,DV),col=&amp;quot;firebrick&amp;quot;, lwd=1) + 
   geom_line(data=initial,aes(time,DV), lty=2, col=&amp;quot;darkgreen&amp;quot;, lwd=1) + 
   geom_point(data=data %&amp;gt;% filter(evid==0), aes(time,DV), col=&amp;quot;darkslateblue&amp;quot;,size=3)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/generate-map-bayes-parameter-estimates/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/map_bayes_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -1522,7 +1522,7 @@ mod&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% init(GUT=1000) %&amp;gt;% mrgsim(end=72)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Model:  gallery1.cpp 
 . Dim:    721 x 5 
@@ -1543,7 +1543,7 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=1000, ii=12, addl=15) %&amp;gt;% mrgsim(end=336)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events object was just a simple data set that looks like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dosing &amp;lt;- events(out)
 dosing&lt;/code&gt;&lt;/pre&gt;
@@ -1562,7 +1562,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 3  3 3000 12    6    1   1    0 3000&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(dose) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=168)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(dose),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-different-bioavability-and-dosing-lag-time&#34; class=&#34;section level1&#34;&gt;
@@ -1617,7 +1617,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 
 plot(out, CP~time|factor(FORM),group=ALG, 
      scales=&amp;quot;same&amp;quot;, auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-residual-error&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK model with residual error&lt;/h1&gt;
@@ -1658,7 +1658,7 @@ out &amp;lt;-
 ggplot(data=out, aes(x=time)) + 
   geom_point(aes(y=DV),size=3) + 
   geom_line(aes(y=CP), col=&amp;quot;firebrick&amp;quot;,lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-continuous-pk&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by continuous PK&lt;/h1&gt;
@@ -1703,7 +1703,7 @@ out &amp;lt;- mod %&amp;gt;%
   Req(CP,RESPONSE) %&amp;gt;% mrgsim(end=480*2)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-metric-summarizing-exposure&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by metric summarizing exposure&lt;/h1&gt;
@@ -1747,7 +1747,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% obsonly %&amp;gt;% mrgsim(end=120)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;effect-compartment-model&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Effect compartment model&lt;/h1&gt;
@@ -1783,7 +1783,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
 &lt;p&gt;Simulate a snigle 200 unit dose&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=200) %&amp;gt;% obsonly %&amp;gt;% mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Simulate steady state PK/PD under Q12 hour dosing&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
   mod %&amp;gt;% 
@@ -1791,7 +1791,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
   mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;, end=168)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model-with-covariates-and-iov&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/h1&gt;
@@ -1850,7 +1850,7 @@ dose&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120, nid=5)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;$OMEGA&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And check the result&lt;/p&gt;
@@ -1876,10 +1876,10 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120,nid=5,seed=9765)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;ETAs&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,3))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,CP~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,1))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Just look at WT with no IIV/IOV&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% drop.re&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
@@ -1890,12 +1890,12 @@ out %&amp;gt;%
   as.tbl %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
   geom_line(lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Cmin versus weight&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% subset(time==240) %&amp;gt;%
   ggplot(data=.,aes(x=WT,y=CP)) + 
   geom_line(lwd=1) + geom_point(size=3) + xlab(&amp;quot;Cmin&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-with-dialysis-sessions-3-times-per-week&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK with dialysis sessions 3 times per week&lt;/h1&gt;
@@ -1953,13 +1953,13 @@ events&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Simulate&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(events) %&amp;gt;%  obsonly %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK plot with dialysis sessions marked in red&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% as.tbl %&amp;gt;% filter(time &amp;lt;=7*24) %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
   geom_path(data=dial,col=&amp;quot;firebrick&amp;quot;, lwd=6, alpha=0.4)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Warning: Removed 1 rows containing missing values (geom_path).&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/02/23/model-gallery/figures/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/model-gallery_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level1&#34;&gt;
@@ -2115,7 +2115,7 @@ mod&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% init(GUT=1000) %&amp;gt;% mrgsim(end=72)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Model:  gallery1.cpp 
 . Dim:    721 x 5 
@@ -2136,7 +2136,7 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=1000, ii=12, addl=15) %&amp;gt;% mrgsim(end=336)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events object was just a simple data set that looks like this&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dosing &amp;lt;- events(out)
 dosing&lt;/code&gt;&lt;/pre&gt;
@@ -2155,7 +2155,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 . 3  3 3000 12    6    1   1    0 3000&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% carry.out(dose) %&amp;gt;% Req(CP) %&amp;gt;% mrgsim(end=168)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out, CP~time|factor(dose),scales=&amp;quot;same&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-different-bioavability-and-dosing-lag-time&#34; class=&#34;section level1&#34;&gt;
@@ -2210,7 +2210,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 
 plot(out, CP~time|factor(FORM),group=ALG, 
      scales=&amp;quot;same&amp;quot;, auto.key=list(columns=4))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-model-with-residual-error&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK model with residual error&lt;/h1&gt;
@@ -2251,7 +2251,7 @@ out &amp;lt;-
 ggplot(data=out, aes(x=time)) + 
   geom_point(aes(y=DV),size=3) + 
   geom_line(aes(y=CP), col=&amp;quot;firebrick&amp;quot;,lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-continuous-pk&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by continuous PK&lt;/h1&gt;
@@ -2296,7 +2296,7 @@ out &amp;lt;- mod %&amp;gt;%
   Req(CP,RESPONSE) %&amp;gt;% mrgsim(end=480*2)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;indirect-response-model-driven-by-metric-summarizing-exposure&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Indirect response model driven by metric summarizing exposure&lt;/h1&gt;
@@ -2340,7 +2340,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% data_set(data) %&amp;gt;% obsonly %&amp;gt;% mrgsim(end=120)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;effect-compartment-model&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Effect compartment model&lt;/h1&gt;
@@ -2376,7 +2376,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
 &lt;p&gt;Simulate a snigle 200 unit dose&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(amt=200) %&amp;gt;% obsonly %&amp;gt;% mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-22-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Simulate steady state PK/PD under Q12 hour dosing&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- 
   mod %&amp;gt;% 
@@ -2384,7 +2384,7 @@ mod &amp;lt;- mread(&amp;quot;effcmt&amp;quot;, tempdir(), code)&lt;/code&gt;&lt
   mrgsim(Req=&amp;quot;CP,CE,EFFECT&amp;quot;, end=168)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-23-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;population-pk-model-with-covariates-and-iov&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Population PK model with covariates and &lt;code&gt;IOV&lt;/code&gt;&lt;/h1&gt;
@@ -2443,7 +2443,7 @@ dose&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120, nid=5)
 
 plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Update &lt;code&gt;$OMEGA&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And check the result&lt;/p&gt;
@@ -2469,10 +2469,10 @@ plot(out)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(dose) %&amp;gt;% mrgsim(end=120,nid=5,seed=9765)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;ETAs&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,3))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-30-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out,CP~time|factor(ID),scales=&amp;quot;same&amp;quot;, layout=c(5,1))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-31-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Just look at WT with no IIV/IOV&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mod %&amp;gt;% drop.re&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data &amp;lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
@@ -2483,12 +2483,12 @@ out %&amp;gt;%
   as.tbl %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
   geom_line(lwd=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-33-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Cmin versus weight&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% subset(time==240) %&amp;gt;%
   ggplot(data=.,aes(x=WT,y=CP)) + 
   geom_line(lwd=1) + geom_point(size=3) + xlab(&amp;quot;Cmin&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-34-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;pk-with-dialysis-sessions-3-times-per-week&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;PK with dialysis sessions 3 times per week&lt;/h1&gt;
@@ -2546,13 +2546,13 @@ events&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Simulate&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out &amp;lt;- mod %&amp;gt;% ev(events) %&amp;gt;%  obsonly %&amp;gt;% mrgsim&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(out)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;PK plot with dialysis sessions marked in red&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;out %&amp;gt;% as.tbl %&amp;gt;% filter(time &amp;lt;=7*24) %&amp;gt;%
   ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
   geom_path(data=dial,col=&amp;quot;firebrick&amp;quot;, lwd=6, alpha=0.4)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;. Warning: Removed 1 rows containing missing values (geom_path).&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/model-gallery/figures/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/model-gallery_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level1&#34;&gt;
@@ -2719,13 +2719,13 @@ library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 . 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/31/work-with-event-objects/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
   ev(amt=100, ii=24, addl=6) %&amp;gt;%
   mrgsim %&amp;gt;% 
   plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/31/work-with-event-objects/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Event expectations&lt;/h1&gt;
@@ -2783,7 +2783,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2017/01/31/work-with-event-objects/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/post/events_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
@@ -2829,13 +2829,13 @@ library(dplyr)&lt;/code&gt;&lt;/pre&gt;
 . 1    0   1 100 24    6    1&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can implement this series of doses by passing &lt;code&gt;e&lt;/code&gt; in as the &lt;code&gt;events&lt;/code&gt; argument to &lt;code&gt;mrgsim&lt;/code&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% mrgsim(events=e) %&amp;gt;% plot(EV1+CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The events can also be implemented with the &lt;code&gt;ev&lt;/code&gt; constructor along the simulation pipeline&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;%
   ev(amt=100, ii=24, addl=6) %&amp;gt;%
   mrgsim %&amp;gt;% 
   plot(CP~time)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;event-expectations&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Event expectations&lt;/h1&gt;
@@ -2893,7 +2893,7 @@ data&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To simulate from this data set, we use the &lt;code&gt;data_set&lt;/code&gt; function. First, let’s load a population PK model&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod &amp;lt;- mread(&amp;quot;popex&amp;quot;, modlib())&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mod %&amp;gt;% data_set(data) %&amp;gt;% mrgsim(end=336) %&amp;gt;% plot(GUT+DV ~  .)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/topic/events/figures/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####content/topic/events_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>
