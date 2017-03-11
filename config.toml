@@ -18,9 +18,13 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
   url = "https://github.com/metrumresearchgroup/mrgsolve"
   weight=3
 [[menu.main]]
+  name="CRAN"
+  url = " https://CRAN.R-project.org/package=mrgsolve"
+  weight=4
+[[menu.main]]
   name="Documentation"
   url="/index.html#Documentation"
-  weight=4
+  weight=5
 [[menu.main]]
   name="Blog"
   url="/post/"
@@ -28,7 +32,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 [[menu.main]]
   name="MetrumRG"
   url="http://metrumrg.com"
-  weight=5
+  weight=6
 
 [taxonimies]
 tag="tags"
