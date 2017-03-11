@@ -10,20 +10,9 @@ source("ref.R")
 
 <!-- [![CRAN](http://www.r-pkg.org/badges/version/mrgsolve)](https://cran.r-project.org/package=mrgsolve) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![questions](https://img.shields.io/badge/ask_for-Help-brightgreen.svg)](https://github.com/metrumresearchgroup/mrgsolve/issues) [![Metrumrg](https://img.shields.io/badge/contact-MetrumRG-brightgreen.svg)](http://metrumrg.com) -->
 
-
-## Free workshop
-- __Developing Interactive Visualization Tools for Model-Supported R&D__
-- Saturday, March 18th Washington, DC
-- Info: [http://metrumrg.com/events/](http://metrumrg.com/events/index.html)
-
-
-## About
-`mrgsolve` is an `R` package designed to facilitate simulation from hierarchical, ordinary 
+`mrgsolve` is an `R` package for simulation from hierarchical, ordinary 
 differential equation (ODE) based models typically employed in drug development.
-The modeler creates a model specification file consisting of `R` and `C++` code that
-is parsed, compiled, and dynamically loaded into the `R` session. Input data are
-passed in and simulated data are returned as `R` objects, so disk access is never
-required during the simulation cycle after compiling. 
+
 
 ## `mrgsolve` is free, open-source software
 `mrgsolve` is distributed as a package for `R` and   <img src="/images/mrgsolve_sticker_812418_1.png" width="100px" align="right"> utilizes an ODE-solver from `ODEPACK` which is freely-available in the public domain.  We develop `mrgsolve` on [github](http://www.github.com/metrumresearchgroup/mrgsolve), with input and contributions from the pharmacometrics modeling and simulation community.  We welcome feature requests and 
