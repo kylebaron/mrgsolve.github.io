@@ -36,6 +36,7 @@ bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresea
 
 ## Links and Resources
 * [GitHub Page](http://www.github.com/metrumresearchgroup/mrgsolve): Browse source code, find useful examples, get help installing, report issues
+* `mrgsolve` home on [CRAN](https://CRAN.R-project.org/package=mrgsolve)
 * [Site navagation](/tax/): A listing of all tagged content on this site, including blog posts and
 other help / demonstration content
 * [Metrum Research Group](http://metrumrg.com): Our main website
