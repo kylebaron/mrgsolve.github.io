@@ -6,8 +6,19 @@
     <description>Recent content in Posts on mrgsolve</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Apr 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Workshop at PAGE 2017</title>
+      <link>/2017/04/07/workshop-at-page-2017/</link>
+      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/04/07/workshop-at-page-2017/</guid>
+      <description>&lt;p&gt;Metrum will be presenting a one-day, introduction to &lt;code&gt;mrgsolve&lt;/code&gt; workshop
+at PAGE 2017.  Please visit the &lt;a href=&#34;http://metrumrg.com/events/2017/03/page2017mrgsolve.html&#34;&gt;Metrum events page&lt;/a&gt; for workshop details (summary and outline) and links to register.  Hope to see you in Budapest.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Model visualization tutorial materials</title>
