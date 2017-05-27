@@ -13,7 +13,6 @@ source("ref.R")
 `mrgsolve` is an `R` package for simulation from hierarchical, ordinary 
 differential equation (ODE) based models typically employed in drug development.
 
-
 ## `mrgsolve` is free, open-source software
 `mrgsolve` is distributed as a package for `R` and   <img src="/images/mrgsolve_sticker_812418_1.png" width="100px" align="right"> utilizes an ODE-solver from `ODEPACK` which is freely-available in the public domain.  We develop `mrgsolve` on [github](http://www.github.com/metrumresearchgroup/mrgsolve), with input and contributions from the pharmacometrics modeling and simulation community.  We welcome feature requests and 
 bug reports on the GitHub site [issue tracker](http://www.github.com/metrumresearchgroup/mrgsolve/issues). 
@@ -44,7 +43,7 @@ library(mrgsolve)
 
 First, a model object is created.  As an introduction, we will use a pre-coded model 
 from an internal library.
-```{r,message=FALSE}
+```{r,message=FALSE,cache=TRUE}
 mod <- mread("irm1", modlib())
 ```
 
@@ -65,8 +64,8 @@ out
 ```
 
 And plot
-```{r}
-plot(out)
+```{r,"plot_1",fig.path="figures/index-"}
+plot(out)  
 ```
 
 

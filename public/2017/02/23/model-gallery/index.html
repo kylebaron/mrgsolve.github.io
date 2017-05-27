@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.18.1" />
+<meta name="generator" content="Hugo 0.21" />
 
 
 <title>Model Gallery - mrgsolve</title>
@@ -26,9 +26,6 @@
 
 <link rel="stylesheet" href="../../../../css/fonts.css" media="all">
 <link rel="stylesheet" href="../../../../css/main.css" media="all">
-
-
-
 
 
 
@@ -75,9 +72,7 @@
     
 
     <div class="article-content">
-
-
-<div id="TOC">
+      <div id="TOC">
 <ul>
 <li><a href="#load-packages-required-for-the-gallery">Load packages required for the gallery</a></li>
 <li><a href="#simple-pk-model">Simple PK model</a></li>
@@ -157,7 +152,7 @@ mod</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% init(GUT=1000) %&gt;% mrgsim(end=72)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>out</code></pre>
 <pre><code>. Model:  gallery1.cpp 
 . Dim:    721 x 5 
@@ -178,7 +173,7 @@ plot(out)</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% ev(amt=1000, ii=12, addl=15) %&gt;% mrgsim(end=336)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The events object was just a simple data set that looks like this</p>
 <pre class="r"><code>dosing &lt;- events(out)
 dosing</code></pre>
@@ -197,7 +192,7 @@ data</code></pre>
 . 3  3 3000 12    6    1   1    0 3000</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% data_set(data) %&gt;% carry.out(dose) %&gt;% Req(CP) %&gt;% mrgsim(end=168)</code></pre>
 <pre class="r"><code>plot(out, CP~time|factor(dose),scales=&quot;same&quot;)</code></pre>
-<p><img src="figures/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="pk-model-with-different-bioavability-and-dosing-lag-time" class="section level1">
@@ -252,7 +247,7 @@ data</code></pre>
 
 plot(out, CP~time|factor(FORM),group=ALG, 
      scales=&quot;same&quot;, auto.key=list(columns=4))</code></pre>
-<p><img src="figures/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="pk-model-with-residual-error" class="section level1">
 <h1>PK model with residual error</h1>
@@ -293,7 +288,7 @@ out &lt;-
 ggplot(data=out, aes(x=time)) + 
   geom_point(aes(y=DV),size=3) + 
   geom_line(aes(y=CP), col=&quot;firebrick&quot;,lwd=1)</code></pre>
-<p><img src="figures/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="indirect-response-model-driven-by-continuous-pk" class="section level1">
 <h1>Indirect response model driven by continuous PK</h1>
@@ -338,7 +333,7 @@ out &lt;- mod %&gt;%
   Req(CP,RESPONSE) %&gt;% mrgsim(end=480*2)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="indirect-response-model-driven-by-metric-summarizing-exposure" class="section level1">
 <h1>Indirect response model driven by metric summarizing exposure</h1>
@@ -382,7 +377,7 @@ data</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% data_set(data) %&gt;% obsonly %&gt;% mrgsim(end=120)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="effect-compartment-model" class="section level1">
 <h1>Effect compartment model</h1>
@@ -418,7 +413,7 @@ mod &lt;- mread(&quot;effcmt&quot;, tempdir(), code)</code></pre>
 <p>Simulate a snigle 200 unit dose</p>
 <pre class="r"><code>out &lt;- mod %&gt;% ev(amt=200) %&gt;% obsonly %&gt;% mrgsim(Req=&quot;CP,CE,EFFECT&quot;)</code></pre>
 <pre class="r"><code>plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Simulate steady state PK/PD under Q12 hour dosing</p>
 <pre class="r"><code>out &lt;- 
   mod %&gt;% 
@@ -426,7 +421,7 @@ mod &lt;- mread(&quot;effcmt&quot;, tempdir(), code)</code></pre>
   mrgsim(Req=&quot;CP,CE,EFFECT&quot;, end=168)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="population-pk-model-with-covariates-and-iov" class="section level1">
 <h1>Population PK model with covariates and <code>IOV</code></h1>
@@ -485,7 +480,7 @@ dose</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% ev(dose) %&gt;% mrgsim(end=120, nid=5)
 
 plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Update <code>$OMEGA</code></p>
 <pre class="r"><code>mod &lt;- mod %&gt;% omat(IIV=cmat(0.1, 0.45, 0.3, 0,0,0), IOV=dmat(0.5,0.5))</code></pre>
 <p>And check the result</p>
@@ -511,10 +506,10 @@ plot(out)</code></pre>
 <pre class="r"><code>out &lt;- mod %&gt;% ev(dose) %&gt;% mrgsim(end=120,nid=5,seed=9765)</code></pre>
 <p>ETAs</p>
 <pre class="r"><code>plot(out,ETA1+ETA2+IOV~time|factor(ID),scales=&quot;same&quot;, layout=c(5,3))</code></pre>
-<p><img src="figures/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>PK</p>
 <pre class="r"><code>plot(out,CP~time|factor(ID),scales=&quot;same&quot;, layout=c(5,1))</code></pre>
-<p><img src="figures/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Just look at WT with no IIV/IOV</p>
 <pre class="r"><code>mod &lt;- mod %&gt;% drop.re</code></pre>
 <pre class="r"><code>data &lt;- expand.ev(amt=300,ii=12, addl=19,WT=seq(40,140,20))
@@ -525,12 +520,12 @@ out %&gt;%
   as.tbl %&gt;%
   ggplot(data=., aes(x=time, y=CP,col=WT,group=ID)) + 
   geom_line(lwd=1)</code></pre>
-<p><img src="figures/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Cmin versus weight</p>
 <pre class="r"><code>out %&gt;% subset(time==240) %&gt;%
   ggplot(data=.,aes(x=WT,y=CP)) + 
   geom_line(lwd=1) + geom_point(size=3) + xlab(&quot;Cmin&quot;)</code></pre>
-<p><img src="figures/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="pk-with-dialysis-sessions-3-times-per-week" class="section level1">
 <h1>PK with dialysis sessions 3 times per week</h1>
@@ -588,13 +583,13 @@ events</code></pre>
 <p><strong>Simulate</strong></p>
 <pre class="r"><code>out &lt;- mod %&gt;% ev(events) %&gt;%  obsonly %&gt;% mrgsim</code></pre>
 <pre class="r"><code>plot(out)</code></pre>
-<p><img src="figures/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-43-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>PK plot with dialysis sessions marked in red</p>
 <pre class="r"><code>out %&gt;% as.tbl %&gt;% filter(time &lt;=7*24) %&gt;%
   ggplot(data=., aes(x=time, y=CP)) + geom_line(lwd=1) + 
   geom_path(data=dial,col=&quot;firebrick&quot;, lwd=6, alpha=0.4)</code></pre>
 <pre><code>. Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
-<p><img src="figures/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="model-gallery_files/figure-html/unnamed-chunk-45-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="references" class="section level1">
@@ -703,7 +698,7 @@ MathJax.Hub.Config({
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92528248-1', 'auto');
 ga('send', 'pageview');

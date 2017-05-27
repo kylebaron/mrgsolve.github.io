@@ -3,7 +3,7 @@
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92528248-1', 'auto');
 ga('send', 'pageview');
@@ -14,7 +14,7 @@ ga('send', 'pageview');
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.18.1" />
+<meta name="generator" content="Hugo 0.21" />
 
 
 <title>Generate MAP Bayes Parameter Estimates - mrgsolve</title>
@@ -37,9 +37,6 @@ ga('send', 'pageview');
 
 <link rel="stylesheet" href="../../css/fonts.css" media="all">
 <link rel="stylesheet" href="../../css/main.css" media="all">
-
-
-
 
 
 
@@ -83,10 +80,7 @@ ga('send', 'pageview');
     
 
     <div class="article-content">
-
-
-
-<pre class="r"><code>library(ggplot2)
+      <pre class="r"><code>library(ggplot2)
 library(mrgsolve)
 library(minqa)
 library(dplyr)
@@ -307,7 +301,7 @@ head(initial)</code></pre>
   geom_line(data=pred, aes(time,DV),col=&quot;firebrick&quot;, lwd=1) + 
   geom_line(data=initial,aes(time,DV), lty=2, col=&quot;darkgreen&quot;, lwd=1) + 
   geom_point(data=data %&gt;% filter(evid==0), aes(time,DV), col=&quot;darkslateblue&quot;,size=3)</code></pre>
-<p><img src="figures/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="map_bayes_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 
     </div>
@@ -359,7 +353,7 @@ MathJax.Hub.Config({
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92528248-1', 'auto');
 ga('send', 'pageview');

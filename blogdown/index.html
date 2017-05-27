@@ -4,14 +4,8 @@ type: page
 ---
 
 <!-- BLOGDOWN-HEAD -->
-
-
-
 <!-- /BLOGDOWN-HEAD -->
 
-<!-- BLOGDOWN-BODY-BEFORE -->
-
-<!-- /BLOGDOWN-BODY-BEFORE -->
 
 <!-- [![CRAN](http://www.r-pkg.org/badges/version/mrgsolve)](https://cran.r-project.org/package=mrgsolve) [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![questions](https://img.shields.io/badge/ask_for-Help-brightgreen.svg)](https://github.com/metrumresearchgroup/mrgsolve/issues) [![Metrumrg](https://img.shields.io/badge/contact-MetrumRG-brightgreen.svg)](http://metrumrg.com) -->
 <p><code>mrgsolve</code> is an <code>R</code> package for simulation from hierarchical, ordinary differential equation (ODE) based models typically employed in drug development.</p>
@@ -47,9 +41,9 @@ type: page
 <pre><code>. 
 . 
 . -------- mrgsolve model object (unix) --------
-.   Project: /Users/kyleb/Rlibs/lib/mrgsolve/models
+.   Project: /Users/kyleb/Rlibs/mrgsolve/models
 .   source:        irm1.cpp
-.   shared object: irm1-so-128c96a73f62d 
+.   shared object: irm1-so-4fdea3bc3f0 
 . 
 .   compile date:  
 .   Time:          start: 0 end: 24 delta: 1
@@ -84,7 +78,7 @@ out</code></pre>
 . [7,]  1  0.5  60.65 37.824 1.00324 3.882   0 1.8912
 . [8,]  1  0.6  54.88 43.013 1.38417 3.628   0 2.1507</code></pre>
 <p>And plot</p>
-<pre class="r"><code>plot(out)</code></pre>
+<pre class="r"><code>plot(out)  </code></pre>
 <p><img src="#####content/index_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The source code for this model:</p>
 <pre><code>  $PROB

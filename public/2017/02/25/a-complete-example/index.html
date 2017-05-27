@@ -3,7 +3,7 @@
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92528248-1', 'auto');
 ga('send', 'pageview');
@@ -14,7 +14,7 @@ ga('send', 'pageview');
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.18.1" />
+<meta name="generator" content="Hugo 0.21" />
 
 
 <title>A Complete Example - mrgsolve</title>
@@ -37,9 +37,6 @@ ga('send', 'pageview');
 
 <link rel="stylesheet" href="../../../../css/fonts.css" media="all">
 <link rel="stylesheet" href="../../../../css/main.css" media="all">
-
-
-
 
 
 
@@ -87,9 +84,7 @@ ga('send', 'pageview');
     
 
     <div class="article-content">
-
-
-<div id="TOC">
+      <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#population-pk-model">Population PK model</a></li>
@@ -250,19 +245,19 @@ out</code></pre>
 </ul>
 <p>This shows the plot method for <code>mrgsims</code> objects</p>
 <pre class="r"><code>plot(out, IPRED+DV~., subset=ID==10)</code></pre>
-<p><img src="figures/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <code>mrgsims</code> object can be passed right into <code>dplyr::filter</code></p>
 <pre class="r"><code>tr &lt;- filter(out, time==240)</code></pre>
 <p>Simulated day 10 concentration versus patient weight by dose/weight group</p>
 <pre class="r"><code>ggplot(tr, aes(x=WT,y=DV)) + 
   geom_point() +  facet_wrap(~dosegr) +
   geom_smooth(method=&quot;loess&quot;)</code></pre>
-<p><img src="figures/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Density plots of day 10 concentrations in the two dose/weight groups</p>
 <pre class="r"><code>ggplot(tr,aes(x=DV,fill=factor(dosegr))) + 
   geom_density(alpha=0.5) +
   scale_fill_brewer(palette=&quot;Set1&quot;)</code></pre>
-<p><img src="figures/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2017-02-25-complete-example_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
@@ -308,7 +303,7 @@ out</code></pre>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-92528248-1', 'auto');
 ga('send', 'pageview');
