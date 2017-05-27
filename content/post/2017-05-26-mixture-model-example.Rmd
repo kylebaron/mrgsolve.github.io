@@ -56,7 +56,8 @@ e <- ev(amt=100)
 
 mod %>% mrgsim(idata=idata,events=e) %>% plot
 ```
-The profile in pink was for `POP==2` or the lower clearance profile.
+The profile in pink was for `POP==2` or the lower clearance profile and
+blue was for `POP==1`.
 
 
 ## Modify the model to simulate a population mixture
