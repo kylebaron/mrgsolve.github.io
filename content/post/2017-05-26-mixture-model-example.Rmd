@@ -8,7 +8,7 @@ tags: []
 ---
 
 ```{r,echo=FALSE}
-knitr::opts_chunk$set(message=FALSE, comment='.', cache=TRUE, autodep=TRUE)
+knitr::opts_chunk$set(message=FALSE, comment='.', cache=FALSE, autodep=TRUE)
 ```
 
 
@@ -56,6 +56,7 @@ e <- ev(amt=100)
 
 mod %>% mrgsim(idata=idata,events=e) %>% plot
 ```
+
 The profile in pink was for `POP==2` or the lower clearance profile and
 blue was for `POP==1`.
 
