@@ -32,10 +32,11 @@ if(POP==2) CL = TVCL * THETA1;
 <pre class="r"><code>mod &lt;- mcode(&quot;A&quot;, code) %&gt;% update(end=72, delta=0.1)
 
 idata &lt;- data_frame(POP=c(1,2))
+
 e &lt;- ev(amt=100)
 
 mod %&gt;% mrgsim(idata=idata,events=e) %&gt;% plot</code></pre>
-<p><img src="/post/2017-05-26-mixture-model-example_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/post/2017-05-26-mixture-model-example_files/figure-html/unnamed-chunk-3-1.png" width="672" /> The profile in pink was for <code>POP==2</code> or the lower clearance profile and blue was for <code>POP==1</code>.</p>
 <div id="modify-the-model-to-simulate-a-population-mixture" class="section level2">
 <h2>Modify the model to simulate a population mixture</h2>
 <p>In the get-started exmaple model, we hard-coded <code>POP</code> as a parameter and we had to supply the value of <code>POP</code> in the input data set (in this case, it was via <code>idata</code>).</p>

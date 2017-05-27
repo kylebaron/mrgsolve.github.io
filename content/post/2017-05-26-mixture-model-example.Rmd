@@ -8,7 +8,7 @@ tags: []
 ---
 
 ```{r,echo=FALSE}
-knitr::opts_chunk$set(message=FALSE, comment='.', cache=FALSE, autodep=TRUE)
+knitr::opts_chunk$set(message=FALSE, comment='.', cache=TRUE, autodep=TRUE)
 ```
 
 
