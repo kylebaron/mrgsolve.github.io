@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 export PATH := /Applications/RStudio.app/Contents/MacOS/pandoc:$(PATH)
-DEST := ../../mrgsolve.github.io/
+DEST := ../../mrgsolve/mrgsolve.github.io/
 
 publish:
 	cp -r public/ ${DEST}

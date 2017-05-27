@@ -1,0 +1,14 @@
+unnamed-chunk-2	library
+unnamed-chunk-3	%>%	c	code	data_frame	ev	mcode	mrgsim	plot	update
+unnamed-chunk-4	mcode
+unnamed-chunk-5	mod	mrgsim
+unnamed-chunk-6	head	out
+unnamed-chunk-7	==	$	mean	out
+unnamed-chunk-8	mcode
+unnamed-chunk-9	e	mod	mrgsim
+unnamed-chunk-10	==	$	head	mean	out
+unnamed-chunk-11	%>%	==	CLi	filter	group_by	median	n	out	POP	summarise	time
+unnamed-chunk-12	
+unnamed-chunk-13	code	mcode	mrgsim
+unnamed-chunk-14	head	out
+unnamed-chunk-15	%>%	as.tbl	count	mutate	n	nrow	out	POP
