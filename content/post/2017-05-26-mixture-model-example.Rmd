@@ -51,10 +51,12 @@ Compile this model and run
 mod <- mcode("A", code) %>% update(end=72, delta=0.1)
 
 idata <- data_frame(POP=c(1,2))
+
 e <- ev(amt=100)
 
 mod %>% mrgsim(idata=idata,events=e) %>% plot
 ```
+The profile in pink was for `POP==2` or the lower clearance profile.
 
 
 ## Modify the model to simulate a population mixture
