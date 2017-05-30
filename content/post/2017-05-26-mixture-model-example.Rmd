@@ -4,11 +4,11 @@ author: ~
 date: '2017-05-26'
 slug: mixture-model-example
 categories: []
-tags: []
+tags: ["rcpp", "mixture-model"]
 ---
 
 ```{r,echo=FALSE}
-knitr::opts_chunk$set(message=FALSE, comment='.', cache=FALSE, autodep=TRUE)
+knitr::opts_chunk$set(message=FALSE, comment='.', cache=TRUE, autodep=TRUE)
 ```
 
 
@@ -48,7 +48,7 @@ otherwise.
 
 Compile this model and run
 ```{r}
-mod <- mcode("A", code) %>% update(end=72, delta=0.1)
+mod <- mcode_cache("A", code) %>% update(end=72, delta=0.1)
 
 idata <- data_frame(POP=c(1,2))
 
@@ -86,7 +86,7 @@ if(NEWIND <=1) {
 $CAPTURE POP
 '
 
-mod <- mcode("B", code)
+mod <- mcode_cache("B", code)
 ```
 
 Here, we invoked the `Rcpp` plugin that allows us to call `R::binom(1,0.8)`.  `R::binom` is just like the regular `R` version, but it only draws
@@ -134,7 +134,7 @@ double CLi = CL*exp(myETA);
 $CAPTURE POP CL CLi
 '
 
-mod <- mcode("C", code)
+mod <- mcode_cache("C", code)
 ```
 
 
@@ -189,7 +189,7 @@ Here's what we did
 
 Now, let's compile and test it out
 ```{r}
-mod <- mcode("D", code)
+mod <- mcode_cache("D", code)
 
 set.seed(333)
 out <- mrgsim(mod, nid=10000, end=-1)

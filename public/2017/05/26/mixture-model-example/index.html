@@ -104,7 +104,7 @@ if(POP==2) CL = TVCL * THETA1;
 &#39;</code></pre>
 <p>In this model, we created a parameter for the population indicator (<code>POP</code>) and if <code>POP</code> is 2 then clearance is lower than it would be otherwise.</p>
 <p>Compile this model and run</p>
-<pre class="r"><code>mod &lt;- mcode(&quot;A&quot;, code) %&gt;% update(end=72, delta=0.1)
+<pre class="r"><code>mod &lt;- mcode_cache(&quot;A&quot;, code) %&gt;% update(end=72, delta=0.1)
 
 idata &lt;- data_frame(POP=c(1,2))
 
@@ -129,7 +129,7 @@ if(NEWIND &lt;=1) {
 $CAPTURE POP
 &#39;
 
-mod &lt;- mcode(&quot;B&quot;, code)</code></pre>
+mod &lt;- mcode_cache(&quot;B&quot;, code)</code></pre>
 <p>Here, we invoked the <code>Rcpp</code> plugin that allows us to call <code>R::binom(1,0.8)</code>. <code>R::binom</code> is just like the regular <code>R</code> version, but it only draws one variate (<code>n=1</code>).</p>
 <p>Let’s test it out</p>
 <pre class="r"><code>set.seed(222)
@@ -170,7 +170,7 @@ double CLi = CL*exp(myETA);
 $CAPTURE POP CL CLi
 &#39;
 
-mod &lt;- mcode(&quot;C&quot;, code)</code></pre>
+mod &lt;- mcode_cache(&quot;C&quot;, code)</code></pre>
 <p>And simulate again</p>
 <pre class="r"><code>set.seed(444)
 out &lt;- mrgsim(mod,nid=10000, end=72, events=e,obsonly=TRUE)</code></pre>
@@ -222,7 +222,7 @@ $CAPTURE POP mixv
 <li>Remember: you must use <code>$PLUGIN</code> for this to work</li>
 </ul>
 <p>Now, let’s compile and test it out</p>
-<pre class="r"><code>mod &lt;- mcode(&quot;D&quot;, code)
+<pre class="r"><code>mod &lt;- mcode_cache(&quot;D&quot;, code)
 
 set.seed(333)
 out &lt;- mrgsim(mod, nid=10000, end=-1)</code></pre>
