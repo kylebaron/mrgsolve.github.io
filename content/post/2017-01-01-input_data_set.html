@@ -40,7 +40,7 @@ data</code></pre>
 mod %&gt;% 
   mrgsim(data=data) %&gt;% 
   plot(CP~time|factor(ID),scales=&quot;same&quot;)</code></pre>
-<p><img src="2017-01-01-input_data_set_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<p><img src="/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <hr>
 </div>
 <div id="as_data_set" class="section level3">
@@ -121,7 +121,7 @@ mod %&gt;%
   data_set(data) %&gt;% 
   mrgsim() %&gt;% 
   plot</code></pre>
-<img src="2017-01-01-input_data_set_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto auto auto 0;" />
+<img src="/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto auto auto 0;" />
 <hr>
 </div>
 <div id="as.data.frame.ev" class="section level3">
@@ -195,7 +195,7 @@ data</code></pre>
 . 2  1   48   1 250    1 168    3
 . 3  1   96   1 250    1 168    3</code></pre>
 <pre class="r"><code>mod %&gt;% mrgsim(data=data,end=168*4) %&gt;% plot</code></pre>
-<p><img src="2017-01-01-input_data_set_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<p><img src="/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <p>Or, you can do 100 mg doses on Monday, Wednesday, Friday, and 50 mg doses on Tuesday, Thursday, with drug holiday on weekends</p>
 <pre class="r"><code>e1 &lt;- ev(amt=100,ID=1)
 e2 &lt;- ev(amt=50,ID=1)
@@ -209,7 +209,7 @@ data</code></pre>
 . 5  1   96   1 100    1 168    3</code></pre>
 <p>And simulate</p>
 <pre class="r"><code>mod %&gt;% mrgsim(data=data,end=168*4) %&gt;% plot</code></pre>
-<p><img src="2017-01-01-input_data_set_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
+<p><img src="/post/2017-01-01-input_data_set_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto auto auto 0;" /></p>
 <p>The same thing can be accomplished like this</p>
 <pre class="r"><code>a &lt;- ev_days(e1,days=&quot;m,w,f&quot;,addl=3)
 b &lt;- ev_days(e2,days=&quot;t,th&quot;,addl=3)

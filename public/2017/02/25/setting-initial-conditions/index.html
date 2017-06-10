@@ -201,14 +201,14 @@ dplot &lt;- function(x) plot(x,ylim=c(0,400))</code></pre>
 <li>So, if we don’t update something in <code>$MAIN</code> the initial condition is as we set it in the base list</li>
 </ul>
 <pre class="r"><code>mod %&gt;% mrgsim %&gt;% dplot</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p><strong>Next, we update the base initial condition for <code>A</code> to 100</strong></p>
 <p>Note:</p>
 <ul>
 <li>The code in <code>$MAIN</code> still doesn’t get run because <code>IFLAG</code> is 0</li>
 </ul>
 <pre class="r"><code>mod %&gt;% init(A = 100) %&gt;% mrgsim %&gt;% dplot</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p><strong>Now, turn on <code>IFLAG</code></strong></p>
 <p>Note:</p>
 <ul>
@@ -216,9 +216,9 @@ dplot &lt;- function(x) plot(x,ylim=c(0,400))</code></pre>
 <li><code>A_0</code> is set to the value of <code>BASE</code></li>
 </ul>
 <pre class="r"><code>mod %&gt;% param(IFLAG=1) %&gt;% mrgsim %&gt;% dplot</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre class="r"><code>mod %&gt;% param(IFLAG=1, BASE=300) %&gt;% mrgsim %&gt;% dplot</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 </div>
 <div id="example-pkpd-model-with-initial-condition" class="section level2">
 <h2><span class="header-section-number">2.2</span> Example PK/PD model with initial condition</h2>
@@ -237,7 +237,7 @@ dxdt_RESP = KIN*(1-AUC/(AUC50+AUC)) - KOUT*RESP;
 <pre class="r"><code>mod &lt;- mcode(&quot;init_long2&quot;, code)</code></pre>
 <p>The initial condition is set to 40 per the values of <code>KIN</code> and <code>KOUT</code></p>
 <pre class="r"><code>mod %&gt;% mrgsim %&gt;% plot</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Even when we change <code>RESP_0</code> in <code>R</code>, the calculation in <code>$MAIN</code> gets the final say</p>
 <pre class="r"><code>mod %&gt;% init(RESP=1E9) %&gt;% mrgsim</code></pre>
 <pre><code>. Model:  init_long2.cpp 
@@ -304,37 +304,41 @@ idata %&gt;% head</code></pre>
   idata_set(idata) %&gt;% 
   mrgsim(end=40)</code></pre>
 <pre class="r"><code>plot(out, CENT~.)</code></pre>
-<p><img src="init_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="../../../../post/init_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="session-info" class="section level1">
 <h1><span class="header-section-number">4</span> Session Info</h1>
-<pre><code>. R version 3.3.2 (2016-10-31)
-. Platform: x86_64-apple-darwin13.4.0 (64-bit)
-. Running under: OS X Mavericks 10.9.5
+<pre><code>. R version 3.4.0 (2017-04-21)
+. Platform: x86_64-apple-darwin15.6.0 (64-bit)
+. Running under: macOS Sierra 10.12.5
+. 
+. Matrix products: default
+. BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+. LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
 . 
 . locale:
 . [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 . 
 . attached base packages:
-. [1] methods   stats     grDevices utils     datasets  graphics  base     
+. [1] methods   stats     graphics  grDevices utils     datasets  base     
 . 
 . other attached packages:
-. [1] mrgsolve_0.7.10.9005
+. [1] mrgsolve_0.8.6
 . 
 . loaded via a namespace (and not attached):
-.  [1] Rcpp_0.12.9               bookdown_0.3.9           
-.  [3] lattice_0.20-34           codetools_0.2-15         
-.  [5] assertthat_0.1            digest_0.6.12            
-.  [7] dplyr_0.5.0               rprojroot_1.2            
-.  [9] grid_3.3.2                R6_2.2.0                 
-. [11] DBI_0.5-1                 backports_1.0.5          
+.  [1] Rcpp_0.12.11              bookdown_0.4             
+.  [3] lattice_0.20-35           codetools_0.2-15         
+.  [5] assertthat_0.2.0          dplyr_0.5.0              
+.  [7] digest_0.6.12             rprojroot_1.2            
+.  [9] grid_3.4.0                R6_2.2.1                 
+. [11] DBI_0.6-1                 backports_1.1.0          
 . [13] magrittr_1.5              evaluate_0.10            
-. [15] blogdown_0.0.22           stringi_1.1.2            
-. [17] lazyeval_0.2.0            RcppArmadillo_0.7.700.0.0
-. [19] rmarkdown_1.3             tools_3.3.2              
+. [15] blogdown_0.0.41           stringi_1.1.5            
+. [17] lazyeval_0.2.0            RcppArmadillo_0.7.800.2.0
+. [19] rmarkdown_1.5             tools_3.4.0              
 . [21] stringr_1.2.0             yaml_2.1.14              
-. [23] htmltools_0.3.5           knitr_1.15.1             
-. [25] tibble_1.2</code></pre>
+. [23] compiler_3.4.0            htmltools_0.3.6          
+. [25] knitr_1.16                tibble_1.3.0</code></pre>
 </div>
 
     </div>

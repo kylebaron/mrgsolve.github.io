@@ -95,7 +95,7 @@ mod %&gt;%
   ev(amt=100,rate=3,addl=4,ii=48,cmt=2) %&gt;%
   mrgsim(end=320) %&gt;% 
   plot(CP~.)</code></pre>
-<p><img src="modmrg_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/modmrg_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>see(mod)</code></pre>
 <pre><code>. 
 . Model file:  pk2cmt.cpp 
@@ -163,7 +163,7 @@ modlib(list=TRUE)</code></pre>
 .   popex
 . </code></pre>
 <pre class="r"><code>modlib()</code></pre>
-<pre><code>. [1] &quot;/Users/kyleb/Rlibs/lib/mrgsolve/models&quot;</code></pre>
+<pre><code>. [1] &quot;/Users/kyleb/Rlibs/mrgsolve/models&quot;</code></pre>
 </div>
 <div id="viral-model" class="section level3">
 <h3>Viral model</h3>
@@ -181,7 +181,7 @@ out &lt;-
 
 
 plot(out,logChange~time,groups=delta,auto.key=list(columns=4))</code></pre>
-<p><img src="modmrg_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/modmrg_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="pkpd-model" class="section level3">
 <h3>PK/PD model</h3>
@@ -242,7 +242,7 @@ see(mod)</code></pre>
 .  CP : Plasma concentration (mass/volume)</code></pre>
 <pre class="r"><code>mod %&gt;% ev(amt=700,time=50) %&gt;% param(n=1.5,KOUT=0.02) %&gt;%
   mrgsim(end=480) %&gt;% plot(CP+RESP~.)</code></pre>
-<p><img src="modmrg_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/modmrg_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="population-pk-model" class="section level3">
 <h3>Population PK model</h3>
@@ -251,7 +251,7 @@ see(mod)</code></pre>
   ev(amt=100) %&gt;% 
   mrgsim(nid=100, end=96, delta=0.25) %&gt;%
   plot(DV+ECL~.)</code></pre>
-<p><img src="modmrg_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/modmrg_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 
     </div>
