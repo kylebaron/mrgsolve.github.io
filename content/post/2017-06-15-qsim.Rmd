@@ -1,0 +1,71 @@
+---
+title: qsim
+author: ~
+date: '2017-06-15'
+slug: qsim
+categories: []
+tags: []
+---
+
+```{r,message=FALSE}
+knitr::opts_chunk$set(message=FALSE,comment='.')
+library(rbenchmark)
+library(mrgsolve)
+library(dplyr)
+```
+
+
+`qsim` is a function in `mrgsolve` that is similar to `mrgsim`, but quicker.  In order to get that quickness, we lose some flexibility with the model.  But
+in many circumstances, this is no big deal at all.  `qsim` works with a 
+regular model object, an event object, and (optionally) an `idata_set`.
+`qsim` returns simulations as a (plain/old) matrix so you will also
+have to do a little more work on the back end.
+
+
+Let's start with a benchmark.  For the example, load a 2-cmt model
+and update the simulation end time.  We'll create a dosing event 
+object (`ev`).  
+
+```{r}
+mod <- mread("pk2cmt", modlib()) %>% update(end=120)
+ev <- ev(amt=100, ii=24,addl=2)
+```
+
+Finally, we will pass the dosing event object into `recmatrix` along
+with the observation time grid (see `?stime`). 
+```{r}
+recs <- recmatrix(ev,stime(mod))
+head(recs)
+```
+
+`recmatrix` takes
+the dosing information in the event object, expands out all of 
+the additional doses, schedules infusion end times (if `rate > 0`)
+and inserts rows for observation records.  So the `recs` object
+looks like a `data_set` but with slightly different information.  
+
+Let's try the benchmark:
+```{r}
+benchmark(qsim(mod,recs),
+          mrgsim(mod,events=ev),replications=300)[,c(1:4)]
+```
+```{r}
+benchmark(qsim(mod,ev),
+          mrgsim(mod,events=ev),replications=300)[,c(1:4)]
+```
+
+The idea
+is to fix all of that __prior__ to running the simulation.  It won't always
+give you a huge savings (for example, if every simulation has a different 
+design or dose, you have to call `recmatrix` every time).  But it helps
+with replicate simulation when you can build the design once beforehand,
+and re-use for every replicate.
+
+The time savings you get with `qsim` totally depend on the problem, including the duration of the simulation and the number of individuals.  
+You might see a 100 speed up for simple simulation from a single set of parameters.  Or a 30% speed up for long simulations in a big population.  I would say you get the biggest speed up when it's the shortest, simplest problem. Using `qsim` in that case gets you out of all the overhead `mrgsolve` needs in order to do complicated simulations.  
+
+But beware of the limitations here.  `mrgsolve` will call `recmatrix` on the event object even if you don't.  `qsim` always uses a single regimen for a single
+fixed design with bioavability and infusion duration fixed prior to the problem.  
+
+
+

@@ -189,7 +189,9 @@ data</code></pre>
 <pre><code>. [1]  0.4995400 -0.3274858</code></pre>
 <p>Here are the simulated values</p>
 <pre class="r"><code>slice(sim,1) %&gt;% select(ET1, ET2)</code></pre>
-<pre><code>.        ET1        ET2
+<pre><code>. # A tibble: 1 x 2
+.        ET1        ET2
+.      &lt;dbl&gt;      &lt;dbl&gt;
 . 1 0.519569 -0.2727675</code></pre>
 </div>
 </div>
@@ -201,7 +203,7 @@ pmod &lt;- mod %&gt;% update(end=24, delta=0.1) </code></pre>
 <p>Predicted line based on final estimates</p>
 <pre class="r"><code>pred &lt;- mapbayes(fit$par,y,pdata,pmod,pred=TRUE) %&gt;% filter(time &gt; 0)
 head(pred)</code></pre>
-<pre><code>. # A tibble: 6 × 5
+<pre><code>. # A tibble: 6 x 5
 .      ID  time       DV   ET1   ET2
 .   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 . 1     1   0.1 43.82331     0     0
@@ -213,7 +215,7 @@ head(pred)</code></pre>
 <p>Predicted line based on initial estimates</p>
 <pre class="r"><code>initial &lt;- mapbayes(init,y,pdata,pmod,pred=TRUE) %&gt;% filter(time &gt; 0)
 head(initial)</code></pre>
-<pre><code>. # A tibble: 6 × 5
+<pre><code>. # A tibble: 6 x 5
 .      ID  time       DV   ET1   ET2
 .   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 . 1     1   0.1 26.13954     0     0

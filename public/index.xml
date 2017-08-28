@@ -6,10 +6,37 @@
     <description>Recent content on mrgsolve</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Aug 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Creating complex dosing regimens with event objects</title>
+      <link>/2017/08/27/creating-complex-dosing-regimens-with-event-objects/</link>
+      <pubDate>Sun, 27 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/08/27/creating-complex-dosing-regimens-with-event-objects/</guid>
+      <description>1 Introduction 2 Event objects 3 Sequences of event objects 3.1 Using wait in event sequence  4 Repeating a complicated regimen 5 Expand an event into a population   1 Introduction There are some new functions that work from event objects that we’d like to introduce with this blog post. The focus for this functionality is creating complicated dosing regimens from simpler, elementary event objects. And in particular, we’ll see in this blog post how to easily create regularly irregular dosing patterns.</description>
+    </item>
+    
+    <item>
+      <title>mrgsolve tool kit</title>
+      <link>/2017/06/15/mrgsolve-tool-kit/</link>
+      <pubDate>Thu, 15 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/06/15/mrgsolve-tool-kit/</guid>
+      <description>mrgsolve Tool Kit (mrgsolvetk) is an package in development to help users do more with mrgsolve.</description>
+    </item>
+    
+    <item>
+      <title>qsim</title>
+      <link>/2017/06/15/qsim/</link>
+      <pubDate>Thu, 15 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/06/15/qsim/</guid>
+      <description>knitr::opts_chunk$set(message=FALSE,comment=&amp;#39;.&amp;#39;) library(rbenchmark) library(mrgsolve) library(dplyr) qsim is a function in mrgsolve that is similar to mrgsim, but quicker. In order to get that quickness, we lose some flexibility with the model. But in many circumstances, this is no big deal at all. qsim works with a regular model object, an event object, and (optionally) an idata_set. qsim returns simulations as a (plain/old) matrix so you will also have to do a little more work on the back end.</description>
+    </item>
     
     <item>
       <title>Mixture model example</title>
