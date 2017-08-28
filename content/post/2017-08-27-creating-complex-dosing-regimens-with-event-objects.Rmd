@@ -24,11 +24,7 @@ for this functionality is creating complicated dosing
 regimens from simpler, elementary event objects.  And 
 in particular, we'll see in this blog post how to 
 easily create regular/irregular dosing patterns.
-
-__NOTE__ these functions are new to `mrgsolve` and only 
-available on the development version of this package [on 
-GitHub](https://github.com/metrumresearchgroup/mrgsolve).  
-
+ 
 Let's get started
 
 ```{r,message=FALSE}
@@ -156,5 +152,9 @@ and then 200 mg daily for a week after a 3 day break.
 ```{r}
 mod <- mread("popex", modlib()) %>% update(delta=0.1)
 mod %>% mrgsim(data = e9, end = 600) %>% plot(DV~.)
+```
+# Environment
+```{r,echo=FALSE}
+devtools::session_info()
 ```
 
