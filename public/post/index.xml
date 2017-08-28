@@ -17,7 +17,7 @@
       <pubDate>Sun, 27 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/08/27/creating-complex-dosing-regimens-with-event-objects/</guid>
-      <description>1 Introduction 2 Event objects 3 Sequences of event objects 3.1 Using wait in event sequence  4 Repeating a complicated regimen 5 Expand an event into a population   1 Introduction There are some new functions that work from event objects that we’d like to introduce with this blog post. The focus for this functionality is creating complicated dosing regimens from simpler, elementary event objects. And in particular, we’ll see in this blog post how to easily create regularly irregular dosing patterns.</description>
+      <description>1 Introduction 2 Event objects 3 Sequences of event objects 3.1 Using wait in event sequence  4 Repeating a complicated regimen 5 Expand an event into a population   1 Introduction With this blog post, we’d like to introduce some new functions in mrgsolve that work with event objects. The focus for this functionality is creating complicated dosing regimens from simpler, elementary event objects. And in particular, we’ll see in this blog post how to easily create regular/irregular dosing patterns.</description>
     </item>
     
     <item>

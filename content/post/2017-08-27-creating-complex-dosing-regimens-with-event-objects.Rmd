@@ -18,12 +18,12 @@ knitr::opts_chunk$set(comment='.', warning=FALSE, message=FALSE)
 
 
 # Introduction
-There are some new functions that work from event objects that 
-we'd like to introduce with this blog post.  The focus 
+With this blog post, we'd like to introduce some new functions
+in `mrgsolve` that work with event objects. The focus 
 for this functionality is creating complicated dosing
 regimens from simpler, elementary event objects.  And 
 in particular, we'll see in this blog post how to 
-easily create regularly irregular dosing patterns.
+easily create regular/irregular dosing patterns.
 
 __NOTE__ these functions are new to `mrgsolve` and only 
 available on the development version of this package [on 
@@ -34,7 +34,7 @@ Let's get started
 ```{r,message=FALSE}
 library(dplyr)
 library(mrgsolve)
-mod <- mread("pk2cmt", modlib()) %>% update(delta=0.1) %>% Req(CP)
+mod <- mread("pk2cmt", modlib()) %>% update(delta = 0.1) %>% Req(CP)
 ```
 
 # Event objects
@@ -49,13 +49,13 @@ e1
 ```
 
 ```{r}
-mod %>% mrgsim(events=e1,end=2*168) %>% plot
+mod %>% mrgsim(events = e1, end = 2*168) %>% plot
 ```
 
 
 # Sequences of event objects
 
-Now, let's imagine a dosing sequence of alternating 100 mg daily for a 
+Now, let's imagine a alternating dosing sequence of 100 mg daily for a 
 week, then 200 mg daily for a week etc.  We can schedule this 
 with a sequence of event objects.
 
@@ -67,34 +67,38 @@ e2 <- ev(amt = 200, ii = 24, addl = 6)
 Then, schedule them in a sequence
 
 ```{r}
-e3 <- seq(e1,e2,e1)
+e3 <- seq(e1, e2, e1)
 e3
 ```
 
 When we create a sequence of event objects, `mrgsolve` calculates
 when each event is finished and automatically times each event
-according to the end time from the preceeding event.
+according to the end time from the preceeding event.  Notice
+that each event starts one dosing interval after the last
+dose of the previous event.
 
 And try that out
 ```{r}
-mod %>% mrgsim(events=e3,end=5*168) %>% plot
+mod %>% mrgsim(events = e3, end = 5*168) %>% plot
 ```
 
 ## Using `wait` in event sequence
 
-What if we want a 3-day holiday between each treatment period.  Simply
+What if we want a 3-day holiday between each treatment period?  Simply
 schedule a waiting period in the sequence:
 
 ```{r}
-e4 <- seq(e1,wait=72,e2,wait=72,e1)
+e4 <- seq(e1, wait = 72, e2, wait = 72, e1)
 e4
 ```
 Notice that the event objects (`e1` and `e2`) are 
 unnamed arguments.  But `wait` is a named argument
-with a single numeric value.
+with a single numeric value.  Introducing a `wait` period
+in the sequence pushes the start of the next period 
+in the sequence forward in time.
 
 ```{r}
-mod %>% mrgsim(events=e4,end=6*168) %>% plot
+mod %>% mrgsim(events = e4, end = 6*168) %>% plot
 ```
 
 To code a cycle of 3 weeks on, one week off for two months
@@ -104,7 +108,7 @@ e5 <- ev(amt = 200, ii = 24, addl = 20)
 
 e6 <- seq(e5, wait = 168, e5)
 
-mod %>% mrgsim(events=e6, end=72*24) %>% plot
+mod %>% mrgsim(events = e6, end = 72*24) %>% plot
 ```
 
 
@@ -117,9 +121,9 @@ To make that simpler we can repeat the basic regimen
 as many times as we'd like with `ev_rep`
 
 ```{r}
-e7 <- ev_rep(e5, n=12, wait=168)
+e7 <- ev_rep(e5, n = 12, wait = 168)
 
-mod %>% mrgsim(data=e7, end=52*168) %>% plot(CP~time/7/24)
+mod %>% mrgsim(data = e7, end = 52*168) %>% plot(CP~time/7/24)
 ```
 
 In `ev_rep`, there is a single `wait`ing period in between replicates
@@ -129,8 +133,8 @@ Alternatively, we could work with the 100/200/100 sequence
 like this
 ```{r}
 e4
-e8 <- ev_rep(e4, n=10, wait=168)
-mod %>% mrgsim(data=e8, end=52*168) %>% plot(CP~time/7/24)
+e8 <- ev_rep(e4, n = 10, wait = 168)
+mod %>% mrgsim(data = e8, end = 52*168) %>% plot(CP~time/7/24)
 ```
 
 
@@ -141,7 +145,7 @@ in to several IDs
 
 
 ```{r}
-e9 <- seq(e1,wait=72,e2)
+e9 <- seq(e1, wait = 72, e2)
 e9 <- ev_rep(e9, id = 1:5)
 e9
 ```
@@ -151,6 +155,6 @@ and then 200 mg daily for a week after a 3 day break.
 
 ```{r}
 mod <- mread("popex", modlib()) %>% update(delta=0.1)
-mod %>% mrgsim(data=e9, end=600) %>% plot(DV~.)
+mod %>% mrgsim(data = e9, end = 600) %>% plot(DV~.)
 ```
 
